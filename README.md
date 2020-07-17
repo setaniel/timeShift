@@ -1,4 +1,4 @@
 # timeShift
-to-do list
-"pomodoro" working
+to-do list,
+"pomodoro" working,
 reminders
