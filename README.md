@@ -1,6 +1,6 @@
 # timeShift
 
-Own project, for the sake of experience and pleasure
+Own project, for the sake of experience and fun
 
 to-do list,
 "pomodoro" working,
