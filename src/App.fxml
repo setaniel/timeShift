@@ -14,50 +14,11 @@
          <children>
             <VBox prefHeight="503.0" prefWidth="377.0" AnchorPane.bottomAnchor="20.0" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="20.0">
                 <children>
-                    <MenuBar>
-                        <menus>
-                            <Menu mnemonicParsing="false" text="File">
-                                <items>
-                                    <MenuItem mnemonicParsing="false" text="New" />
-                                    <MenuItem mnemonicParsing="false" text="Open…" />
-                                    <Menu mnemonicParsing="false" text="Open Recent" />
-                                    <SeparatorMenuItem mnemonicParsing="false" />
-                                    <MenuItem mnemonicParsing="false" text="Close" />
-                                    <MenuItem mnemonicParsing="false" text="Save" />
-                                    <MenuItem mnemonicParsing="false" text="Save As…" />
-                                    <MenuItem mnemonicParsing="false" text="Revert" />
-                                    <SeparatorMenuItem mnemonicParsing="false" />
-                                    <MenuItem mnemonicParsing="false" text="Preferences…" />
-                                    <SeparatorMenuItem mnemonicParsing="false" />
-                                    <MenuItem mnemonicParsing="false" text="Quit" />
-                                </items>
-                            </Menu>
-                            <Menu mnemonicParsing="false" text="Edit">
-                                <items>
-                                    <MenuItem mnemonicParsing="false" text="Undo" />
-                                    <MenuItem mnemonicParsing="false" text="Redo" />
-                                    <SeparatorMenuItem mnemonicParsing="false" />
-                                    <MenuItem mnemonicParsing="false" text="Cut" />
-                                    <MenuItem mnemonicParsing="false" text="Copy" />
-                                    <MenuItem mnemonicParsing="false" text="Paste" />
-                                    <MenuItem mnemonicParsing="false" text="Delete" />
-                                    <SeparatorMenuItem mnemonicParsing="false" />
-                                    <MenuItem mnemonicParsing="false" text="Select All" />
-                                    <MenuItem mnemonicParsing="false" text="Unselect All" />
-                                </items>
-                            </Menu>
-                            <Menu mnemonicParsing="false" text="Help">
-                                <items>
-                                    <MenuItem mnemonicParsing="false" text="About MyHelloApp" />
-                                </items>
-                            </Menu>
-                        </menus>
-                    </MenuBar>
                     <StackPane prefHeight="552.0" prefWidth="900.0">
                         <children>
                             <ImageView fitHeight="522.0" fitWidth="380.0">
                                <image>
-                                       <Image url="/sources/notes.jpg" />
+                                       <Image url="file:/home/setaniel/IdeaProjects/timeShift/src/sources/notes.jpg" />
                                </image>
                             </ImageView>
                             <VBox prefHeight="200.0" prefWidth="100.0">
@@ -66,7 +27,7 @@
                                         <children>
                                             <ImageView fx:id="Pomodoro" fitHeight="46.0" fitWidth="54.0" layoutX="333.0" layoutY="-23.0" pickOnBounds="true" preserveRatio="true">
                                                <image>
-                                                       <Image url="/sources/Tomato.png" />
+                                                       <Image url="file:/home/setaniel/IdeaProjects/timeShift/src/sources/Tomato.png" />
                                                </image>
                                             </ImageView>
                                             <HBox id="HBox" alignment="CENTER_LEFT" prefHeight="22.0" prefWidth="375.0" spacing="5.0" AnchorPane.topAnchor="490.0">
@@ -88,6 +49,45 @@
                                             </HBox>
                                             <TextField fx:id="myTextField" layoutX="68.0" layoutY="41.0" />
                                             <Button fx:id="myButton" layoutX="117.0" layoutY="99.0" mnemonicParsing="false" onAction="#showDateTime" text="Show Date Time" />
+                                      <MenuBar layoutX="78.0" layoutY="9.0" prefHeight="29.0" prefWidth="190.0" style="-fx-background-color: transparent;">
+                                          <menus>
+                                              <Menu mnemonicParsing="false" text="File">
+                                                  <items>
+                                                      <MenuItem mnemonicParsing="false" text="New" />
+                                                      <MenuItem mnemonicParsing="false" text="Open…" />
+                                                      <Menu mnemonicParsing="false" text="Open Recent" />
+                                                      <SeparatorMenuItem mnemonicParsing="false" />
+                                                      <MenuItem mnemonicParsing="false" text="Close" />
+                                                      <MenuItem mnemonicParsing="false" text="Save" />
+                                                      <MenuItem mnemonicParsing="false" text="Save As…" />
+                                                      <MenuItem mnemonicParsing="false" text="Revert" />
+                                                      <SeparatorMenuItem mnemonicParsing="false" />
+                                                      <MenuItem mnemonicParsing="false" text="Preferences…" />
+                                                      <SeparatorMenuItem mnemonicParsing="false" />
+                                                      <MenuItem mnemonicParsing="false" text="Quit" />
+                                                  </items>
+                                              </Menu>
+                                              <Menu mnemonicParsing="false" text="Edit">
+                                                  <items>
+                                                      <MenuItem mnemonicParsing="false" text="Undo" />
+                                                      <MenuItem mnemonicParsing="false" text="Redo" />
+                                                      <SeparatorMenuItem mnemonicParsing="false" />
+                                                      <MenuItem mnemonicParsing="false" text="Cut" />
+                                                      <MenuItem mnemonicParsing="false" text="Copy" />
+                                                      <MenuItem mnemonicParsing="false" text="Paste" />
+                                                      <MenuItem mnemonicParsing="false" text="Delete" />
+                                                      <SeparatorMenuItem mnemonicParsing="false" />
+                                                      <MenuItem mnemonicParsing="false" text="Select All" />
+                                                      <MenuItem mnemonicParsing="false" text="Unselect All" />
+                                                  </items>
+                                              </Menu>
+                                              <Menu mnemonicParsing="false" text="Help">
+                                                  <items>
+                                                      <MenuItem mnemonicParsing="false" text="About MyHelloApp" />
+                                                  </items>
+                                              </Menu>
+                                          </menus>
+                                      </MenuBar>
                                         </children>
                                     </AnchorPane>
                                 </children>
