@@ -61,19 +61,13 @@ public class View {
             anchorPane.getChildren().addAll(titleLabel, button, previewLabel);
             // add a note in notes list in 0 index
             content.getChildren().add(0, anchorPane); //onClick on note for edit
-            anchorPane.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
-                @Override
-            public void handle(MouseEvent mouseEvent) {
-                addNote(primaryStage, text);
-                content.getChildren().remove(anchorPane);
-            }
+            anchorPane.addEventHandler(MouseEvent.MOUSE_CLICKED, mouseEvent -> {
+            addNote(primaryStage, text);
+            content.getChildren().remove(anchorPane);
         });
-        text.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
-            @Override
-            public void handle(MouseEvent mouseEvent) {
-                addNote(primaryStage, text);
-                content.getChildren().remove(anchorPane);
-            }
+        text.addEventHandler(MouseEvent.MOUSE_CLICKED, mouseEvent -> {
+            addNote(primaryStage, text);
+            content.getChildren().remove(anchorPane);
         });
     }
     private void setNotePreview(Label titleLabel, Label previewLabel, String noteContent){
@@ -82,6 +76,6 @@ public class View {
         model.setPreviewLabel(previewLabel);
         List<String> list = Arrays.asList(noteContent.split("\n"));
         model.getTitleLabel().setText(list.get(0));
-        model.getPreviewLabel().setText(list.get(1));
+        if(list.size()>1)model.getPreviewLabel().setText(list.get(1));
     }
 }
