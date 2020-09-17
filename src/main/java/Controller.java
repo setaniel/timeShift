@@ -1,46 +1,31 @@
-import com.sun.istack.internal.NotNull;
-import javafx.application.Application;
-import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TextArea;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
-import javafx.scene.paint.Color;
 import javafx.stage.Stage;
-import javafx.stage.StageStyle;
-
-import javax.annotation.Resources;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.net.URL;
-import java.util.Random;
 import java.util.ResourceBundle;
 
-
+/** The class that controls the relationship between
+ * the FXML file and Java code. Here the link fx:id
+ * of links is initialized and translated into Java code.*/
 public class Controller extends View implements Initializable {
-    private Model model = new Model();
+    private final Model model = new Model();
     static private Stage primaryStage;
     @FXML
-    VBox content;
-    @FXML
     Button addButton;
-    @FXML
-    AnchorPane noteList;
 
     //--------------------------
     public static void setPrimaryStage(Stage stage){
             primaryStage = stage;
+    }
+    @FXML
+    private void closeApp(){
+        primaryStage.close();
     }
 
     @Override

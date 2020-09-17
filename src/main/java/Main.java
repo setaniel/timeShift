@@ -1,4 +1,5 @@
 import javafx.application.Application;
+import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -7,9 +8,17 @@ import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 
 public class Main extends Application {
-    //Program start point. Only start application, don't contain any logic.
+    /** The starting point of the program. Only run
+     * the application, do not contain any logic. The
+     * main window is designed here. This class loads
+     * the FXML that describes the appearance of the program. */
 
+    @Override
     public void start(Stage primaryStage) throws Exception {
+        // test load
+/*        FXMLLoader loader = new FXMLLoader();
+        loader.setLocation(Main.class.getResource("MainWindow.fxml"));*/
+        //____________
         // init FXML
         Parent root = FXMLLoader.load(getClass().getResource("MainWindow.fxml"));
         // init Window
@@ -26,6 +35,7 @@ public class Main extends Application {
                 "-fx-background-insets: 0, 0 1 1 0;");
         Controller.setPrimaryStage(primaryStage);
     }
+    @FXML
     public static void main(String[] args) {
         launch(args);
     }
