@@ -32,7 +32,7 @@
                                                 </ImageView>
                                                 <HBox alignment="CENTER_LEFT" prefHeight="22.0" prefWidth="375.0" spacing="5.0" AnchorPane.topAnchor="490.0">
                                                     <children>
-                                                        <Label maxHeight="1.7976931348623157E308" maxWidth="-1.0" text="Data saved" HBox.hgrow="ALWAYS">
+                                                        <Label maxHeight="1.7976931348623157E308" text="Data saved" HBox.hgrow="ALWAYS">
                                                             <font>
                                                                 <Font size="11.0" fx:id="x3" />
                                                             </font>
@@ -41,7 +41,7 @@
                                                             </textFill>
                                                         </Label>
                                                         <Pane HBox.hgrow="ALWAYS" />
-                                                        <Label font="$x3" text="Link ok" textFill="$x4" HBox.hgrow="NEVER" />
+                                                        <Label fx:id="linkLabel" font="$x3" text="Link ok" textFill="$x4" HBox.hgrow="NEVER" />
                                                     </children>
                                                     <padding>
                                                         <Insets bottom="3.0" left="3.0" right="3.0" top="3.0" />
@@ -95,7 +95,7 @@
                                              </ScrollPane>
                                                    </children>
                                                 </AnchorPane>
-                                    <Button fx:id="addButton" layoutX="20.0" layoutY="440.0" mnemonicParsing="false" prefHeight="29.0" prefWidth="35.0" text="Add" textAlignment="RIGHT">
+                                    <Button layoutX="20.0" layoutY="440.0" mnemonicParsing="false" prefHeight="29.0" prefWidth="35.0" text="Add" textAlignment="RIGHT" onAction="#onNewNoteClick">
                                        <effect>
                                           <ImageInput>
                                              <source>

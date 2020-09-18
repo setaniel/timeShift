@@ -15,13 +15,8 @@ public class Main extends Application {
 
     @Override
     public void start(Stage primaryStage) throws Exception {
-        // test load
-/*        FXMLLoader loader = new FXMLLoader();
-        loader.setLocation(Main.class.getResource("MainWindow.fxml"));*/
-        //____________
-        // init FXML
+
         Parent root = FXMLLoader.load(getClass().getResource("MainWindow.fxml"));
-        // init Window
         Scene scene = new Scene(root, 420, 565, Color.TRANSPARENT);
         primaryStage.initStyle(StageStyle.TRANSPARENT);
         primaryStage.setScene(scene);
@@ -33,7 +28,8 @@ public class Main extends Application {
         root.setStyle("-fx-background-radius: 6;" +
                 "-fx-background-color: rgb(45, 45, 50), rgb(60, 60, 65);" +
                 "-fx-background-insets: 0, 0 1 1 0;");
-        Controller.setPrimaryStage(primaryStage);
+        // send stage on View, for close button use
+        View.setMainStage(primaryStage);
     }
     @FXML
     public static void main(String[] args) {
