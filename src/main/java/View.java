@@ -18,64 +18,79 @@ class View {
     // stage of modal window (set note text)
     private  final EditNote editNote = new EditNote();
 //    private Stage mainStage;
-    private TextArea note;
-    private Model model;
+    private Model viewModel;
     // FXML linked nodes
     @FXML
     private VBox content;
-    //--------------------------
-    {
-        EditNote.doneButton.addEventHandler(MouseEvent.MOUSE_CLICKED, mouseEvent -> manageNote());
-    }
-
-    protected void addNote(TextArea newText){
-        note = newText;
-        note = editNote.showWindow(note, mainStage);
-    }
-    // Add note on main window(note list)
-    protected void manageNote(){
-            if (note.getText().length() > 0){
-
-//                content.getChildren().indexOf(anchorPane);
+/*    {
+        content.getChildren().addListener((ListChangeListener<Node>) c -> {
+            for (Node anchorPane : content.getChildren()){
+                content.getChildren().indexOf(anchorPane);
+                //                content.getChildren().indexOf(anchorPane);
 //                getting index of this pane
 
-                AnchorPane anchorPane = new AnchorPane();
-                anchorPane.setStyle("-fx-background-color: transparent; -fx-border-color: brown;");
-                //trashButton note Button
-                Button trashButton = createTrashButton();
-                trashButton.setOnAction(evt -> content.getChildren().remove(anchorPane));
-                // get note text and null local note variable
-                TextArea text = new TextArea(note.getText());
-                note.setText("");
-                // set note title and text, getting out textarea
-                Label titleLabel = new Label();
-                Label previewLabel = new Label();
-                setNotePreview(titleLabel, previewLabel, text.getText());
-                // set positions of text and buttons in note
-                AnchorPane.setBottomAnchor(previewLabel, 0.0);
-                AnchorPane.setLeftAnchor(previewLabel, 5.0);
-                AnchorPane.setLeftAnchor(titleLabel, 5.0);
-                AnchorPane.setTopAnchor(titleLabel, 0.0);
-                AnchorPane.setRightAnchor(trashButton, 5.0);
-                AnchorPane.setTopAnchor(trashButton, 5.0);
-                AnchorPane.setBottomAnchor(trashButton, 5.0);
-                anchorPane.getChildren().addAll(titleLabel, trashButton, previewLabel);
-                // add a note in notes list in 0 index
-                content.getChildren().add(0, anchorPane);
-                //onClick on note for edit
-                anchorPane.addEventHandler(MouseEvent.MOUSE_CLICKED, mouseEvent -> {
-                    addNote(text);
-                    content.getChildren().remove(anchorPane);
-                });
             }
+        });
+    }*/
+    //--------------------------
+    {
+        EditNote.doneButton.addEventHandler(MouseEvent.MOUSE_CLICKED, mouseEvent -> manageNote(viewModel));
     }
-    private void setNotePreview(Label titleLabel, Label previewLabel, String noteContent){
+
+    protected void addNote(Model model){
+        viewModel = model;
+        viewModel.setNoteText(editNote.showWindow(new TextArea(viewModel.getNoteText()), mainStage));
+
+    }
+    // Add note on main window(note list)
+    protected void manageNote(Model viewModel){
+        System.out.println(viewModel.getNoteText());
+        if (viewModel.getTitleLabelText() == null){
+            Model model = setModelData(viewModel.getNoteText());
+            AnchorPane anchorPane = createAnchorPane(model);
+            // add a note in notes list in 0 index
+            content.getChildren().add(0, anchorPane);
+            //onClick on note for edit
+            anchorPane.addEventHandler(MouseEvent.MOUSE_CLICKED, mouseEvent -> {
+//                setModelData(editNote.showWindow(new TextArea(model.getNoteText()), mainStage).getText());
+                addNote(model);
+            });
+        }
+    }
+    private void editAnchorPane(AnchorPane anchorPane, Model model){
+
+        anchorPane = createAnchorPane(model);
+    }
+    private AnchorPane createAnchorPane(Model model){
+        AnchorPane anchorPane = new AnchorPane();
+        anchorPane.setStyle("-fx-background-color: transparent; -fx-border-color: brown;");
+        Button trashButton = createTrashButton();
+        trashButton.setOnAction(evt -> content.getChildren().remove(anchorPane));
+        //-----------------
+        // get note text and null local note variable
+        viewModel = new Model();
+        // set note title and text, getting out model
+        Label titleLabel = new Label(model.getTitleLabelText());
+        titleLabel.setStyle("-fx-font-size: 15; -fx-font-weight: bold");
+        Label previewLabel = new Label(model.getPreviewLabelText());
+        // set positions of text and buttons in note
+        AnchorPane.setBottomAnchor(previewLabel, 0.0);
+        AnchorPane.setLeftAnchor(previewLabel, 5.0);
+        AnchorPane.setLeftAnchor(titleLabel, 5.0);
+        AnchorPane.setTopAnchor(titleLabel, 0.0);
+        AnchorPane.setRightAnchor(trashButton, 5.0);
+        AnchorPane.setTopAnchor(trashButton, 5.0);
+        AnchorPane.setBottomAnchor(trashButton, 5.0);
+        anchorPane.getChildren().addAll(titleLabel, trashButton, previewLabel);
+        return anchorPane;
+    }
+    private Model setModelData(String data){
         Model model = new Model();
-        model.setTitleLabel(titleLabel);
-        model.setPreviewLabel(previewLabel);
-        List<String> list = Arrays.asList(noteContent.split("\n"));
-        model.getTitleLabel().setText(list.get(0));
-        if(list.size()>1)model.getPreviewLabel().setText(list.get(1));
+        List<String> list = Arrays.asList(data.split("\n"));
+        model.setTitleLabelText(list.get(0));
+        if(list.size()>1)model.setPreviewLabelText(list.get(1));
+        model.setNoteText(data);
+        return model;
     }
     private Button createTrashButton(){
         Image image = new Image(View.class.getResourceAsStream("images/trash.png"), 30, 30, true, false);
