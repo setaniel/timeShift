@@ -19,6 +19,7 @@ class View {
     private  final EditNote editNote = new EditNote();
 //    private Stage mainStage;
     private TextArea note;
+    private Model model;
     // FXML linked nodes
     @FXML
     private VBox content;
@@ -34,6 +35,10 @@ class View {
     // Add note on main window(note list)
     protected void manageNote(){
             if (note.getText().length() > 0){
+
+//                content.getChildren().indexOf(anchorPane);
+//                getting index of this pane
+
                 AnchorPane anchorPane = new AnchorPane();
                 anchorPane.setStyle("-fx-background-color: transparent; -fx-border-color: brown;");
                 //trashButton note Button
