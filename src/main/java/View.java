@@ -42,11 +42,7 @@ class View {
                 AnchorPane anchorPane = new AnchorPane();
                 anchorPane.setStyle("-fx-background-color: transparent; -fx-border-color: brown;");
                 //trashButton note Button
-                Image image = new Image(View.class.getResourceAsStream("images/trash.png"), 30, 30, true, false);
-                ImageView imageView = new ImageView(image);
-                Button trashButton = new Button("", imageView);
-                trashButton.setMaxSize(30, 30);
-                trashButton.setStyle("-fx-background-color : transparent;");
+                Button trashButton = createTrashButton();
                 trashButton.setOnAction(evt -> content.getChildren().remove(anchorPane));
                 // get note text and null local note variable
                 TextArea text = new TextArea(note.getText());
@@ -80,6 +76,14 @@ class View {
         List<String> list = Arrays.asList(noteContent.split("\n"));
         model.getTitleLabel().setText(list.get(0));
         if(list.size()>1)model.getPreviewLabel().setText(list.get(1));
+    }
+    private Button createTrashButton(){
+        Image image = new Image(View.class.getResourceAsStream("images/trash.png"), 30, 30, true, false);
+        ImageView imageView = new ImageView(image);
+        Button trashButton = new Button("", imageView);
+        trashButton.setMaxSize(30, 30);
+        trashButton.setStyle("-fx-background-color : transparent;");
+        return trashButton;
     }
     public static void setMainStage(Stage stage){
         View.mainStage = stage;
