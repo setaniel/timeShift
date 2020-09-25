@@ -4,28 +4,36 @@ import java.awt.*;
 
 public class Model {
     // Computing and internal data storage
-    private TextArea note;
-    private Label titleLabel;
-    private Label previewLabel;
+    private String noteText;
+    private String titleLabelText;
+    private String previewLabelText;
+    private int index;
 
-    public void setNote(TextArea noteText){
-        this.note = noteText;
+    public void setNoteText(String noteText){
+        this.noteText = noteText;
     }
-    public void setTitleLabel(Label titleLabel){
-        this.titleLabel = titleLabel;
-        titleLabel.setStyle("-fx-font-size: 15; -fx-font-weight: bold");
+    public void setPreviewLabelText(String previewLabelText){
+        this.previewLabelText = previewLabelText;
     }
-    public void setPreviewLabel(Label previewLabel){
-        this.previewLabel = previewLabel;
+    public void setTitleLabelText(String titleLabelText) {
+        this.titleLabelText = titleLabelText;
+    }
+    public void setIndex(int index){
+        this.index = index;
     }
 
-    public TextArea getNote(){
-        return note;
+    public String getNoteText(){
+        return noteText;
     }
-    public Label getTitleLabel(){
-        return titleLabel;
+    public String getTitleLabelText(){
+        return titleLabelText;
     }
-    public Label getPreviewLabel(){
-        return previewLabel;
+    public String getPreviewLabelText(){
+        return previewLabelText;
     }
+    public int getIndex(){
+        return index;
+    }
+
+
 }
