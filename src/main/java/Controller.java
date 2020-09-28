@@ -15,11 +15,11 @@ import java.util.ResourceBundle;
  * the FXML file and Java code. Here the link fx:id
  * of links is initialized and translated into Java code.*/
 public class Controller extends View /*implements Initializable*/ {
-    private final Model model = new Model();
+    private Model model = new Model();
 
     @FXML
     private void onNewNoteClick(){
-        addNote(new TextArea());
+        addNote();
     }
 
 

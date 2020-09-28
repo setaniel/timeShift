@@ -1,22 +1,15 @@
 import javafx.fxml.FXML;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
-
-import java.util.Arrays;
-import java.util.List;
 // function to get and output the result
 
 class View {
     private static Stage mainStage;
     // stage of modal window (set note text)
-    private  final EditNote editNote = new EditNote();
+    private  final NoteEditor noteEditor = new NoteEditor();
 //    private Stage mainStage;
     private Model viewModel;
     // FXML linked nodes
@@ -34,11 +27,10 @@ class View {
     }*/
     //--------------------------
     {
-        EditNote.doneButton.addEventHandler(MouseEvent.MOUSE_CLICKED, mouseEvent -> manageNote(viewModel));
+        noteEditor.doneButton.addEventHandler(MouseEvent.MOUSE_CLICKED, mouseEvent -> manageNote(viewModel));
     }
 
-    protected void addNote(Model model){
-        viewModel = model;
+    protected void addNote(){
         viewModel.setNoteText(editNote.showWindow(new TextArea(viewModel.getNoteText()), mainStage));
 
     }
@@ -51,17 +43,22 @@ class View {
             // add a note in notes list in 0 index
             content.getChildren().add(0, anchorPane);
             //onClick on note for edit
-            anchorPane.addEventHandler(MouseEvent.MOUSE_CLICKED, mouseEvent -> {
-//                setModelData(editNote.showWindow(new TextArea(model.getNoteText()), mainStage).getText());
-                addNote(model);
-            });
+
         }
     }
-    private void editAnchorPane(AnchorPane anchorPane, Model model){
 
-        anchorPane = createAnchorPane(model);
+    public static void setMainStage(Stage stage){
+        View.mainStage = stage;
     }
-    private AnchorPane createAnchorPane(Model model){
+    @FXML
+    private void closeApp(){
+        mainStage.close();
+    }
+
+
+
+
+/*    private AnchorPane createAnchorPane(Model model){
         AnchorPane anchorPane = new AnchorPane();
         anchorPane.setStyle("-fx-background-color: transparent; -fx-border-color: brown;");
         Button trashButton = createTrashButton();
@@ -99,12 +96,5 @@ class View {
         trashButton.setMaxSize(30, 30);
         trashButton.setStyle("-fx-background-color : transparent;");
         return trashButton;
-    }
-    public static void setMainStage(Stage stage){
-        View.mainStage = stage;
-    }
-    @FXML
-    private void closeApp(){
-        mainStage.close();
-    }
+    }*/
 }
