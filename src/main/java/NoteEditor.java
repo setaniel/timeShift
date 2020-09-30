@@ -1,4 +1,5 @@
 import com.sun.org.apache.xerces.internal.impl.dv.ValidatedInfo;
+import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.scene.Scene;
@@ -16,10 +17,11 @@ public class NoteEditor {
     private double yOffset = 0;
     final Button doneButton = new Button("Done");
 
-    public void showWindow(TextArea editableText, Window winMod, View view) {
-        //-----------------------------------
+    public void noteEditWindow(Note note, Stage winMod) {
+        // window building
+        TextArea text = new TextArea(note.getText());
         Stage stage = new Stage(StageStyle.UNDECORATED);
-        Scene scene = new Scene(setLayout(editableText, stage), 300, 300, Color.TRANSPARENT);
+        Scene scene = new Scene(setLayout(text, stage), 300, 300, Color.TRANSPARENT);
         scene.getStylesheets().add(getClass().getResource("notepad.css").toExternalForm());
         stage.setScene(scene);
         stage.initModality(Modality.WINDOW_MODAL);
@@ -28,12 +30,15 @@ public class NoteEditor {
         stage.setX(winMod.getX() + 30);
         stage.setY(winMod.getY() + 60);
         stage.show();
-
-        doneButton.addEventHandler(MouseEvent.MOUSE_CLICKED, mouseEvent -> {
-            view.setViewModelText(editableText.getText());
+        //-----------------------------------
+        doneButton.setOnAction(event -> {
+            if (text.getText().length() > 0) {
+                System.out.println("inside  noteEditWindow, length == " + text.getText().length());
+                note.update(text.getText());
+                View.manageNotes(note);
+            }
             stage.close();
         });
-//        return editableText.getText();
     }
 
     private VBox setLayout(TextArea editableText, Stage stage){

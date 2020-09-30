@@ -9,17 +9,17 @@ public class Model {
     private String previewLabelText;
     private int index;
 
-    public void setNoteText(String noteText){
-        this.noteText = noteText;
+    public void setNoteText(String text){
+        this.noteText = text;
     }
-    public void setPreviewLabelText(String previewLabelText){
-        this.previewLabelText = previewLabelText;
+    public void setPreviewLabelText(String previewText){
+        this.previewLabelText = previewText;
     }
-    public void setTitleLabelText(String titleLabelText) {
-        this.titleLabelText = titleLabelText;
+    public void setTitleLabelText(String titleText) {
+        this.titleLabelText = titleText;
     }
-    public void setIndex(int index){
-        this.index = index;
+    public void setIndex(int contentIndex){
+        this.index = contentIndex;
     }
 
     public String getNoteText(){

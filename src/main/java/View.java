@@ -10,11 +10,10 @@ class View {
     private static Stage mainStage;
     // stage of modal window (set note text)
     private  final NoteEditor noteEditor = new NoteEditor();
-//    private Stage mainStage;
-    private Model viewModel;
+    Note note;
     // FXML linked nodes
     @FXML
-    private VBox content;
+    private static VBox content;
 /*    {
         content.getChildren().addListener((ListChangeListener<Node>) c -> {
             for (Node anchorPane : content.getChildren()){
@@ -26,17 +25,24 @@ class View {
         });
     }*/
     //--------------------------
-    {
+    /*{
         noteEditor.doneButton.addEventHandler(MouseEvent.MOUSE_CLICKED, mouseEvent -> manageNote(viewModel));
-    }
+    }*/
 
     protected void addNote(){
-        viewModel.setNoteText(editNote.showWindow(new TextArea(viewModel.getNoteText()), mainStage));
+        note = new Note(content);
+        noteEditor.noteEditWindow(note, mainStage);
+        System.out.println("inside addNote");
 
     }
-    // Add note on main window(note list)
-    protected void manageNote(Model viewModel){
-        System.out.println(viewModel.getNoteText());
+
+    protected static void manageNotes(Note note){
+        System.out.println("inside manageNotes");
+        if (note.getText() != null) {
+            content.getChildren().add(0, note.getNote());
+        }
+
+        /*System.out.println(viewModel.getNoteText());
         if (viewModel.getTitleLabelText() == null){
             Model model = setModelData(viewModel.getNoteText());
             AnchorPane anchorPane = createAnchorPane(model);
@@ -44,7 +50,7 @@ class View {
             content.getChildren().add(0, anchorPane);
             //onClick on note for edit
 
-        }
+        }*/
     }
 
     public static void setMainStage(Stage stage){

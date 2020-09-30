@@ -1,4 +1,3 @@
-import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
@@ -6,56 +5,71 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
+import javafx.stage.Stage;
 
 import java.util.Arrays;
 import java.util.List;
 
 public class Note {
-    private final VBox noteList;
+    private static Stage mainStage;
+    private VBox noteListContent;
     private final Model noteModel;
     private AnchorPane anchorPaneNote;
+    private  final NoteEditor noteEditor = new NoteEditor();
     private Label titleLabel;
     private Label previewLabel;
 
-    public Note(VBox content, String text){
-        this.noteList = content;
+    public Note(VBox content){
+        System.out.println("inside noteConstructor");
+        this.noteListContent = content;
         noteModel = new Model();
         anchorPaneNote = createAnchorPane();
-        update(text);
     }
 
     public void setText(String text){
         noteModel.setNoteText(text);
+        System.out.println("inside noteSetText");
     }
     public void setTitle(String title){
         noteModel.setTitleLabelText(title);
         titleLabel.setText(title);
+        System.out.println("inside noteSetTitle");
     }
     public void setPreview(String preview){
         noteModel.setPreviewLabelText(preview);
         previewLabel.setText(preview);
+        System.out.println("inside noteSetPreview");
     }
     public void update(String text){
+        System.out.println("inside noteUpdate");
         List<String> list = Arrays.asList(text.split("\n"));
         setTitle(list.get(0));
         if (list.size()>1) setPreview(list.get(1));
         setText(text);
     }
+    public AnchorPane getNote(){
+        System.out.println("inside noteGetNote");
+        return anchorPaneNote;
+    }
     public String getText(){
+        System.out.println("inside noteGetText");
         return noteModel.getNoteText();
     }
     public String getTitle(){
+        System.out.println("inside noteGetTitle");
         return noteModel.getTitleLabelText();
     }
     public String getPreview(){
+        System.out.println("inside noteGetPreview");
         return noteModel.getPreviewLabelText();
     }
 
     private AnchorPane createAnchorPane(){
+        System.out.println("inside noteCreateAnchorPane");
         AnchorPane anchorPane = new AnchorPane();
         anchorPane.setStyle("-fx-background-color: transparent; -fx-border-color: brown;");
         Button trashButton = createTrashButton();
-        trashButton.setOnAction(evt -> noteList.getChildren().remove(anchorPane));
+        trashButton.setOnAction(evt -> noteListContent.getChildren().remove(anchorPane));
         // set note title and text, getting out model
         titleLabel = new Label(getTitle());
         titleLabel.setStyle("-fx-font-size: 15; -fx-font-weight: bold");
@@ -70,7 +84,8 @@ public class Note {
         AnchorPane.setBottomAnchor(trashButton, 5.0);
         anchorPane.getChildren().addAll(titleLabel, trashButton, previewLabel);
         anchorPane.addEventHandler(MouseEvent.MOUSE_CLICKED, mouseEvent -> {
-            update();
+            System.out.println("inside noteAnchorPaneOnClick");
+            noteEditor.noteEditWindow(this, mainStage);
         });
         return anchorPane;
     }
@@ -82,5 +97,8 @@ public class Note {
         trashButton.setMaxSize(30, 30);
         trashButton.setStyle("-fx-background-color : transparent;");
         return trashButton;
+    }
+    public static void setMainStage(Stage stage){
+        Note.mainStage = stage;
     }
 }
