@@ -1,12 +1,7 @@
-import com.sun.org.apache.xerces.internal.impl.dv.ValidatedInfo;
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextArea;
-import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
@@ -34,7 +29,6 @@ public class NoteEditor {
         //-----------------------------------
         doneButton.setOnAction(event -> {
             if (text.getText().length() > 0) {
-                System.out.println("inside  noteEditWindow, length == " + text.getText().length());
                 note.update(text.getText());
                 View.getInstance().manageNotes(note);
             }

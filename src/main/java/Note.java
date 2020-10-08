@@ -16,12 +16,11 @@ public class Note {
     private final Model noteModel;
     private final AnchorPane anchorPaneNote;
     private final NoteEditor noteEditor = new NoteEditor();
-    private Note note;
+    private final Note note;
     private Label titleLabel;
     private Label previewLabel;
 
     public Note(VBox content){
-        System.out.println("inside noteConstructor");
         this.noteListContent = content;
         noteModel = new Model();
         note = this;
@@ -30,45 +29,35 @@ public class Note {
 
     public void setText(String text){
         noteModel.setNoteText(text);
-        System.out.println("inside noteSetText");
     }
     public void setTitle(String title){
         noteModel.setTitleLabelText(title);
         titleLabel.setText(title);
-        System.out.println("inside noteSetTitle");
     }
     public void setPreview(String preview){
         noteModel.setPreviewLabelText(preview);
         previewLabel.setText(preview);
-        System.out.println("inside noteSetPreview");
     }
     public void update(String text){
-        System.out.println("inside noteUpdate");
         List<String> list = Arrays.asList(text.split("\n"));
         setTitle(list.get(0));
         if (list.size()>1) setPreview(list.get(1));
         setText(text);
     }
     public AnchorPane getNote(){
-        System.out.println("inside noteGetNote");
-        System.out.println(anchorPaneNote);
         return anchorPaneNote;
     }
     public String getText(){
-        System.out.println("inside noteGetText");
         return noteModel.getNoteText();
     }
     public String getTitle(){
-        System.out.println("inside noteGetTitle");
         return noteModel.getTitleLabelText();
     }
     public String getPreview(){
-        System.out.println("inside noteGetPreview");
         return noteModel.getPreviewLabelText();
     }
 
     private AnchorPane createAnchorPane(){
-        System.out.println("inside noteCreateAnchorPane");
         AnchorPane anchorPane = new AnchorPane();
         anchorPane.setStyle("-fx-background-color: transparent; -fx-border-color: brown;");
         Button trashButton = createTrashButton();
@@ -86,12 +75,7 @@ public class Note {
         AnchorPane.setTopAnchor(trashButton, 5.0);
         AnchorPane.setBottomAnchor(trashButton, 5.0);
         anchorPane.getChildren().addAll(titleLabel, trashButton, previewLabel);
-        anchorPane.addEventHandler(MouseEvent.MOUSE_CLICKED, mouseEvent -> {
-            System.out.println("inside noteAnchorPaneOnClick");
-            System.out.println("note == " + note);
-            System.out.println("mainStage == " + mainStage);
-            noteEditor.noteEditWindow(note, mainStage);
-        });
+        anchorPane.addEventHandler(MouseEvent.MOUSE_CLICKED, mouseEvent -> noteEditor.noteEditWindow(note, mainStage));
         return anchorPane;
     }
 

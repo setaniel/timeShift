@@ -23,14 +23,10 @@ class View {
 
     protected void addNote(){
         noteEditor.noteEditWindow(new Note(content), mainStage);
-        System.out.println("inside addNote");
     }
 
     protected void manageNotes(Note note){
-        System.out.println("inside manageNotes");
         if (note.getText() != null) {
-            System.out.println(content);
-            System.out.println(note.getText());
             content.getChildren().remove(note.getNote());
             content.getChildren().add(0, note.getNote());
         }
