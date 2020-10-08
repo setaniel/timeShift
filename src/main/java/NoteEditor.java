@@ -19,6 +19,7 @@ public class NoteEditor {
 
     public void noteEditWindow(Note note, Stage winMod) {
         // window building
+        note.setMainStage(winMod);
         TextArea text = new TextArea(note.getText());
         Stage stage = new Stage(StageStyle.UNDECORATED);
         Scene scene = new Scene(setLayout(text, stage), 300, 300, Color.TRANSPARENT);

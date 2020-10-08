@@ -11,11 +11,12 @@ import java.util.Arrays;
 import java.util.List;
 
 public class Note {
-    private static Stage mainStage;
+    private Stage mainStage;
     private final VBox noteListContent;
     private final Model noteModel;
     private final AnchorPane anchorPaneNote;
     private final NoteEditor noteEditor = new NoteEditor();
+    private Note note;
     private Label titleLabel;
     private Label previewLabel;
 
@@ -23,6 +24,7 @@ public class Note {
         System.out.println("inside noteConstructor");
         this.noteListContent = content;
         noteModel = new Model();
+        note = this;
         anchorPaneNote = createAnchorPane();
     }
 
@@ -86,7 +88,9 @@ public class Note {
         anchorPane.getChildren().addAll(titleLabel, trashButton, previewLabel);
         anchorPane.addEventHandler(MouseEvent.MOUSE_CLICKED, mouseEvent -> {
             System.out.println("inside noteAnchorPaneOnClick");
-            noteEditor.noteEditWindow(this, mainStage);
+            System.out.println("note == " + note);
+            System.out.println("mainStage == " + mainStage);
+            noteEditor.noteEditWindow(note, mainStage);
         });
         return anchorPane;
     }
@@ -99,7 +103,7 @@ public class Note {
         trashButton.setStyle("-fx-background-color : transparent;");
         return trashButton;
     }
-    public static void setMainStage(Stage stage){
-        Note.mainStage = stage;
+    public void setMainStage(Stage stage){
+        mainStage = stage;
     }
 }
