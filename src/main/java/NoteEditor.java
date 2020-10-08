@@ -35,7 +35,7 @@ public class NoteEditor {
             if (text.getText().length() > 0) {
                 System.out.println("inside  noteEditWindow, length == " + text.getText().length());
                 note.update(text.getText());
-                View.manageNotes(note);
+                View.getInstance().manageNotes(note);
             }
             stage.close();
         });

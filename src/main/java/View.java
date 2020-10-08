@@ -11,9 +11,16 @@ class View {
     // stage of modal window (set note text)
     private  final NoteEditor noteEditor = new NoteEditor();
     Note note;
+    private static View instance;
     // FXML linked nodes
     @FXML
-    private static VBox content;
+    private VBox content;
+    public View(){
+        instance = this;
+    }
+    public static View getInstance(){
+        return instance;
+    }
 /*    {
         content.getChildren().addListener((ListChangeListener<Node>) c -> {
             for (Node anchorPane : content.getChildren()){
@@ -36,9 +43,11 @@ class View {
 
     }
 
-    protected static void manageNotes(Note note){
+    protected void manageNotes(Note note){
         System.out.println("inside manageNotes");
         if (note.getText() != null) {
+            System.out.println(content);
+            System.out.println(note.getText());
             content.getChildren().add(0, note.getNote());
         }
 

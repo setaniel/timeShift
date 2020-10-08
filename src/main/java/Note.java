@@ -12,10 +12,10 @@ import java.util.List;
 
 public class Note {
     private static Stage mainStage;
-    private VBox noteListContent;
+    private final VBox noteListContent;
     private final Model noteModel;
-    private AnchorPane anchorPaneNote;
-    private  final NoteEditor noteEditor = new NoteEditor();
+    private final AnchorPane anchorPaneNote;
+    private final NoteEditor noteEditor = new NoteEditor();
     private Label titleLabel;
     private Label previewLabel;
 
@@ -49,6 +49,7 @@ public class Note {
     }
     public AnchorPane getNote(){
         System.out.println("inside noteGetNote");
+        System.out.println(anchorPaneNote);
         return anchorPaneNote;
     }
     public String getText(){
