@@ -49,19 +49,23 @@ class View {
         mainStage.close();
     }
     public static void deserializeNotes(){
-        try {
-            FileInputStream fileIn = new FileInputStream("src/main/java/dataSerialize/0.ser");
-            ObjectInputStream in = new ObjectInputStream(fileIn);
-            Note note = new Note(View.instance.content, (Model)in.readObject());
-            View.instance.content.getChildren().add(note.getIndex(), note);
-//            View.instance.noteEditor.noteEditWindow(new Note(View.instance.content, (Model)in.readObject()), mainStage);
-            in.close();
-            fileIn.close();
-        } catch (IOException i) {
-            i.printStackTrace();
-        } catch (ClassNotFoundException c) {
-            System.out.println("Класс Employee не найден");
-            c.printStackTrace();
+        for (int i = 0; i < Integer.MAX_VALUE; i++) {
+            File file = new File(String.format("src/main/java/dataSerialize/%d.ser", i));
+            if (file.exists()) {
+                try {
+                    FileInputStream fileIn = new FileInputStream(file);
+                    ObjectInputStream in = new ObjectInputStream(fileIn);
+                    Note note = new Note(View.instance.content, (Model) in.readObject());
+                    View.instance.content.getChildren().add(note.getIndex(), note);
+                    in.close();
+                    fileIn.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                } catch (ClassNotFoundException c){
+                    break;
+                }
+            }
+            else break;
         }
     }
     public static void setMainStage(Stage stage){
