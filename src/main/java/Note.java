@@ -4,27 +4,25 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
 import java.util.Arrays;
 import java.util.List;
 
-public class Note {
+public class Note extends AnchorPane {
     private Stage mainStage;
     private final VBox noteListContent;
     private final Model noteModel;
-    private final AnchorPane anchorPaneNote;
     private final NoteEditor noteEditor = new NoteEditor();
-    private final Note note;
     private Label titleLabel;
     private Label previewLabel;
 
     public Note(VBox content){
         this.noteListContent = content;
         noteModel = new Model();
-        note = this;
-        anchorPaneNote = createAnchorPane();
+        createNoteInstance();
     }
 
     public void setText(String text){
@@ -38,14 +36,14 @@ public class Note {
         noteModel.setPreviewLabelText(preview);
         previewLabel.setText(preview);
     }
+    public void setIndex(int index){
+        noteModel.setIndex(index);
+    }
     public void update(String text){
         List<String> list = Arrays.asList(text.split("\n"));
         setTitle(list.get(0));
         if (list.size()>1) setPreview(list.get(1));
         setText(text);
-    }
-    public AnchorPane getNote(){
-        return anchorPaneNote;
     }
     public String getText(){
         return noteModel.getNoteText();
@@ -56,12 +54,17 @@ public class Note {
     public String getPreview(){
         return noteModel.getPreviewLabelText();
     }
+    public Model getNoteModel(){
+        return noteModel;
+    }
+    public int getIndex(){
+        return noteModel.getIndex();
+    }
 
-    private AnchorPane createAnchorPane(){
-        AnchorPane anchorPane = new AnchorPane();
-        anchorPane.setStyle("-fx-background-color: transparent; -fx-border-color: brown;");
+    private void createNoteInstance(){
+        this.setStyle("-fx-background-color: transparent; -fx-border-color: brown;");
         Button trashButton = createTrashButton();
-        trashButton.setOnAction(evt -> noteListContent.getChildren().remove(anchorPane));
+        trashButton.setOnAction(evt -> noteListContent.getChildren().remove(this));
         // set note title and text, getting out model
         titleLabel = new Label(getTitle());
         titleLabel.setStyle("-fx-font-size: 15; -fx-font-weight: bold");
@@ -74,9 +77,8 @@ public class Note {
         AnchorPane.setRightAnchor(trashButton, 5.0);
         AnchorPane.setTopAnchor(trashButton, 5.0);
         AnchorPane.setBottomAnchor(trashButton, 5.0);
-        anchorPane.getChildren().addAll(titleLabel, trashButton, previewLabel);
-        anchorPane.addEventHandler(MouseEvent.MOUSE_CLICKED, mouseEvent -> noteEditor.noteEditWindow(note, mainStage));
-        return anchorPane;
+        this.getChildren().addAll(titleLabel, trashButton, previewLabel);
+        this.addEventHandler(MouseEvent.MOUSE_CLICKED, mouseEvent -> noteEditor.noteEditWindow(this, mainStage));
     }
 
     private Button createTrashButton(){

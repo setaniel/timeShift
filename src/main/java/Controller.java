@@ -25,7 +25,8 @@ public class Controller extends View /*implements Initializable*/ {
 
 
 
-     /* @Override
+/*      @Override
     public void initialize(URL location, ResourceBundle resources) {
+        test();
     }*/
 }

@@ -30,7 +30,7 @@ public class NoteEditor {
         doneButton.setOnAction(event -> {
             if (text.getText().length() > 0) {
                 note.update(text.getText());
-                View.getInstance().manageNotes(note);
+                View.getViewInstance().manageNotes(note);
             }
             stage.close();
         });

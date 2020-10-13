@@ -1,9 +1,14 @@
 import javafx.scene.control.Label;
 
 import java.awt.*;
-
-public class Model {
-    // Computing and internal data storage
+import java.io.Serializable;
+import java.util.Random;
+/** Internal data storage for notes.
+ * Uses for serialize and deserialize,
+ * collecting data of all notes.
+ * Each note uses its own instance of the model*/
+public class Model implements Serializable {
+    private static final long serialVersionUID = 101;
     private String noteText;
     private String titleLabelText;
     private String previewLabelText;
