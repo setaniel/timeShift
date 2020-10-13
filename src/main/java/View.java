@@ -48,7 +48,7 @@ class View {
             try {
                 Note serialNote = (Note)node;
                 serialNote.setIndex(getViewInstance().content.getChildren().indexOf(node));
-                String path = String.format("dataSerialize/%d.ser", serialNote.getIndex());
+                String path = String.format("src/main/java/dataSerialize/%d.ser", serialNote.getIndex());
                 FileOutputStream fileOut = new FileOutputStream(new File(path));
                 ObjectOutputStream out = new ObjectOutputStream(fileOut);
                 out.writeObject(serialNote.getNoteModel());
