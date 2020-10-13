@@ -1,25 +1,13 @@
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.TextArea;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
-import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.ObjectOutputStream;
-import java.util.Observable;
-// function to get and output the result
+import java.io.*;
 
 class View {
-    private static Stage mainStage;     // stage of modal window (set note text)
+    private static Stage mainStage;
     private  final NoteEditor noteEditor = new NoteEditor();
     private static View instance;
     @FXML
@@ -49,7 +37,7 @@ class View {
                 Note serialNote = (Note)node;
                 serialNote.setIndex(getViewInstance().content.getChildren().indexOf(node));
                 String path = String.format("src/main/java/dataSerialize/%d.ser", serialNote.getIndex());
-                FileOutputStream fileOut = new FileOutputStream(new File(path));
+                FileOutputStream fileOut = new FileOutputStream(path);
                 ObjectOutputStream out = new ObjectOutputStream(fileOut);
                 out.writeObject(serialNote.getNoteModel());
                 out.close();
@@ -61,7 +49,20 @@ class View {
         mainStage.close();
     }
     public static void deserializeNotes(){
-
+        try {
+            FileInputStream fileIn = new FileInputStream("src/main/java/dataSerialize/0.ser");
+            ObjectInputStream in = new ObjectInputStream(fileIn);
+            Note note = new Note(View.instance.content, (Model)in.readObject());
+            View.instance.content.getChildren().add(note.getIndex(), note);
+//            View.instance.noteEditor.noteEditWindow(new Note(View.instance.content, (Model)in.readObject()), mainStage);
+            in.close();
+            fileIn.close();
+        } catch (IOException i) {
+            i.printStackTrace();
+        } catch (ClassNotFoundException c) {
+            System.out.println("Класс Employee не найден");
+            c.printStackTrace();
+        }
     }
     public static void setMainStage(Stage stage){
         View.mainStage = stage;

@@ -30,6 +30,7 @@ public class Main extends Application {
                 "-fx-background-insets: 0, 0 1 1 0;");
         // send stage on View, for close button use
         View.setMainStage(primaryStage);
+        View.deserializeNotes();
     }
     @FXML
     public static void main(String[] args) {

@@ -24,6 +24,11 @@ public class Note extends AnchorPane {
         noteModel = new Model();
         createNoteInstance();
     }
+    public Note(VBox content, Model model){
+        this.noteListContent = content;
+        noteModel = model;
+        createNoteInstance();
+    }
 
     public void setText(String text){
         noteModel.setNoteText(text);
