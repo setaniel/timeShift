@@ -56,6 +56,7 @@ class View {
                     FileInputStream fileIn = new FileInputStream(file);
                     ObjectInputStream in = new ObjectInputStream(fileIn);
                     Note note = new Note(View.instance.content, (Model) in.readObject());
+                    note.setMainStage(mainStage);
                     View.instance.content.getChildren().add(note.getIndex(), note);
                     in.close();
                     fileIn.close();
