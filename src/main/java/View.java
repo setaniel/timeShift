@@ -67,9 +67,18 @@ class View {
             }
             else break;
         }
+        deleteSerializeFiles();
     }
     public static void setMainStage(Stage stage){
         View.mainStage = stage;
+    }
+    private static void deleteSerializeFiles(){
+        for (int i = 0; i < Integer.MAX_VALUE; i++) {
+            File file = new File(String.format("src/main/java/dataSerialize/%d.ser", i));
+            if (file.exists()) {
+                file.delete();
+            }else break;
+        }
     }
     @FXML
     private void closeApp(){
