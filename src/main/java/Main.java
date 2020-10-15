@@ -27,7 +27,7 @@ public class Main extends Application {
         // background bottom transparent window
         root.setStyle("-fx-background-radius: 6;" +
                 "-fx-background-color: rgb(45, 45, 50), rgb(60, 60, 65);" +
-                "-fx-background-insets: 0, 0 1 1 0;");
+                "-fx-background-insets: 0, 0 1.ser 1.ser 0;");
         // send stage on View, for close button use
         View.setMainStage(primaryStage);
         View.deserializeNotes();

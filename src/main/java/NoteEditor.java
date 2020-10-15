@@ -16,6 +16,7 @@ public class NoteEditor {
         // window building
         note.setMainStage(winMod);
         TextArea text = new TextArea(note.getText());
+        text.setWrapText(true);
         Stage stage = new Stage(StageStyle.UNDECORATED);
         Scene scene = new Scene(setLayout(text, stage), 300, 300, Color.TRANSPARENT);
         scene.getStylesheets().add(getClass().getResource("notepad.css").toExternalForm());
@@ -42,7 +43,7 @@ public class NoteEditor {
         layout.setPadding(new Insets(10));
         layout.setStyle("-fx-background-radius: 6;" +
                 "-fx-background-color: rgb(45, 45, 50), rgb(60, 60, 65);" +
-                "-fx-background-insets: 0, 0 1 1 0;");
+                "-fx-background-insets: 0, 0 1.ser 1.ser 0;");
         VBox.setVgrow(editableText, Priority.ALWAYS);
         com.sun.glass.ui.Window.getWindows().get(0).setUndecoratedMoveRectangle(22);
 

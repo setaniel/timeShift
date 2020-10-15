@@ -64,6 +64,7 @@
                     <include>*.fxml</include>
                     <include>*.css</include>
                     <include>images/*</include>
+                    <include>dataSerialize</include>
                 </includes>
             </resource>
         </resources>
@@ -75,6 +76,20 @@
                 <configuration>
                     <source>8</source>
                     <target>8</target>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-jar-plugin</artifactId>
+                <version>2.4</version>
+                <configuration>
+                    <archive>
+                        <manifest>
+                            <addClasspath>true</addClasspath>
+                            <classpathPrefix>libs/</classpathPrefix>
+                            <mainClass>Main</mainClass>
+                        </manifest>
+                    </archive>
                 </configuration>
             </plugin>
             <plugin>
@@ -120,18 +135,6 @@
             <groupId>org.simpleframework</groupId>
             <artifactId>simple-xml</artifactId>
             <version>2.7.1</version>
-        </dependency>
-        <dependency>
-            <groupId>junit</groupId>
-            <artifactId>junit</artifactId>
-            <version>RELEASE</version>
-            <scope>test</scope>
-        </dependency>
-        <dependency>
-            <groupId>junit</groupId>
-            <artifactId>junit</artifactId>
-            <version>RELEASE</version>
-            <scope>test</scope>
         </dependency>
     </dependencies>
 

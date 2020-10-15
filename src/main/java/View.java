@@ -3,13 +3,17 @@ import javafx.fxml.FXML;
 import javafx.scene.Node;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
-
 import java.io.*;
 
+/**
+ * Create a view frame.
+ * Managing notes
+ * */
 class View {
     private static Stage mainStage;
     private  final NoteEditor noteEditor = new NoteEditor();
     private static View instance;
+    boolean isAppClosing = false;
     @FXML
     private VBox content;
 
@@ -28,15 +32,23 @@ class View {
         if (note.getText() != null) {
             content.getChildren().remove(note);
             content.getChildren().add(0, note);
+            deleteSerializeFiles();
+            serializeNotes(instance.content.getChildren());
         }
     }
+    public static void setMainStage(Stage stage){
+        View.mainStage = stage;
+    }
 
+    /**
+     * Serializing notes in user home directory
+     * */
     public static void serializeNotes(ObservableList<Node> list){
         for (Node node : list) {
             try {
                 Note serialNote = (Note)node;
-                serialNote.setIndex(getViewInstance().content.getChildren().indexOf(node));
-                String path = String.format("src/main/java/dataSerialize/%d.ser", serialNote.getIndex());
+                serialNote.setIndex(instance.content.getChildren().indexOf(node));
+                String path = String.format(System.getProperty("user.home") + "/documents/timeShift/serialize/%d.ser", serialNote.getIndex());
                 FileOutputStream fileOut = new FileOutputStream(path);
                 ObjectOutputStream out = new ObjectOutputStream(fileOut);
                 out.writeObject(serialNote.getNoteModel());
@@ -46,18 +58,24 @@ class View {
                 e.printStackTrace();
             }
         }
-        mainStage.close();
+        if (instance.isAppClosing){
+            mainStage.close();
+        }
     }
+    /**
+     * Deserializing notes, from files in user home directory
+     * */
     public static void deserializeNotes(){
         for (int i = 0; i < Integer.MAX_VALUE; i++) {
-            File file = new File(String.format("src/main/java/dataSerialize/%d.ser", i));
+            String path = String.format(System.getProperty("user.home") + "/documents/timeShift/serialize/%d.ser", i);
+            File file = new File(path);
             if (file.exists()) {
                 try {
                     FileInputStream fileIn = new FileInputStream(file);
                     ObjectInputStream in = new ObjectInputStream(fileIn);
-                    Note note = new Note(View.instance.content, (Model) in.readObject());
+                    Note note = new Note(instance.content, (Model) in.readObject());
                     note.setMainStage(mainStage);
-                    View.instance.content.getChildren().add(note.getIndex(), note);
+                    instance.content.getChildren().add(note.getIndex(), note);
                     in.close();
                     fileIn.close();
                 } catch (IOException e) {
@@ -70,19 +88,24 @@ class View {
         }
         deleteSerializeFiles();
     }
-    public static void setMainStage(Stage stage){
-        View.mainStage = stage;
-    }
-    private static void deleteSerializeFiles(){
+    /**
+     * After deserialize, delete all .ser files
+     * */
+    public static void deleteSerializeFiles(){
         for (int i = 0; i < Integer.MAX_VALUE; i++) {
-            File file = new File(String.format("src/main/java/dataSerialize/%d.ser", i));
+            String path = String.format(System.getProperty("user.home") + "/documents/timeShift/serialize/%d.ser", i);
+            File file = new File(path);
             if (file.exists()) {
                 file.delete();
             }else break;
         }
     }
     @FXML
+    /**
+     * Closing app, run serialization
+     * */
     private void closeApp(){
+        isAppClosing = true;
         serializeNotes(content.getChildren());
     }
 }

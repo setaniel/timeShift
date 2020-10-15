@@ -11,22 +11,14 @@ import javafx.stage.Stage;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-/** The class that controls the relationship between
+/**
+ * The class that controls the relationship between
  * the FXML file and Java code. Here the link fx:id
- * of links is initialized and translated into Java code.*/
-public class Controller extends View /*implements Initializable*/ {
-    private Model model = new Model();
-
+ * of links is initialized and translated into Java code.
+ * */
+public class Controller extends View {
     @FXML
     private void onNewNoteClick(){
         addNote();
     }
-
-
-
-
-/*      @Override
-    public void initialize(URL location, ResourceBundle resources) {
-        test();
-    }*/
 }
