@@ -29,7 +29,7 @@ public class NoteEditor {
         stage.show();
         //-----------------------------------
         doneButton.setOnAction(event -> {
-            if (text.getText().length() > 0) {
+            if (text.getText() != null && text.getText().length() > 0) {
                 note.update(text.getText());
                 View.getViewInstance().manageNotes(note);
             }

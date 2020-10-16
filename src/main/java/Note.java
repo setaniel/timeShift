@@ -5,6 +5,8 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
+import javafx.scene.text.Font;
+import javafx.scene.text.FontWeight;
 import javafx.stage.Stage;
 
 import java.util.Arrays;
@@ -32,6 +34,7 @@ public class Note extends AnchorPane {
         this.noteListContent = content;
         noteModel = deserializedModel;
         createNoteInstance();
+        this.update(noteModel.getNoteText());
     }
 
     public void setText(String text){
@@ -39,23 +42,25 @@ public class Note extends AnchorPane {
     }
     public void setTitle(String title){
         noteModel.setTitleLabelText(title);
+        titleLabel.setFont(Font.font("Lucida Console", FontWeight.BOLD, 15));
         titleLabel.setText(title);
     }
     public void setPreview(String preview){
         noteModel.setPreviewLabelText(preview);
+        previewLabel.setFont(Font.font("Lucida Console", 12));
         previewLabel.setText(preview);
     }
     public void setIndex(int index){
         noteModel.setIndex(index);
     }
     public void update(String text){
-        if (text.length() <= 25) setTitle(text);
-        if (text.length() > 25 && text.length() <= 50){
-            setTitle(text.substring(0, 25));
-            setPreview(text.substring(25));
-        }if (text.length() > 50){
-            setTitle(text.substring(0, 25));
-            setPreview(text.substring(26, 50));
+        if (text.contains("\n")){
+            setTitle(text.indexOf("\n") > 28 ? text.substring(0, 28)+"..." : text.substring(0, text.indexOf("\n")));
+            String s = text.substring(text.indexOf("\n")+1); // for code length economy
+            setPreview(s.length() > 35 ? s.substring(0, 35) + "..." : s);
+        }else {
+            setTitle(text.length() > 28 ? text.substring(0, 28)+"..." : text);
+            setPreview("Нет доп. текста");
         }
         setText(text);
     }
@@ -80,7 +85,6 @@ public class Note extends AnchorPane {
         Button trashButton = createTrashButton();
         // set note title and text, getting out model
         titleLabel = new Label(getTitle());
-        titleLabel.setStyle("-fx-font-size: 15; -fx-font-weight: bold");
         previewLabel = new Label(getPreview());
         // set positions of text and buttons in note
         AnchorPane.setBottomAnchor(previewLabel, 0.0);

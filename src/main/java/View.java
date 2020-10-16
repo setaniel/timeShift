@@ -48,6 +48,7 @@ class View {
             try {
                 Note serialNote = (Note)node;
                 serialNote.setIndex(instance.content.getChildren().indexOf(node));
+                new File(System.getProperty("user.home") + "/documents/timeShift/serialize").mkdirs();
                 String path = String.format(System.getProperty("user.home") + "/documents/timeShift/serialize/%d.ser", serialNote.getIndex());
                 FileOutputStream fileOut = new FileOutputStream(path);
                 ObjectOutputStream out = new ObjectOutputStream(fileOut);
