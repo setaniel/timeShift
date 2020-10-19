@@ -7,7 +7,6 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.paint.*?>
 <?import javafx.scene.text.*?>
-
 <Pane prefHeight="547.0" prefWidth="420.0" stylesheets="@styles.css" xmlns="http://javafx.com/javafx/1.8.0.261" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller">
     <children>
         <AnchorPane prefHeight="535.0" prefWidth="420.0">
@@ -25,7 +24,7 @@
                                     <children>
                                         <AnchorPane prefHeight="200.0" prefWidth="200.0">
                                             <children>
-                                                <ImageView fx:id="Pomodoro" fitHeight="46.0" fitWidth="54.0" layoutX="333.0" layoutY="-23.0" pickOnBounds="true" preserveRatio="true">
+                                                <ImageView fx:id="pomodoro" onMouseClicked="#onPomodoroClick" fitHeight="46.0" fitWidth="54.0" layoutX="333.0" layoutY="0.0" pickOnBounds="true" preserveRatio="true">
                                                     <image>
                                                         <Image url="@images/Tomato.png" />
                                                     </image>
@@ -95,16 +94,16 @@
                                              </ScrollPane>
                                                    </children>
                                                 </AnchorPane>
-                                    <Button layoutX="20.0" layoutY="440.0" mnemonicParsing="false" prefHeight="29.0" prefWidth="35.0" text="Add" textAlignment="RIGHT" onAction="#onNewNoteClick">
-                                       <effect>
-                                          <ImageInput>
-                                             <source>
-                                                <Image url="@images/add.png" />
-                                             </source>
-                                          </ImageInput>
-                                       </effect>
-                                    </Button>
-                                    <Button layoutX="14.0" layoutY="2.0" mnemonicParsing="false" onAction="#closeApp" style="-fx-background-color: transparent;" text="Close [X]" />
+                                    <ImageView fx:id="addButton" layoutX="8.0" layoutY="440.0"  onMouseClicked="#onNewNoteClick">
+                                       <image>
+                                           <Image url="@images/add.png" />
+                                       </image>
+                                    </ImageView>
+                                                <ImageView fx:id="closeButton" layoutX="9.0" layoutY="9.0" onMouseClicked="#closeApp" >
+                                                    <image>
+                                                        <Image url="@images/close_red.png" />
+                                                    </image>
+                                                </ImageView>
                                             </children>
                                         </AnchorPane>
                                     </children>

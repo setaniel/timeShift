@@ -60,7 +60,7 @@ public class Note extends AnchorPane {
             setPreview(s.length() > 35 ? s.substring(0, 35) + "..." : s);
         }else {
             setTitle(text.length() > 28 ? text.substring(0, 28)+"..." : text);
-            setPreview("Нет доп. текста");
+            setPreview("Нет дополнительного текста");
         }
         setText(text);
     }

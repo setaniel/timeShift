@@ -1,8 +1,14 @@
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
+import javafx.scene.control.Button;
+import javafx.scene.effect.DropShadow;
+import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
+
+import javax.swing.plaf.nimbus.AbstractRegionPainter;
 import java.io.*;
 
 /**
@@ -14,6 +20,7 @@ class View {
     private  final NoteEditor noteEditor = new NoteEditor();
     private static View instance;
     boolean isAppClosing = false;
+    static boolean isPomodoroStarted = false;
     @FXML
     private VBox content;
 
@@ -26,6 +33,11 @@ class View {
 
     protected void addNote(){
         noteEditor.noteEditWindow(new Note(content), mainStage);
+    }
+    protected void startPomodoro(){
+        if (isPomodoroStarted) return;
+        new Pomodoro().startPomodoro(mainStage);
+        isPomodoroStarted = true;
     }
 
     protected void manageNotes(Note note){
@@ -61,8 +73,10 @@ class View {
         }
         if (instance.isAppClosing){
             mainStage.close();
+            System.exit(0);
         }
     }
+
     /**
      * Deserializing notes, from files in user home directory
      * */
@@ -102,9 +116,7 @@ class View {
         }
     }
     @FXML
-    /**
-     * Closing app, run serialization
-     * */
+    // Closing app, run serialization
     private void closeApp(){
         isAppClosing = true;
         serializeNotes(content.getChildren());

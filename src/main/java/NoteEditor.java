@@ -13,7 +13,6 @@ public class NoteEditor {
     final Button doneButton = new Button("Done");
 
     public void noteEditWindow(Note note, Stage winMod) {
-        // window building
         note.setMainStage(winMod);
         TextArea text = new TextArea(note.getText());
         text.setWrapText(true);
@@ -23,7 +22,7 @@ public class NoteEditor {
         stage.setScene(scene);
         stage.initModality(Modality.WINDOW_MODAL);
         stage.initOwner(winMod);
-        // set position this modal on parent window
+        // set position this modal on parent frame
         stage.setX(winMod.getX() + 30);
         stage.setY(winMod.getY() + 60);
         stage.show();
@@ -38,7 +37,6 @@ public class NoteEditor {
     }
 
     private VBox setLayout(TextArea editableText, Stage stage){
-
         VBox layout = new VBox(editableText, doneButton);
         layout.setPadding(new Insets(10));
         layout.setStyle("-fx-background-radius: 6;" +
@@ -46,7 +44,6 @@ public class NoteEditor {
                 "-fx-background-insets: 0, 0 1.ser 1.ser 0;");
         VBox.setVgrow(editableText, Priority.ALWAYS);
         com.sun.glass.ui.Window.getWindows().get(0).setUndecoratedMoveRectangle(22);
-
         layout.setOnMousePressed(event -> {
             xOffset = event.getSceneX();
             yOffset = event.getSceneY();
