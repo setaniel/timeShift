@@ -9,6 +9,8 @@ import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.stage.Stage;
 
+import java.time.Instant;
+import java.time.LocalDate;
 import java.util.Arrays;
 import java.util.List;
 /**
@@ -86,6 +88,9 @@ public class Note extends AnchorPane {
         // set note title and text, getting out model
         titleLabel = new Label(getTitle());
         previewLabel = new Label(getPreview());
+
+        Label dateStampLabel = new Label(Instant.now().toString());
+
         // set positions of text and buttons in note
         AnchorPane.setBottomAnchor(previewLabel, 0.0);
         AnchorPane.setLeftAnchor(previewLabel, 5.0);
@@ -94,22 +99,22 @@ public class Note extends AnchorPane {
         AnchorPane.setRightAnchor(trashButton, 5.0);
         AnchorPane.setTopAnchor(trashButton, 5.0);
         AnchorPane.setBottomAnchor(trashButton, 5.0);
-        this.getChildren().addAll(titleLabel, trashButton, previewLabel);
+        this.getChildren().addAll(titleLabel, previewLabel, trashButton);
         this.addEventHandler(MouseEvent.MOUSE_CLICKED, mouseEvent -> noteEditor.noteEditWindow(this, mainStage));
     }
 
     private Button createTrashButton(){
-        Image image = new Image(Note.class.getResourceAsStream("images/trash.png"), 30, 30, true, false);
+        Image image = new Image(Note.class.getResourceAsStream("images/trash.png"));
         ImageView imageView = new ImageView(image);
-        Button trashButton = new Button("", imageView);
-        trashButton.setOnAction(evt -> {
+        Button button = new Button("", imageView);
+        Controller.setDropShadow(button);
+        button.setStyle("-fx-background-color : transparent;");
+        button.setOnAction(evt -> {
             noteListContent.getChildren().remove(this);
             View.deleteSerializeFiles();
             View.serializeNotes(noteListContent.getChildren());
         });
-        trashButton.setMaxSize(30, 30);
-        trashButton.setStyle("-fx-background-color : transparent;");
-        return trashButton;
+        return button;
     }
     public void setMainStage(Stage stage){
         mainStage = stage;

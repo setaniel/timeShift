@@ -46,7 +46,7 @@ public class Controller extends View implements Initializable{
         setDropShadow(pomodoro);
         serializeNotes(content.getChildren());
     }
-    private void setDropShadow(Node node){
+    static void setDropShadow(Node node){
         DropShadow shadow = new DropShadow();
         // Adding the shadow when the mouse cursor is on
         node.addEventHandler(MouseEvent.MOUSE_ENTERED, e -> node.setEffect(shadow));

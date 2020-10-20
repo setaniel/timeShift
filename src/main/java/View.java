@@ -89,6 +89,7 @@ class View {
                     FileInputStream fileIn = new FileInputStream(file);
                     ObjectInputStream in = new ObjectInputStream(fileIn);
                     Note note = new Note(instance.content, (Model) in.readObject());
+                    Controller.setDropShadow(note);
                     note.setMainStage(mainStage);
                     instance.content.getChildren().add(note.getIndex(), note);
                     in.close();

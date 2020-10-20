@@ -34,13 +34,6 @@ public class Pomodoro {
         setImage("Tomato");
     }
 
- /*   public static Pomodoro getInstance(){
-        if (instance == null){
-            instance = new Pomodoro();
-        }
-        return instance;
-    }*/
-
     public void startPomodoro(Stage mainStage){
 
         this.mainStage = mainStage;
@@ -92,6 +85,7 @@ public class Pomodoro {
 
         Image closeImage = new Image(Pomodoro.class.getResourceAsStream("images/close.png"));
         ImageView closeImageView = new ImageView(closeImage);
+        Controller.setDropShadow(closeImageView);
         anchorPane.getChildren().add(closeImageView);
         AnchorPane.setRightAnchor(closeImageView, 0.0);
         AnchorPane.setTopAnchor(closeImageView,56.0);
@@ -157,19 +151,9 @@ public class Pomodoro {
                         "-fx-background-insets: 0px; " +
                         "-fx-padding: 0px;" +
                         "-fx-background-color: #22CC00; " //+
-//                        "fx-font-color: blue;" +
-//                        "fx-font-weight: bolder;" //+
-//                        "-fx-font-size: 13em; " +
-//                        "-fx-text-fill: blue;"
-
-                , width, width
+                        , width, width
         ));
-        DropShadow shadow = new DropShadow();
-        // Adding the shadow when the mouse cursor is on
-        button.addEventHandler(MouseEvent.MOUSE_ENTERED, e -> button.setEffect(shadow));
-        // Removing the shadow when the mouse cursor is off
-        button.addEventHandler(MouseEvent.MOUSE_EXITED, e -> button.setEffect(null));
-
+        Controller.setDropShadow(button);
         return button;
     }
 }

@@ -13,6 +13,7 @@ public class NoteEditor {
     final Button doneButton = new Button("Done");
 
     public void noteEditWindow(Note note, Stage winMod) {
+        Controller.setDropShadow(note);
         note.setMainStage(winMod);
         TextArea text = new TextArea(note.getText());
         text.setWrapText(true);
