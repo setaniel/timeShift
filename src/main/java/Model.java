@@ -1,8 +1,4 @@
-import javafx.scene.control.Label;
-
-import java.awt.*;
 import java.io.Serializable;
-import java.util.Random;
 /** Internal data storage for notes.
  * Uses for serialize and deserialize,
  * collecting data of all notes.
@@ -39,6 +35,4 @@ public class Model implements Serializable {
     public int getIndex(){
         return index;
     }
-
-
 }

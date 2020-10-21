@@ -1,18 +1,16 @@
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.effect.DropShadow;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
+import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.stage.Stage;
-
 import java.time.Instant;
-import java.time.LocalDate;
-import java.util.Arrays;
-import java.util.List;
 /**
  * Note is a fabric-class and note manager.
  * In this class, most creating a AnchorPanes, managed notes data
@@ -100,14 +98,14 @@ public class Note extends AnchorPane {
         AnchorPane.setTopAnchor(trashButton, 5.0);
         AnchorPane.setBottomAnchor(trashButton, 5.0);
         this.getChildren().addAll(titleLabel, previewLabel, trashButton);
-        this.addEventHandler(MouseEvent.MOUSE_CLICKED, mouseEvent -> noteEditor.noteEditWindow(this, mainStage));
+        this.setOnMouseClicked(event -> noteEditor.noteEditWindow(this, mainStage));
     }
 
     private Button createTrashButton(){
         Image image = new Image(Note.class.getResourceAsStream("images/trash.png"));
         ImageView imageView = new ImageView(image);
         Button button = new Button("", imageView);
-        Controller.setDropShadow(button);
+        Controller.setDropShadow(button, Color.BLACK);
         button.setStyle("-fx-background-color : transparent;");
         button.setOnAction(evt -> {
             noteListContent.getChildren().remove(this);

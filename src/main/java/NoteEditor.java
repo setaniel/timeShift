@@ -1,7 +1,10 @@
 import javafx.geometry.Insets;
+import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextArea;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
@@ -10,10 +13,14 @@ import javafx.stage.*;
 public class NoteEditor {
     private double xOffset = 0;
     private double yOffset = 0;
-    final Button doneButton = new Button("Done");
+    Image image = new Image(NoteEditor.class.getResourceAsStream("images/done.png"));
+    ImageView imageView = new ImageView(image);
+    private final Button doneButton = new Button("", imageView);
 
     public void noteEditWindow(Note note, Stage winMod) {
-        Controller.setDropShadow(note);
+        doneButton.setStyle("-fx-background-color : transparent;");
+        Controller.setDropShadow(doneButton, Color.ALICEBLUE);
+        Controller.setDropShadow(note, Color.BLACK);
         note.setMainStage(winMod);
         TextArea text = new TextArea(note.getText());
         text.setWrapText(true);
@@ -27,6 +34,7 @@ public class NoteEditor {
         stage.setX(winMod.getX() + 30);
         stage.setY(winMod.getY() + 60);
         stage.show();
+
         //-----------------------------------
         doneButton.setOnAction(event -> {
             if (text.getText() != null && text.getText().length() > 0) {

@@ -1,16 +1,12 @@
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.TextArea;
 import javafx.scene.effect.DropShadow;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
-import javafx.stage.Stage;
+import javafx.scene.paint.Color;
+
 import java.net.URL;
 import java.util.ResourceBundle;
 
@@ -41,13 +37,14 @@ public class Controller extends View implements Initializable{
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        setDropShadow(addButton);
-        setDropShadow(closeButton);
-        setDropShadow(pomodoro);
+        setDropShadow(addButton, Color.BLACK);
+        setDropShadow(closeButton, Color.BLACK);
+        setDropShadow(pomodoro, Color.BLACK);
         serializeNotes(content.getChildren());
     }
-    static void setDropShadow(Node node){
+    static void setDropShadow(Node node, Color color){
         DropShadow shadow = new DropShadow();
+        shadow.setColor(color);
         // Adding the shadow when the mouse cursor is on
         node.addEventHandler(MouseEvent.MOUSE_ENTERED, e -> node.setEffect(shadow));
         // Removing the shadow when the mouse cursor is off

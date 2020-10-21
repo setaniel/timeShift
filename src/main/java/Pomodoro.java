@@ -1,10 +1,8 @@
 import javafx.application.Platform;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
-import javafx.scene.effect.DropShadow;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
@@ -21,14 +19,14 @@ public class Pomodoro {
     private double yOffset = 0;
     private static Button button;
     private static AnchorPane anchorPane;
-    private StackPane stackPane = new StackPane();
+    private final StackPane stackPane = new StackPane();
     private Stage stage;
     private Stage mainStage;
     private Timer timer;
     private Image image;
     Scene scene;
-    private static int minutes = 5;
-    private static int time = 5;
+    private static int minutes = 3;
+    private static int time = 3;
 
     public Pomodoro(){
         setImage("Tomato");
@@ -85,7 +83,7 @@ public class Pomodoro {
 
         Image closeImage = new Image(Pomodoro.class.getResourceAsStream("images/close.png"));
         ImageView closeImageView = new ImageView(closeImage);
-        Controller.setDropShadow(closeImageView);
+        Controller.setDropShadow(closeImageView, Color.BLACK);
         anchorPane.getChildren().add(closeImageView);
         AnchorPane.setRightAnchor(closeImageView, 0.0);
         AnchorPane.setTopAnchor(closeImageView,56.0);
@@ -153,7 +151,7 @@ public class Pomodoro {
                         "-fx-background-color: #22CC00; " //+
                         , width, width
         ));
-        Controller.setDropShadow(button);
+        Controller.setDropShadow(button, Color.BLACK);
         return button;
     }
 }

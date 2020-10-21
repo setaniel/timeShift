@@ -1,14 +1,9 @@
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
-import javafx.scene.control.Button;
-import javafx.scene.effect.DropShadow;
-import javafx.scene.image.ImageView;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.VBox;
+import javafx.scene.paint.Color;
 import javafx.stage.Stage;
-
-import javax.swing.plaf.nimbus.AbstractRegionPainter;
 import java.io.*;
 
 /**
@@ -89,7 +84,7 @@ class View {
                     FileInputStream fileIn = new FileInputStream(file);
                     ObjectInputStream in = new ObjectInputStream(fileIn);
                     Note note = new Note(instance.content, (Model) in.readObject());
-                    Controller.setDropShadow(note);
+                    Controller.setDropShadow(note, Color.BLACK);
                     note.setMainStage(mainStage);
                     instance.content.getChildren().add(note.getIndex(), note);
                     in.close();
