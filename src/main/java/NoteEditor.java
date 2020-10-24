@@ -1,6 +1,5 @@
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
-import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextArea;
@@ -22,8 +21,8 @@ public class NoteEditor {
 
     public void noteEditWindow(Note note) {
         doneButton.setStyle("-fx-background-color : transparent;");
-        Instances.setDropShadow(doneButton, Color.ALICEBLUE);
-        Instances.setDropShadow(note, Color.BLACK);
+        Utility.setDropShadow(doneButton, Color.ALICEBLUE);
+        Utility.setDropShadow(note, Color.BLACK);
         TextArea text = new TextArea(note.getText());
         text.setWrapText(true);
         stage = new Stage(StageStyle.UNDECORATED);
@@ -33,10 +32,10 @@ public class NoteEditor {
         stage.setScene(scene);
         stage.initModality(Modality.NONE);
         stage.initStyle(StageStyle.TRANSPARENT);
-        stage.initOwner(Instances.getPrimaryStage());
+        stage.initOwner(Utility.getPrimaryStage());
         // set position this modal on parent frame
-        stage.setX(Instances.getPrimaryStage().getX() + 30);
-        stage.setY(Instances.getPrimaryStage().getY() + 60);
+        stage.setX(Utility.getPrimaryStage().getX() + 30);
+        stage.setY(Utility.getPrimaryStage().getY() + 60);
         stage.show();
 
         //-----------------------------------
@@ -56,10 +55,10 @@ public class NoteEditor {
                     View.manageNotes(note);
                 }
                 stage.close();
-                Instances.root.removeEventFilter(MouseEvent.MOUSE_CLICKED, this); // at the bottom
+                Utility.root.removeEventFilter(MouseEvent.MOUSE_CLICKED, this); // at the bottom
             }
         };
-        Instances.root.addEventFilter(MouseEvent.MOUSE_CLICKED, primeStageClicked); // add the eventhandler to the node
+        Utility.root.addEventFilter(MouseEvent.MOUSE_CLICKED, primeStageClicked); // add the eventhandler to the node
     }
 
     private static VBox setLayout(TextArea editableText, Stage stage){

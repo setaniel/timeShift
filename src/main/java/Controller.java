@@ -45,7 +45,7 @@ public class Controller extends View implements Initializable{
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        Instances.setContent(content);
+        Utility.setContent(content);
         setDropShadow(info, Color.BLACK);
         setDropShadow(settings, Color.BLACK);
         setDropShadow(addButton, Color.BLACK);

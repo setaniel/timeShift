@@ -1,10 +1,4 @@
-import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
-import javafx.scene.Node;
-import javafx.scene.layout.VBox;
-import javafx.scene.paint.Color;
-import javafx.stage.Stage;
-import java.io.*;
 
 /**
  * Create a view frame.
@@ -15,7 +9,7 @@ class View {
     static boolean isPomodoroStarted = false;
 
     protected void addNote(){
-        noteEditor.noteEditWindow(new Note(Instances.getContent()));
+        noteEditor.noteEditWindow(new Note(Utility.getContent()));
     }
     protected void startPomodoro(){
         if (isPomodoroStarted) return;
@@ -25,8 +19,8 @@ class View {
 
     protected static void manageNotes(Note note){
         if (note.getText() != null) {
-            Instances.getContent().getChildren().remove(note);
-            Instances.getContent().getChildren().add(0, note);
+            Utility.getContent().getChildren().remove(note);
+            Utility.getContent().getChildren().add(0, note);
             Serializer.deleteSerializeFiles();
             Serializer.serializeNotes();
         }
@@ -35,7 +29,7 @@ class View {
     @FXML
     // Closing app, run serialization
     private void closeApp(){
-        Instances.setIsAppClosing(true);
+        Utility.setIsAppClosing(true);
         Serializer.serializeNotes();
     }
 }

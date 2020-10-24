@@ -46,7 +46,7 @@ public class Pomodoro {
         // set scene
         stage = new Stage(StageStyle.UNDECORATED);
         stage.initModality(Modality.NONE);
-        stage.initOwner(Instances.getPrimaryStage());
+        stage.initOwner(Utility.getPrimaryStage());
         anchorPane.setMaxWidth(image.getWidth());
         anchorPane.setMaxHeight(image.getHeight());
         scene = new Scene(stackPane, image.getWidth(), image.getHeight(), Color.TRANSPARENT);
@@ -56,8 +56,8 @@ public class Pomodoro {
         stackPane.setStyle("-fx-background-color: rgba(0, 0, 0, 0);");
         stage.initStyle(StageStyle.TRANSPARENT);
         // set position this modal on parent frame
-        stage.setX(Instances.getPrimaryStage().getX() + 350);
-        stage.setY(Instances.getPrimaryStage().getY() + 50);
+        stage.setX(Utility.getPrimaryStage().getX() + 350);
+        stage.setY(Utility.getPrimaryStage().getY() + 50);
         stage.show();
 
         stackPane.setOnMousePressed(event -> {
@@ -148,7 +148,7 @@ public class Pomodoro {
                         "-fx-background-color: #22CC00; " //+
                         , width, width
         ));
-        Instances.setDropShadow(button, Color.BLACK);
+        Utility.setDropShadow(button, Color.BLACK);
         return button;
     }
 }

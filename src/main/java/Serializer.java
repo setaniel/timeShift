@@ -1,4 +1,3 @@
-import javafx.collections.ObservableList;
 import javafx.scene.Node;
 import javafx.scene.paint.Color;
 
@@ -6,10 +5,10 @@ import java.io.*;
 
 public class Serializer {
     public static void serializeNotes(){
-        for (Node node : Instances.getContent().getChildren()) {
+        for (Node node : Utility.getContent().getChildren()) {
             try {
                 Note serialNote = (Note)node;
-                serialNote.setIndex(Instances.getContent().getChildren().indexOf(node));
+                serialNote.setIndex(Utility.getContent().getChildren().indexOf(node));
                 new File(System.getProperty("user.home") + "/documents/timeShift/serialize").mkdirs();
                 String path = String.format(System.getProperty("user.home") + "/documents/timeShift/serialize/%d.ser", serialNote.getIndex());
                 FileOutputStream fileOut = new FileOutputStream(path);
@@ -21,8 +20,8 @@ public class Serializer {
                 e.printStackTrace();
             }
         }
-        if (Instances.isAppClosing()){
-            Instances.getPrimaryStage().close();
+        if (Utility.isAppClosing()){
+            Utility.getPrimaryStage().close();
             System.exit(0);
         }
     }
@@ -38,9 +37,9 @@ public class Serializer {
                 try {
                     FileInputStream fileIn = new FileInputStream(file);
                     ObjectInputStream in = new ObjectInputStream(fileIn);
-                    Note note = new Note(Instances.getContent(), (Model) in.readObject());
+                    Note note = new Note(Utility.getContent(), (Model) in.readObject());
                     Controller.setDropShadow(note, Color.BLACK);
-                    Instances.getContent().getChildren().add(note.getIndex(), note);
+                    Utility.getContent().getChildren().add(note.getIndex(), note);
                     in.close();
                     fileIn.close();
                 } catch (IOException e) {

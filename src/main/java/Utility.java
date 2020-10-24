@@ -5,7 +5,7 @@ import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 
-public class Instances {
+public class Utility {
     public static Node root;
     private static Stage primaryStage;
     private static VBox content;
@@ -45,9 +45,9 @@ public class Instances {
             public void handle(MouseEvent event) {
                 // on click actions here
                 modalStage.close();
-                Instances.root.removeEventFilter(MouseEvent.MOUSE_CLICKED, this); // at the bottom
+                Utility.root.removeEventFilter(MouseEvent.MOUSE_CLICKED, this); // at the bottom
             }
         };
-        Instances.root.addEventFilter(MouseEvent.MOUSE_CLICKED, primeStageClicked); // add the eventhandler to the node
+        Utility.root.addEventFilter(MouseEvent.MOUSE_CLICKED, primeStageClicked); // add the eventhandler to the node
     }
 }

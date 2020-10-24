@@ -1,15 +1,11 @@
-import javafx.event.Event;
-import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
-import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Hyperlink;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.stage.Modality;
@@ -30,9 +26,9 @@ public class Info {
         Button doneButton = new Button("", imageView);
         //____
         VBox layout = new VBox();
-        layout.setAlignment(Pos.BASELINE_CENTER);
+        layout.setAlignment(Pos.CENTER);
         layout.setPadding(new Insets(10, 10, 0, 10));
-        Label author = new Label("Kirill Orlov @setaniel");
+        Label author = new Label("Kirill Orlov @Setaniel");
         Label mail = new Label("i4data@ya.ru");
         Hyperlink site = new Hyperlink("https://setaniel.github.io");
         site.setOnMouseClicked(event -> {
@@ -59,11 +55,10 @@ public class Info {
         stage.setScene(scene);
         stage.initModality(Modality.NONE);
         stage.initStyle(StageStyle.TRANSPARENT);
-        scene.getStylesheets().add(Info.class.getResource("notepad.css").toExternalForm());
-        stage.initOwner(Instances.getPrimaryStage());
+        stage.initOwner(Utility.getPrimaryStage());
         // set position this modal on parent frame
-        stage.setX(Instances.getPrimaryStage().getX() + 30);
-        stage.setY(Instances.getPrimaryStage().getY() + 60);
+        stage.setX(Utility.getPrimaryStage().getX() + 30);
+        stage.setY(Utility.getPrimaryStage().getY() + 60);
         stage.show();
         com.sun.glass.ui.Window.getWindows().get(0).setUndecoratedMoveRectangle(22);
         layout.setStyle("-fx-background-radius: 16;" +
@@ -80,6 +75,6 @@ public class Info {
             stage.setX(event.getScreenX() - xOffset);
             stage.setY(event.getScreenY() - yOffset);
         });
-        Instances.closeOnClickOutThis(stage);
+        Utility.closeOnClickOutThis(stage);
     }
 }

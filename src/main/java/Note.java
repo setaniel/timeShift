@@ -1,15 +1,13 @@
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.effect.DropShadow;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
-import javafx.stage.Stage;
+
 import java.time.Instant;
 /**
  * Note is a fabric-class of notes.
@@ -103,7 +101,7 @@ public class Note extends AnchorPane {
         Image image = new Image(Note.class.getResourceAsStream("images/trash.png"));
         ImageView imageView = new ImageView(image);
         Button button = new Button("", imageView);
-        Instances.setDropShadow(button, Color.BLACK);
+        Utility.setDropShadow(button, Color.BLACK);
         button.setStyle("-fx-background-color : transparent;");
         button.setOnAction(evt -> {
             noteListContent.getChildren().remove(this);
