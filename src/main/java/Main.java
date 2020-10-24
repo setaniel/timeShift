@@ -28,12 +28,12 @@ public class Main extends Application {
         // Undecorated window cap. Create a 22-wide top border and set drag and drop:
         com.sun.glass.ui.Window.getWindows().get(0).setUndecoratedMoveRectangle(22);
         // background bottom transparent window
-        root.setStyle("-fx-background-radius: 6;" +
-                "-fx-background-color: rgb(45, 45, 50), rgb(60, 60, 65);" +
-                "-fx-background-insets: 0, 0 1.ser 1.ser 0;");
+        root.setStyle("-fx-background-radius: 16;" +
+                "-fx-background-color: rgb(45, 45, 50), rgb(60, 60, 65);");
         // send stage on View, for close button use
-        View.setMainStage(primaryStage);
-        View.deserializeNotes();
+        Instances.setPrimaryStage(primaryStage);
+        Instances.setRoot(root);
+        Serializer.deserializeNotes();
     }
     @FXML
     public static void main(String[] args) {

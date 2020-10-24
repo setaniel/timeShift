@@ -12,11 +12,9 @@ import javafx.scene.text.FontWeight;
 import javafx.stage.Stage;
 import java.time.Instant;
 /**
- * Note is a fabric-class and note manager.
- * In this class, most creating a AnchorPanes, managed notes data
+ * Note is a fabric-class of notes.
  * */
 public class Note extends AnchorPane {
-    private Stage mainStage;
     private final VBox noteListContent;
     private final Model noteModel;
     private final NoteEditor noteEditor = new NoteEditor();
@@ -98,23 +96,20 @@ public class Note extends AnchorPane {
         AnchorPane.setTopAnchor(trashButton, 5.0);
         AnchorPane.setBottomAnchor(trashButton, 5.0);
         this.getChildren().addAll(titleLabel, previewLabel, trashButton);
-        this.setOnMouseClicked(event -> noteEditor.noteEditWindow(this, mainStage));
+        this.setOnMouseClicked(event -> noteEditor.noteEditWindow(this));
     }
 
     private Button createTrashButton(){
         Image image = new Image(Note.class.getResourceAsStream("images/trash.png"));
         ImageView imageView = new ImageView(image);
         Button button = new Button("", imageView);
-        Controller.setDropShadow(button, Color.BLACK);
+        Instances.setDropShadow(button, Color.BLACK);
         button.setStyle("-fx-background-color : transparent;");
         button.setOnAction(evt -> {
             noteListContent.getChildren().remove(this);
-            View.deleteSerializeFiles();
-            View.serializeNotes(noteListContent.getChildren());
+            Serializer.deleteSerializeFiles();
+            Serializer.serializeNotes();
         });
         return button;
-    }
-    public void setMainStage(Stage stage){
-        mainStage = stage;
     }
 }

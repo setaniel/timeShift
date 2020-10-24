@@ -21,20 +21,17 @@ public class Pomodoro {
     private static AnchorPane anchorPane;
     private final StackPane stackPane = new StackPane();
     private Stage stage;
-    private Stage mainStage;
     private Timer timer;
     private Image image;
     Scene scene;
-    private static int minutes = 3;
-    private static int time = 3;
+    private static int time = 25;
+    private static int minutes = time;
 
     public Pomodoro(){
         setImage("Tomato");
     }
 
-    public void startPomodoro(Stage mainStage){
-
-        this.mainStage = mainStage;
+    public void startPomodoro(){
         button = createAnchorButton(25, 43, "Start");
         setImage("Tomato");
 
@@ -49,7 +46,7 @@ public class Pomodoro {
         // set scene
         stage = new Stage(StageStyle.UNDECORATED);
         stage.initModality(Modality.NONE);
-        stage.initOwner(mainStage);
+        stage.initOwner(Instances.getPrimaryStage());
         anchorPane.setMaxWidth(image.getWidth());
         anchorPane.setMaxHeight(image.getHeight());
         scene = new Scene(stackPane, image.getWidth(), image.getHeight(), Color.TRANSPARENT);
@@ -59,8 +56,8 @@ public class Pomodoro {
         stackPane.setStyle("-fx-background-color: rgba(0, 0, 0, 0);");
         stage.initStyle(StageStyle.TRANSPARENT);
         // set position this modal on parent frame
-        stage.setX(mainStage.getX() + 350);
-        stage.setY(mainStage.getY() + 50);
+        stage.setX(Instances.getPrimaryStage().getX() + 350);
+        stage.setY(Instances.getPrimaryStage().getY() + 50);
         stage.show();
 
         stackPane.setOnMousePressed(event -> {
@@ -131,7 +128,7 @@ public class Pomodoro {
                     });
                 });
             }
-        }, /*(1+1) * 1000*/0, 1 * 1000);
+        },0, 60 * 1000);
     }
 
     private Button createAnchorButton(double leftAnchor, int width, String text){
@@ -151,7 +148,7 @@ public class Pomodoro {
                         "-fx-background-color: #22CC00; " //+
                         , width, width
         ));
-        Controller.setDropShadow(button, Color.BLACK);
+        Instances.setDropShadow(button, Color.BLACK);
         return button;
     }
 }

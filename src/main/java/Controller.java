@@ -17,6 +17,10 @@ import java.util.ResourceBundle;
  * */
 public class Controller extends View implements Initializable{
     @FXML
+    private ImageView info;
+    @FXML
+    private ImageView settings;
+    @FXML
     private ImageView addButton;
     @FXML
     private ImageView closeButton;
@@ -33,14 +37,21 @@ public class Controller extends View implements Initializable{
     private void onPomodoroClick(){
         startPomodoro();
     }
+    @FXML
+    private void onInfoClick(){
+        Info.drawInfo();
+    }
 
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+        Instances.setContent(content);
+        setDropShadow(info, Color.BLACK);
+        setDropShadow(settings, Color.BLACK);
         setDropShadow(addButton, Color.BLACK);
         setDropShadow(closeButton, Color.BLACK);
         setDropShadow(pomodoro, Color.BLACK);
-        serializeNotes(content.getChildren());
+        Serializer.serializeNotes();
     }
     static void setDropShadow(Node node, Color color){
         DropShadow shadow = new DropShadow();
