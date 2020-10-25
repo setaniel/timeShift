@@ -1,8 +1,11 @@
 import javafx.application.Platform;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.effect.Bloom;
+import javafx.scene.effect.MotionBlur;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
@@ -24,7 +27,7 @@ public class Pomodoro {
     private Timer timer;
     private Image image;
     Scene scene;
-    private static int minutes = Utility.getPomodoroTime();
+    private static int pomTimer;
 
     public Pomodoro(){
         setImage("Tomato");
@@ -76,21 +79,23 @@ public class Pomodoro {
         anchorPane.setPrefSize(image.getWidth(), image.getHeight());
         anchorClosePane.setPrefSize(image.getWidth(), image.getHeight());
         ImageView tomato = new ImageView(image);
-
+        ImageView closeImageView = createCloseButton();
+        anchorPane.getChildren().add(closeImageView);
+        stackPane.getChildren().removeAll(stackPane.getChildren());
+        stackPane.getChildren().addAll(tomato, anchorPane);
+    }
+    private ImageView createCloseButton(){
         Image closeImage = new Image(Pomodoro.class.getResourceAsStream("images/close.png"));
         ImageView closeImageView = new ImageView(closeImage);
-        Controller.setDropShadow(closeImageView, Color.BLACK);
-        anchorPane.getChildren().add(closeImageView);
         AnchorPane.setRightAnchor(closeImageView, 0.0);
-        AnchorPane.setTopAnchor(closeImageView,56.0);
+        AnchorPane.setTopAnchor(closeImageView,5.0);
         closeImageView.setOnMouseClicked(event -> {
             stage.close();
             if (timer != null) timer.cancel();
             View.isPomodoroStarted = false;
         });
-
-        stackPane.getChildren().removeAll(stackPane.getChildren());
-        stackPane.getChildren().addAll(tomato, anchorPane);
+        Utility.setInnerShadow(closeImageView, Color.RED);
+        return closeImageView;
     }
     private void setDefaultButton(){
         anchorPane.getChildren().remove(button);
@@ -100,28 +105,27 @@ public class Pomodoro {
     }
 
     private void startTimerButton(){
+        pomTimer = Utility.getPomodoroTime();
         anchorPane.getChildren().remove(button);
-        button = createAnchorButton(37.0, 26, String.valueOf(minutes));
+        button = createAnchorButton(37.0, 26, String.valueOf(pomTimer));
         anchorPane.getChildren().add(button);
-        // stop timer
-//        button.setOnAction(event -> setDefaultButton());
 
         timer = new Timer();
         timer.scheduleAtFixedRate(new TimerTask() {
             @Override
             public void run() {
                 Platform.runLater(() -> {
-                    button.setText(String.valueOf(minutes--));
-                    if (minutes == -1){
+                    button.setText(String.valueOf(pomTimer--));
+                    if (pomTimer == -1){
                         timer.cancel();
-                        minutes = Utility.getPomodoroTime();
+                        pomTimer = Utility.getPomodoroTime();
                         setImage("CongraTomato");
                         setDefaultButton();
                         button.setText("Clear");
                     }
                     button.setOnAction(event -> {
                         timer.cancel();
-                        minutes = Utility.getPomodoroTime();
+                        pomTimer = Utility.getPomodoroTime();
                         setImage("Tomato");
                         setDefaultButton();
                     });
@@ -147,7 +151,7 @@ public class Pomodoro {
                         "-fx-background-color: #22CC00; " //+
                         , width, width
         ));
-        Utility.setDropShadow(button, Color.BLACK);
+        Utility.setInnerShadow(button, Color.BLACK);
         return button;
     }
 }

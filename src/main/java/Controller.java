@@ -1,12 +1,15 @@
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
+import javafx.scene.control.ScrollPane;
+import javafx.scene.control.ScrollToEvent;
 import javafx.scene.effect.DropShadow;
+import javafx.scene.effect.InnerShadow;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.input.ScrollEvent;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
-
 import java.net.URL;
 import java.util.ResourceBundle;
 
@@ -16,6 +19,10 @@ import java.util.ResourceBundle;
  * of links is initialized and translated into Java code.
  * */
 public class Controller extends View implements Initializable{
+    @FXML
+    private ImageView minimize;
+    @FXML
+    private ScrollPane scroll;
     @FXML
     private ImageView info;
     @FXML
@@ -50,6 +57,9 @@ public class Controller extends View implements Initializable{
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         Utility.setContent(content);
+        scroll.setVbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
+        setScrollVisible();
+        setDropShadow(minimize, Color.BLACK);
         setDropShadow(info, Color.BLACK);
         setDropShadow(settings, Color.BLACK);
         setDropShadow(addButton, Color.BLACK);
@@ -64,5 +74,21 @@ public class Controller extends View implements Initializable{
         node.addEventHandler(MouseEvent.MOUSE_ENTERED, e -> node.setEffect(shadow));
         // Removing the shadow when the mouse cursor is off
         node.addEventHandler(MouseEvent.MOUSE_EXITED, e -> node.setEffect(null));
+
+    }static void setInnerShadow(Node node, Color color){
+        InnerShadow shadow = new InnerShadow();
+        shadow.setColor(color);
+        // Adding the shadow when the mouse cursor is on
+        node.addEventHandler(MouseEvent.MOUSE_ENTERED, e -> node.setEffect(shadow));
+        // Removing the shadow when the mouse cursor is off
+        node.addEventHandler(MouseEvent.MOUSE_EXITED, e -> node.setEffect(null));
+    }
+    private void setScrollVisible(){
+        // Start scrolling
+        scroll.addEventHandler(ScrollEvent.SCROLL_STARTED, event ->
+                scroll.setVbarPolicy(ScrollPane.ScrollBarPolicy.AS_NEEDED));
+        // Finish scrolling
+        scroll.addEventHandler(ScrollEvent.SCROLL_FINISHED, event ->
+                scroll.setVbarPolicy(ScrollPane.ScrollBarPolicy.NEVER));
     }
 }

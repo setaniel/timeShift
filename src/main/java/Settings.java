@@ -1,9 +1,12 @@
+import com.sun.deploy.util.BlackList;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.scene.effect.DropShadow;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
@@ -23,13 +26,14 @@ public class Settings {
     public static void drawSettings(){
         Image image = new Image(NoteEditor.class.getResourceAsStream("images/done.png"));
         ImageView imageView = new ImageView(image);
-        Button setTimeButton = new Button("", imageView);
+        Button okButton = new Button("", imageView);
+        okButton.setStyle("-fx-background-color : transparent;");
         //____
         VBox layout = new VBox();
-        TextField text = new TextField();
+        TextField text = new TextField("0 - 999");
         AnchorPane anchorPane = new AnchorPane();
         anchorPane.getChildren().add(layout);
-        AnchorPane.setRightAnchor(setTimeButton, 15.0);
+        AnchorPane.setRightAnchor(okButton, 15.0);
         AnchorPane.setLeftAnchor(text, 15.0);
         AnchorPane.setBottomAnchor(layout, 10.0);
         AnchorPane.setLeftAnchor(layout, 10.0);
@@ -41,29 +45,52 @@ public class Settings {
 
 
         text.setFont(Font.font("Lucida Console", FontWeight.BOLD, 15));
-        layout.getChildren().addAll(text, setTimeButton);
+        Utility.setDropShadow(text, Color.BLACK);
+        Utility.setDropShadow(okButton, Color.BLACK);
+        text.setPrefSize(20, 10);
+        text.setBackground(new Background(new BackgroundFill(Paint.valueOf("white"), new CornerRadii(16), Insets.EMPTY)));
+        Label label = new Label("Pomodoro timer");
+        label.setFont(Font.font("monospace", FontWeight.BOLD, 12));
+        label.setPrefHeight(15.0);
+        label.setBackground(new Background(new BackgroundFill(Paint.valueOf("white"), new CornerRadii(16), Insets.EMPTY)));
+        layout.getChildren().addAll(label, text, okButton);
 
         Stage stage = new Stage(StageStyle.UNDECORATED);
-        Scene scene = new Scene(anchorPane, 200, 100, Color.TRANSPARENT);
+        Scene scene = new Scene(anchorPane, 170, 100, Color.TRANSPARENT);
         stage.setScene(scene);
         stage.initModality(Modality.NONE);
         stage.initStyle(StageStyle.TRANSPARENT);
         stage.initOwner(Utility.getPrimaryStage());
         // set position this modal on parent frame
-        stage.setX(Utility.getPrimaryStage().getX() + 145);
-        stage.setY(Utility.getPrimaryStage().getY() + 350);
+        stage.setX(Utility.getPrimaryStage().getX() + 175);
+        stage.setY(Utility.getPrimaryStage().getY() + 320);
         stage.show();
         com.sun.glass.ui.Window.getWindows().get(0).setUndecoratedMoveRectangle(22);
         anchorPane.setStyle("-fx-background-radius: 16;" +
-                "-fx-background-color: rgb(45, 45, 50), rgb(60, 60, 65);" +
-                "-fx-background-insets: 0, 0 1.ser 1.ser 0;");
+                "-fx-background-color: rgb(45, 45, 50), rgb(60, 60, 65);");
 
         //-----------------------------------
-        setTimeButton.setOnAction(event -> {
+        okButton.setOnAction(event -> {
+            DropShadow shadow = new DropShadow();
+            shadow.setColor(Color.RED);
             if (StringUtils.isNumeric(text.getCharacters())){
-                Utility.setPomodoroTime(Integer.parseInt(text.getText()));
-                stage.close();
+                int i;
+                if ((i = Integer.parseInt(text.getText())) <= 999){
+                    Utility.setPomodoroTime(i);
+                    stage.close();
+                }else {
+                    label.setText(" Incorrect value ");
+                    text.setEffect(shadow);
+                    label.setBackground(new Background(new BackgroundFill(Paint.valueOf("red"),
+                            new CornerRadii(16), Insets.EMPTY)));
+                }
+            }else {
+                label.setText(" Incorrect value ");
+                text.setEffect(shadow);
+                label.setBackground(new Background(new BackgroundFill(Paint.valueOf("red"),
+                        new CornerRadii(16), Insets.EMPTY)));
             }
+
         });
         // on out of node click
         Utility.closeOnActions(stage);

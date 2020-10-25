@@ -3,7 +3,6 @@ import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
@@ -13,21 +12,18 @@ import java.time.Instant;
  * Note is a fabric-class of notes.
  * */
 public class Note extends AnchorPane {
-    private final VBox noteListContent;
     private final Model noteModel;
     private final NoteEditor noteEditor = new NoteEditor();
     private Label titleLabel;
     private Label previewLabel;
 
     /** Initialize new Note object, initialize model and content(note list) */
-    public Note(VBox content){
-        this.noteListContent = content;
+    public Note(){
         noteModel = new Model();
         createNoteInstance();
     }
     /** Create Note, from deserialized model objects. */
-    public Note(VBox content, Model deserializedModel){
-        this.noteListContent = content;
+    public Note(Model deserializedModel){
         noteModel = deserializedModel;
         createNoteInstance();
         this.update(noteModel.getNoteText());
@@ -77,13 +73,26 @@ public class Note extends AnchorPane {
     }
 
     private void createNoteInstance(){
-        this.setStyle("-fx-background-color: transparent; -fx-border-color: brown;");
+        final String cssNoteBorders = "-fx-border-color: blue;\n"
+                + "-fx-background-color: transparent;\n"
+                + "-fx-stroke-dash-array: 12 2 4 2;\n"
+                + "-fx-border-width: 0.3;\n"
+                + "-fx-border-color: brown;\n"
+                + "-fx-border-style: dashed;\n";
+
+        this.setStyle(cssNoteBorders);
         Button trashButton = createTrashButton();
         // set note title and text, getting out model
         titleLabel = new Label(getTitle());
         previewLabel = new Label(getPreview());
 
-        Label dateStampLabel = new Label(Instant.now().toString());
+        // Skeleton for date of note added
+        // !!!!!
+        // !!!!!
+        // Label dateStampLabel = new Label(Instant.now().toString());
+        // !!!!!
+        //____________
+
 
         // set positions of text and buttons in note
         AnchorPane.setBottomAnchor(previewLabel, 0.0);
@@ -94,6 +103,7 @@ public class Note extends AnchorPane {
         AnchorPane.setTopAnchor(trashButton, 5.0);
         AnchorPane.setBottomAnchor(trashButton, 5.0);
         this.getChildren().addAll(titleLabel, previewLabel, trashButton);
+        this.setMaxWidth(260.0);
         this.setOnMouseClicked(event -> noteEditor.noteEditWindow(this));
     }
 
@@ -104,7 +114,7 @@ public class Note extends AnchorPane {
         Utility.setDropShadow(button, Color.BLACK);
         button.setStyle("-fx-background-color : transparent;");
         button.setOnAction(evt -> {
-            noteListContent.getChildren().remove(this);
+            Utility.getContent().getChildren().remove(this);
             Serializer.deleteSerializeFiles();
             Serializer.serializeNotes();
         });

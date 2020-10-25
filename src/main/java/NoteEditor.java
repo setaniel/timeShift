@@ -23,7 +23,7 @@ public class NoteEditor {
     public void noteEditWindow(Note note) {
         doneButton.setStyle("-fx-background-color : transparent;");
         Utility.setDropShadow(doneButton, Color.ALICEBLUE);
-        Utility.setDropShadow(note, Color.BLACK);
+        Utility.setDropShadow(note, Color.DARKGREY);
         TextArea text = new TextArea(note.getText());
         text.setWrapText(true);
         stage = new Stage(StageStyle.UNDECORATED);

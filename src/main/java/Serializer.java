@@ -37,8 +37,8 @@ public class Serializer {
                 try {
                     FileInputStream fileIn = new FileInputStream(file);
                     ObjectInputStream in = new ObjectInputStream(fileIn);
-                    Note note = new Note(Utility.getContent(), (Model) in.readObject());
-                    Controller.setDropShadow(note, Color.BLACK);
+                    Note note = new Note((Model) in.readObject());
+                    Utility.setDropShadow(note, Color.DARKGREY);
                     Utility.getContent().getChildren().add(note.getIndex(), note);
                     in.close();
                     fileIn.close();

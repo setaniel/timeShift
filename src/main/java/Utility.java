@@ -23,6 +23,9 @@ public class Utility {
     public static void setDropShadow(Node node, Color color){
         Controller.setDropShadow(node, color);
     }
+    public static void setInnerShadow(Node node, Color color){
+        Controller.setInnerShadow(node, color);
+    }
     public static void setIsAppClosing(boolean state){
         appClosingState = state;
     }

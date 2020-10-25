@@ -1,4 +1,5 @@
 import javafx.fxml.FXML;
+import javafx.scene.image.ImageView;
 
 /**
  * Create a view frame.
@@ -7,9 +8,11 @@ import javafx.fxml.FXML;
 class View {
     private  final NoteEditor noteEditor = new NoteEditor();
     static boolean isPomodoroStarted = false;
+    @FXML
+    private ImageView minimize;
 
     protected void addNote(){
-        noteEditor.noteEditWindow(new Note(Utility.getContent()));
+        noteEditor.noteEditWindow(new Note());
     }
     protected void startPomodoro(){
         if (isPomodoroStarted) return;
@@ -31,5 +34,9 @@ class View {
     private void closeApp(){
         Utility.setIsAppClosing(true);
         Serializer.serializeNotes();
+    }
+    @FXML
+    private void minimizeApp(){
+        minimize.setOnMouseClicked(event ->  Utility.getPrimaryStage().setIconified(true));
     }
 }
