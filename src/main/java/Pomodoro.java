@@ -24,8 +24,7 @@ public class Pomodoro {
     private Timer timer;
     private Image image;
     Scene scene;
-    private static int time = 25;
-    private static int minutes = time;
+    private static int minutes = Utility.getPomodoroTime();
 
     public Pomodoro(){
         setImage("Tomato");
@@ -115,14 +114,14 @@ public class Pomodoro {
                     button.setText(String.valueOf(minutes--));
                     if (minutes == -1){
                         timer.cancel();
-                        minutes = time;
+                        minutes = Utility.getPomodoroTime();
                         setImage("CongraTomato");
                         setDefaultButton();
                         button.setText("Clear");
                     }
                     button.setOnAction(event -> {
                         timer.cancel();
-                        minutes = time;
+                        minutes = Utility.getPomodoroTime();
                         setImage("Tomato");
                         setDefaultButton();
                     });

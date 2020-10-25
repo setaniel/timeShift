@@ -45,7 +45,7 @@
                         <ImageView fx:id="addButton" layoutX="333.0" layoutY="90.0" onMouseClicked="#onNewNoteClick">
                             <Image url="@images/add.png" />
                         </ImageView>
-                        <ImageView fx:id="settings"  layoutX="333.0" layoutY="370.0" pickOnBounds="true" preserveRatio="true">
+                        <ImageView fx:id="settings" onMouseClicked="#onSettingsClick" layoutX="333.0" layoutY="370.0" pickOnBounds="true" preserveRatio="true">
                             <Image url="@images/settings.png" />
                         </ImageView>
                         <ImageView fx:id="info" onMouseClicked="#onInfoClick" layoutX="333.0" layoutY="420.0" pickOnBounds="true" preserveRatio="true">

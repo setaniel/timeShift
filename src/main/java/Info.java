@@ -6,8 +6,10 @@ import javafx.scene.control.Hyperlink;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.layout.VBox;
+import javafx.scene.input.KeyCode;
+import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
+import javafx.scene.paint.Paint;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
@@ -21,11 +23,15 @@ public class Info {
     private static double xOffset = 0;
     private static double yOffset = 0;
     public static void drawInfo(){
-        Image image = new Image(NoteEditor.class.getResourceAsStream("images/done.png"));
-        ImageView imageView = new ImageView(image);
-        Button doneButton = new Button("", imageView);
         //____
         VBox layout = new VBox();
+        AnchorPane anchorPane = new AnchorPane();
+        anchorPane.getChildren().add(layout);
+        AnchorPane.setBottomAnchor(layout, 10.0);
+        AnchorPane.setLeftAnchor(layout, 10.0);
+        AnchorPane.setRightAnchor(layout, 10.0);
+        AnchorPane.setTopAnchor(layout, 10.0);
+        layout.setBackground(new Background(new BackgroundFill(Paint.valueOf("#e8e4db"), new CornerRadii(16), Insets.EMPTY)));
         layout.setAlignment(Pos.CENTER);
         layout.setPadding(new Insets(10, 10, 0, 10));
         Label author = new Label("Kirill Orlov @Setaniel");
@@ -34,6 +40,7 @@ public class Info {
         site.setOnMouseClicked(event -> {
             try {
                 Desktop.getDesktop().browse(new URI(site.getText()));
+                site.setVisited(true);
             } catch (IOException | URISyntaxException e) {
                 e.printStackTrace();
             }
@@ -42,31 +49,25 @@ public class Info {
 
 
         layout.getChildren().addAll(author, mail, site);
-        /*site.setOnAction(new EventHandler<ActionEvent>() {
-
-            @Override
-            public void handle(ActionEvent event) {
-                getHostServices().showDocument("https://eclipse.org");
-            }
-        });*/
 
         Stage stage = new Stage(StageStyle.UNDECORATED);
-        Scene scene = new Scene(layout, 300, 300, Color.TRANSPARENT);
+        Scene scene = new Scene(anchorPane, 200, 100, Color.TRANSPARENT);
         stage.setScene(scene);
         stage.initModality(Modality.NONE);
         stage.initStyle(StageStyle.TRANSPARENT);
         stage.initOwner(Utility.getPrimaryStage());
         // set position this modal on parent frame
-        stage.setX(Utility.getPrimaryStage().getX() + 30);
-        stage.setY(Utility.getPrimaryStage().getY() + 60);
+        stage.setX(Utility.getPrimaryStage().getX() + 145);
+        stage.setY(Utility.getPrimaryStage().getY() + 350);
         stage.show();
         com.sun.glass.ui.Window.getWindows().get(0).setUndecoratedMoveRectangle(22);
-        layout.setStyle("-fx-background-radius: 16;" +
+        anchorPane.setStyle("-fx-background-radius: 16;" +
                 "-fx-background-color: rgb(45, 45, 50), rgb(60, 60, 65);" +
                 "-fx-background-insets: 0, 0 1.ser 1.ser 0;");
 
         //-----------------------------------
-        doneButton.setOnAction(event -> stage.close());
+        Utility.closeOnActions(stage);
+        // Drag window
         layout.setOnMousePressed(event -> {
             xOffset = event.getSceneX();
             yOffset = event.getSceneY();
@@ -75,6 +76,5 @@ public class Info {
             stage.setX(event.getScreenX() - xOffset);
             stage.setY(event.getScreenY() - yOffset);
         });
-        Utility.closeOnClickOutThis(stage);
     }
 }

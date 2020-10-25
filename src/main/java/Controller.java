@@ -41,6 +41,10 @@ public class Controller extends View implements Initializable{
     private void onInfoClick(){
         Info.drawInfo();
     }
+    @FXML
+    private void onSettingsClick(){
+        Settings.drawSettings();
+    }
 
 
     @Override

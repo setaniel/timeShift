@@ -5,6 +5,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.TextArea;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.KeyCode;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
@@ -46,6 +47,7 @@ public class NoteEditor {
             }
             stage.close();
         });
+        //on out of node click
         EventHandler<MouseEvent> primeStageClicked = new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent event) {
@@ -59,6 +61,16 @@ public class NoteEditor {
             }
         };
         Utility.root.addEventFilter(MouseEvent.MOUSE_CLICKED, primeStageClicked); // add the eventhandler to the node
+        // Close on Esc pressed
+        scene.setOnKeyPressed(event -> {
+            if (event.getCode() == KeyCode.ESCAPE) {
+                if (text.getText() != null && text.getText().length() > 0) {
+                    note.update(text.getText());
+                    View.manageNotes(note);
+                }
+                stage.close();
+            }
+        });
     }
 
     private static VBox setLayout(TextArea editableText, Stage stage){

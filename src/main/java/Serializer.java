@@ -51,6 +51,7 @@ public class Serializer {
             else break;
         }
         deleteSerializeFiles();
+        serializeNotes();
     }
     /**
      * After deserialize, delete all .ser files

@@ -1,5 +1,7 @@
 import javafx.event.EventHandler;
 import javafx.scene.Node;
+import javafx.scene.Scene;
+import javafx.scene.input.KeyCode;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
@@ -10,6 +12,7 @@ public class Utility {
     private static Stage primaryStage;
     private static VBox content;
     private static boolean appClosingState = false;
+    private static int pomodoroTime = 25;
 
     public static void setContent(VBox fxContent){
         content = fxContent;
@@ -26,9 +29,14 @@ public class Utility {
     public static void setRoot(Node node){
         root = node;
     }
+    public static void setPomodoroTime(int time){
+        pomodoroTime = time;
+    }
 
 
-
+    public static int getPomodoroTime(){
+        return pomodoroTime;
+    }
     public static VBox getContent(){
         return content;
     }
@@ -39,7 +47,7 @@ public class Utility {
         return appClosingState;
     }
 
-    public static void closeOnClickOutThis(Stage modalStage) {
+    public static void closeOnActions(Stage modalStage) {
         EventHandler<MouseEvent> primeStageClicked=new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent event) {
@@ -49,5 +57,9 @@ public class Utility {
             }
         };
         Utility.root.addEventFilter(MouseEvent.MOUSE_CLICKED, primeStageClicked); // add the eventhandler to the node
+        // Close on Esc pressed
+        modalStage.getScene().setOnKeyPressed(event -> {
+            if (event.getCode() == KeyCode.ESCAPE) modalStage.close();
+        });
     }
 }
