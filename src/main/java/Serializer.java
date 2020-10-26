@@ -4,6 +4,9 @@ import javafx.scene.paint.Color;
 import java.io.*;
 
 public class Serializer {
+    /**
+     * Serializing all notes, from files in user home directory
+     * */
     public static void serializeNotes(){
         for (Node node : Utility.getContent().getChildren()) {
             try {
@@ -27,7 +30,7 @@ public class Serializer {
     }
 
     /**
-     * Deserializing notes, from files in user home directory
+     * Deserializing all notes, from files in user home directory
      * */
     public static void deserializeNotes(){
         for (int i = 0; i < Integer.MAX_VALUE; i++) {

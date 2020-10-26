@@ -20,6 +20,7 @@ import java.util.ResourceBundle;
  * of links is initialized and translated into Java code.
  * */
 public class Controller extends View implements Initializable{
+    @FXML private Label weatherLabel;
     @FXML private Label netLabel;
     @FXML private ImageView minimize;
     @FXML private ScrollPane scroll;
@@ -47,6 +48,7 @@ public class Controller extends View implements Initializable{
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         Utility.setNetLabel(netLabel);
+        Utility.setWeatherLabel(weatherLabel);
         Utility.setContent(content);
         scroll.setVbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
         setScrollVisible();
@@ -58,6 +60,7 @@ public class Controller extends View implements Initializable{
         setDropShadow(pomodoro, Color.BLACK);
         Serializer.serializeNotes();
         NetChecker.ping();
+        Weather.drawWeather();
     }
     static void setDropShadow(Node node, Color color){
         DropShadow shadow = new DropShadow();

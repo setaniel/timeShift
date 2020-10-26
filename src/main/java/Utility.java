@@ -22,10 +22,22 @@ public class Utility {
     private static Stage primaryStage;
     private static VBox content;
     private static Label netLabel;
+    private static Label weatherLabel;
     private static boolean appClosingState = false;
     private static int pomodoroTime = 25;
 
     // Setters
+    public static void setWeatherLabel(Label fxWeather){
+        weatherLabel = fxWeather;
+        // Adding the shadow
+        InnerShadow shadow = new InnerShadow();
+        weatherLabel.setEffect(shadow);
+        weatherLabel.setAlignment(Pos.CENTER);
+        weatherLabel.setPadding(new Insets(5, 8, 5, 8));
+        weatherLabel.setFont(Font.font("Verdana", FontWeight.BOLD, 12));
+        weatherLabel.setBackground(new Background(new BackgroundFill(Paint.valueOf("#98ecf2"),
+                new CornerRadii(16), Insets.EMPTY)));
+    }
     public static void setNetLabel(Label fxNetLabel){
         // Adding the shadow
         InnerShadow shadow = new InnerShadow();
@@ -58,6 +70,9 @@ public class Utility {
     }
 
     // Getters
+    public static Label getWeatherLabel(){
+        return weatherLabel;
+    }
     public static Label getNetLabel(){
         return netLabel;
     }

@@ -30,7 +30,6 @@ class View {
 
     // Closing app, run serialization
     @FXML private void closeApp(){
-        NetChecker.stopPing();
         Utility.setIsAppClosing(true);
         Serializer.serializeNotes();
     }
