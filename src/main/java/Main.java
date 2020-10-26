@@ -32,8 +32,7 @@ public class Main extends Application {
         Utility.setRoot(root);
         Serializer.deserializeNotes();
     }
-    @FXML
-    public static void main(String[] args) {
+    @FXML public static void main(String[] args) {
         launch(args);
     }
 }

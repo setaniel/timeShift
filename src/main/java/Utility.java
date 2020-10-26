@@ -1,19 +1,40 @@
 import javafx.event.EventHandler;
+import javafx.geometry.Insets;
+import javafx.geometry.Pos;
 import javafx.scene.Node;
-import javafx.scene.Scene;
+import javafx.scene.control.Label;
+import javafx.scene.effect.InnerShadow;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.Background;
+import javafx.scene.layout.BackgroundFill;
+import javafx.scene.layout.CornerRadii;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
+import javafx.scene.paint.Paint;
+import javafx.scene.text.Font;
+import javafx.scene.text.FontWeight;
+import javafx.scene.text.TextAlignment;
 import javafx.stage.Stage;
 
 public class Utility {
     public static Node root;
     private static Stage primaryStage;
     private static VBox content;
+    private static Label netLabel;
     private static boolean appClosingState = false;
     private static int pomodoroTime = 25;
 
+    // Setters
+    public static void setNetLabel(Label fxNetLabel){
+        // Adding the shadow
+        InnerShadow shadow = new InnerShadow();
+        netLabel = fxNetLabel;
+        netLabel.setEffect(shadow);
+        netLabel.setAlignment(Pos.CENTER);
+        netLabel.setPadding(new Insets(5, 8, 5, 8));
+        netLabel.setFont(Font.font("Verdana", FontWeight.BOLD, 12));
+    }
     public static void setContent(VBox fxContent){
         content = fxContent;
     }
@@ -36,7 +57,10 @@ public class Utility {
         pomodoroTime = time;
     }
 
-
+    // Getters
+    public static Label getNetLabel(){
+        return netLabel;
+    }
     public static int getPomodoroTime(){
         return pomodoroTime;
     }

@@ -1,19 +1,45 @@
+import javafx.application.Platform;
+import javafx.geometry.Insets;
+import javafx.scene.control.Label;
+import javafx.scene.effect.InnerShadow;
+import javafx.scene.layout.Background;
+import javafx.scene.layout.BackgroundFill;
+import javafx.scene.layout.CornerRadii;
+import javafx.scene.paint.Paint;
+
 import java.io.BufferedReader;
+import java.io.IOException;
 import java.io.InputStreamReader;
-import javafx.concurrent.Task;
-import javafx.scene.control.ProgressBar;
+import java.util.Timer;
+import java.util.TimerTask;
 
+/**
+ * This class check your internet connection.
+ * {@link #ping} method pinging google.com, using system methods.
+ * Result showing in Label, on app right-bottom.
+ * */
 public class NetChecker {
-    public static void runSystemCommand(String command) {
+    private static final Label netLabel = Utility.getNetLabel();
+    private static BufferedReader inStream;
+    private static Process process;
+    private static Thread thread;
 
+    /**
+     * Run any terminal command, by method signature
+     * */
+    @Deprecated private static void runSystemCommand(String command) {
         try {
             Process p = Runtime.getRuntime().exec(command);
             BufferedReader inputStream = new BufferedReader(new InputStreamReader(p.getInputStream()));
-
-            String s = "";
             // reading output stream of the command
-            while ((s = inputStream.readLine()) != null) {
-                System.out.println(s);
+            if (inputStream.readLine() != null) {
+                // Set green background
+                netLabel.setBackground(new Background(new BackgroundFill(Paint.valueOf("#20db39"),
+                        new CornerRadii(16), Insets.EMPTY)));
+            }else {
+                // Set red background
+                netLabel.setBackground(new Background(new BackgroundFill(Paint.valueOf("#e05c3b"),
+                        new CornerRadii(16), Insets.EMPTY)));
             }
 
         } catch (Exception e) {
@@ -21,37 +47,95 @@ public class NetChecker {
         }
     }
 
-/*    public static void main(String[] args) throws UnknownHostException, IOException {
-        Socket s = new Socket("216.58.209.206", 5000);
-        s.getOutputStream().write((byte) '\n');
-        int ch = s.getInputStream().read();
-        s.close();
-        if (ch == '\n') {
-            System.out.println("Stable"); // its all good.
-        }else {
-            System.out.println("X");
+    /**
+     * Run new Task and ping every 2 seconds -> google.com
+     * */
+    @Deprecated public static void pingX(){
+        // Init Process and InputStream
+        BufferedReader inputStream = null;
+        Process p;
+        try {
+            p = Runtime.getRuntime().exec("ping google.com");
+            inputStream = new BufferedReader(new InputStreamReader(p.getInputStream()));
+        } catch (IOException e) {
+            e.printStackTrace();
         }
-    }*/
 
-
-    public static void main(String[] args) {
-        String ip = "google.com";
-        runSystemCommand("ping " + ip);
-        Task task = new Task<Void>() {
-            @Override public Void call() {
-                final int max = 1000000;
-                for (int i=1; i<=max; i++) {
-                    if (isCancelled()) {
-                        break;
-                    }
-                    updateProgress(i, max);
-                }
-                return null;
+        // Start Task
+        Timer timer = new Timer();
+        BufferedReader finalInputStream = inputStream;
+        timer.scheduleAtFixedRate(new TimerTask() {
+            @Override
+            public void run() {
+                System.out.println("?");
+//                Platform.runLater(() -> {
+                    // reading output stream of the command
+                    try {
+                        if (finalInputStream.readLine() != null) {
+                            // Set green background
+                            netLabel.setBackground(new Background(new BackgroundFill(Paint.valueOf("#20db39"),
+                                    new CornerRadii(16), Insets.EMPTY)));
+                        }else {
+                            // Set red background
+                            netLabel.setBackground(new Background(new BackgroundFill(Paint.valueOf("#e05c3b"),
+                                    new CornerRadii(16), Insets.EMPTY)));
+                        }
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }// ____End block________________
+//                });
             }
-        };
-        ProgressBar bar = new ProgressBar();
-        bar.progressProperty().bind(task.progressProperty());
+        },0, 1 * 1000);
+    }
 
-        new Thread(task).start();
+    /**
+     * Run ping on Threads
+     * */
+    public static void ping() {
+        // Long running operation runs on different thread
+        thread = new Thread(() -> {
+            Runnable updater = () -> {
+                // Init Process and InputStream
+                try {
+                    process = Runtime.getRuntime().exec("ping google.com");
+                    inStream = new BufferedReader(new InputStreamReader(process.getInputStream()));
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+                // reading output stream of the command
+                String s;
+                try {
+                    s = inStream.readLine();
+                    if (s != null && !s.contains("timeout")) {
+                        // Set green iNet background
+                        netLabel.setBackground(new Background(new BackgroundFill(Paint.valueOf("#20db39"),
+                                new CornerRadii(16), Insets.EMPTY)));
+                    }else {
+                        // Set red iNet background
+                        netLabel.setBackground(new Background(new BackgroundFill(Paint.valueOf("#e05c3b"),
+                                new CornerRadii(16), Insets.EMPTY)));
+                    }
+                    process.destroy();
+                    inStream.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            };
+            while (true) {
+                try {
+                    Thread.sleep(2000);
+                } catch (InterruptedException ex) {
+                    ex.getStackTrace();
+                }
+                // UI update is run on the Application thread
+                Platform.runLater(updater);
+            }
+        });
+        // don't let thread prevent JVM shutdown
+        thread.setDaemon(true);
+        thread.start();
+    }
+    public static void stopPing(){
+        thread.interrupt();
     }
 }

@@ -1,8 +1,8 @@
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
+import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
-import javafx.scene.control.ScrollToEvent;
 import javafx.scene.effect.DropShadow;
 import javafx.scene.effect.InnerShadow;
 import javafx.scene.image.ImageView;
@@ -10,6 +10,7 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.input.ScrollEvent;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
+
 import java.net.URL;
 import java.util.ResourceBundle;
 
@@ -19,43 +20,33 @@ import java.util.ResourceBundle;
  * of links is initialized and translated into Java code.
  * */
 public class Controller extends View implements Initializable{
-    @FXML
-    private ImageView minimize;
-    @FXML
-    private ScrollPane scroll;
-    @FXML
-    private ImageView info;
-    @FXML
-    private ImageView settings;
-    @FXML
-    private ImageView addButton;
-    @FXML
-    private ImageView closeButton;
-    @FXML
-    private ImageView pomodoro;
-    @FXML
-    private VBox content;
+    @FXML private Label netLabel;
+    @FXML private ImageView minimize;
+    @FXML private ScrollPane scroll;
+    @FXML private ImageView info;
+    @FXML private ImageView settings;
+    @FXML private ImageView addButton;
+    @FXML private ImageView closeButton;
+    @FXML private ImageView pomodoro;
+    @FXML private VBox content;
 
-    @FXML
-    private void onNewNoteClick(){
+    @FXML private void onNewNoteClick(){
         addNote();
     }
-    @FXML
-    private void onPomodoroClick(){
+    @FXML private void onPomodoroClick(){
         startPomodoro();
     }
-    @FXML
-    private void onInfoClick(){
+    @FXML private void onInfoClick(){
         Info.drawInfo();
     }
-    @FXML
-    private void onSettingsClick(){
+    @FXML private void onSettingsClick(){
         Settings.drawSettings();
     }
 
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+        Utility.setNetLabel(netLabel);
         Utility.setContent(content);
         scroll.setVbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
         setScrollVisible();
@@ -66,6 +57,7 @@ public class Controller extends View implements Initializable{
         setDropShadow(closeButton, Color.BLACK);
         setDropShadow(pomodoro, Color.BLACK);
         Serializer.serializeNotes();
+        NetChecker.ping();
     }
     static void setDropShadow(Node node, Color color){
         DropShadow shadow = new DropShadow();
@@ -90,5 +82,8 @@ public class Controller extends View implements Initializable{
         // Finish scrolling
         scroll.addEventHandler(ScrollEvent.SCROLL_FINISHED, event ->
                 scroll.setVbarPolicy(ScrollPane.ScrollBarPolicy.NEVER));
+    }
+    @FXML private void minimizeApp(){
+        minimize.setOnMouseClicked(event ->  Utility.getPrimaryStage().setIconified(true));
     }
 }

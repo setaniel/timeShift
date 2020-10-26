@@ -8,8 +8,6 @@ import javafx.scene.image.ImageView;
 class View {
     private  final NoteEditor noteEditor = new NoteEditor();
     static boolean isPomodoroStarted = false;
-    @FXML
-    private ImageView minimize;
 
     protected void addNote(){
         noteEditor.noteEditWindow(new Note());
@@ -29,14 +27,11 @@ class View {
         }
     }
 
-    @FXML
+
     // Closing app, run serialization
-    private void closeApp(){
+    @FXML private void closeApp(){
+        NetChecker.stopPing();
         Utility.setIsAppClosing(true);
         Serializer.serializeNotes();
-    }
-    @FXML
-    private void minimizeApp(){
-        minimize.setOnMouseClicked(event ->  Utility.getPrimaryStage().setIconified(true));
     }
 }
