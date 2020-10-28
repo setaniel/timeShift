@@ -1,17 +1,13 @@
 import javafx.application.Platform;
 import javafx.geometry.Insets;
 import javafx.scene.control.Label;
-import javafx.scene.effect.InnerShadow;
 import javafx.scene.layout.Background;
 import javafx.scene.layout.BackgroundFill;
 import javafx.scene.layout.CornerRadii;
 import javafx.scene.paint.Paint;
-
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.util.Timer;
-import java.util.TimerTask;
 
 /**
  * This class check your internet connection.
@@ -27,7 +23,7 @@ public class NetChecker {
     /**
      * Run command, set style on netLabel by command response
      * */
-   private static void runSystemPing(String command) {
+    private static void runSystemPing(String command) {
         // Init Process and InputStream
         try {
             process = Runtime.getRuntime().exec(command);
