@@ -8,6 +8,8 @@ import javafx.scene.paint.Paint;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.net.InetAddress;
+import java.net.UnknownHostException;
 
 /**
  * This class check your internet connection.
@@ -23,7 +25,7 @@ public class NetChecker {
     /**
      * Run command, set style on netLabel by command response
      * */
-    private static void runSystemPing(String command) {
+    @Deprecated private static void runSystemPing(String command) {
         // Init Process and InputStream
         try {
             process = Runtime.getRuntime().exec(command);
@@ -35,11 +37,13 @@ public class NetChecker {
         String s;
         try {
             s = inStream.readLine();
-            if (s != null/* && !s.contains("timeout")*/) {
+            System.out.println(s);
+            if (s != null && !s.contains("google.com")) {
                 // Set green iNet background
                 netLabel.setBackground(new Background(new BackgroundFill(Paint.valueOf("#20db39"),
                         new CornerRadii(16), Insets.EMPTY)));
             }else {
+                System.out.println(s);
                 // Set red iNet background
                 netLabel.setBackground(new Background(new BackgroundFill(Paint.valueOf("#e05c3b"),
                         new CornerRadii(16), Insets.EMPTY)));
@@ -51,16 +55,25 @@ public class NetChecker {
         }
     }
 
+    private static void check(){
+        try{
+            InetAddress address = InetAddress.getByName("www.google.com");
+            // Set green iNet background
+            netLabel.setBackground(new Background(new BackgroundFill(Paint.valueOf("#20db39"),
+                    new CornerRadii(16), Insets.EMPTY)));
+        }catch(UnknownHostException e){
+            // Set red iNet background
+            netLabel.setBackground(new Background(new BackgroundFill(Paint.valueOf("#e05c3b"),
+                    new CornerRadii(16), Insets.EMPTY)));
+        }
+    }
     /**
      * Run ping on Threads
      * */
     public static void ping() {
         // Long running operation runs on different thread
         thread = new Thread(() -> {
-            Runnable updater = () -> {
-                runSystemPing("ping google.com");
-            };
-
+            Runnable updater = NetChecker::check;
             // Thread sleep every 2 seconds and start Platform.runLater(updater)
             while (true) {
                 try {
@@ -72,7 +85,6 @@ public class NetChecker {
                 Platform.runLater(updater);
             }
             // New iteration
-
         });
         // don't let thread prevent JVM shutdown
         thread.setDaemon(true);
