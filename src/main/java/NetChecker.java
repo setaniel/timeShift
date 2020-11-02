@@ -13,7 +13,7 @@ import java.net.UnknownHostException;
 
 /**
  * This class check your internet connection.
- * {@link #ping} method pinging google.com, using system methods.
+ * {@link //#ping} method pinging google.com, using system methods.
  * Result showing in Label, on app right-bottom.
  * */
 public class NetChecker {
@@ -55,9 +55,12 @@ public class NetChecker {
         }
     }
 
+    /**
+     * Check google.com, set style on netLabel by check response
+     * */
     private static void check(){
         try{
-            InetAddress address = InetAddress.getByName("www.google.com");
+            InetAddress.getByName("www.google.com");
             // Set green iNet background
             netLabel.setBackground(new Background(new BackgroundFill(Paint.valueOf("#20db39"),
                     new CornerRadii(16), Insets.EMPTY)));
@@ -67,8 +70,9 @@ public class NetChecker {
                     new CornerRadii(16), Insets.EMPTY)));
         }
     }
+
     /**
-     * Run ping on Threads
+     * Run net check method on every 2 seconds
      * */
     public static void ping() {
         // Long running operation runs on different thread

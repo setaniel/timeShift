@@ -8,6 +8,7 @@ import javafx.scene.effect.InnerShadow;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.input.ScrollEvent;
+import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 
@@ -50,6 +51,7 @@ public class Controller extends View implements Initializable{
         Utility.setNetLabel(netLabel);
         Utility.setWeatherLabel(weatherLabel);
         Utility.setContent(content);
+        scroll.getStylesheets().add(Controller.class.getResource("/styles.css").toExternalForm());
         scroll.setVbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
         setScrollVisible();
         setDropShadow(minimize, Color.BLACK);
@@ -87,6 +89,6 @@ public class Controller extends View implements Initializable{
                 scroll.setVbarPolicy(ScrollPane.ScrollBarPolicy.NEVER));
     }
     @FXML private void minimizeApp(){
-        minimize.setOnMouseClicked(event ->  Utility.getPrimaryStage().setIconified(true));
+        Utility.getPrimaryStage().setIconified(true);
     }
 }

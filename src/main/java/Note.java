@@ -8,14 +8,17 @@ import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 
 import java.time.Instant;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+
 /**
  * Note is a fabric-class of notes.
  * */
 public class Note extends AnchorPane {
     private final Model noteModel;
-    private final NoteEditor noteEditor = new NoteEditor();
     private Label titleLabel;
     private Label previewLabel;
+    private Label dateStampLabel;
 
     /** Initialize new Note object, initialize model and content(note list) */
     public Note(){
@@ -34,24 +37,31 @@ public class Note extends AnchorPane {
     }
     public void setTitle(String title){
         noteModel.setTitleLabelText(title);
-        titleLabel.setFont(Font.font("Lucida Console", FontWeight.BOLD, 15));
+        titleLabel.setFont(Font.font("Comic Sans MS,", FontWeight.BOLD, 15));
         titleLabel.setText(title);
     }
     public void setPreview(String preview){
         noteModel.setPreviewLabelText(preview);
-        previewLabel.setFont(Font.font("Lucida Console", 12));
+        previewLabel.setFont(Font.font("Comic Sans MS,", 12));
         previewLabel.setText(preview);
+    }
+    public void setNoteDate(){
+        LocalDateTime ldt = LocalDateTime.now();
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd.MM-HH:mm");
+        String formatDateTime = ldt.format(formatter);
+        dateStampLabel.setText(formatDateTime);
+        noteModel.setNoteDate(formatDateTime);
     }
     public void setIndex(int index){
         noteModel.setIndex(index);
     }
     public void update(String text){
         if (text.contains("\n")){
-            setTitle(text.indexOf("\n") > 28 ? text.substring(0, 28)+"..." : text.substring(0, text.indexOf("\n")));
+            setTitle(text.indexOf("\n") > 14 ? text.substring(0, 14) + "..." : text.substring(0, text.indexOf("\n")));
             String s = text.substring(text.indexOf("\n")+1); // for code length economy
-            setPreview(s.length() > 35 ? s.substring(0, 35) + "..." : s);
+            setPreview(s.length() > 18 ? s.substring(0, 18) + "..." : s);
         }else {
-            setTitle(text.length() > 28 ? text.substring(0, 28)+"..." : text);
+            setTitle(text.length() > 15 ? text.substring(0, 15)+"..." : text);
             setPreview("Нет дополнительного текста");
         }
         setText(text);
@@ -65,11 +75,14 @@ public class Note extends AnchorPane {
     public String getPreview(){
         return noteModel.getPreviewLabelText();
     }
-    public Model getNoteModel(){
-        return noteModel;
+    public String getNoteDate(){
+        return noteModel.getNoteDate();
     }
     public int getIndex(){
         return noteModel.getIndex();
+    }
+    public Model getNoteModel(){
+        return noteModel;
     }
 
     private void createNoteInstance(){
@@ -84,27 +97,29 @@ public class Note extends AnchorPane {
         Button trashButton = createTrashButton();
         // set note title and text, getting out model
         titleLabel = new Label(getTitle());
+        // isScale
         previewLabel = new Label(getPreview());
+        dateStampLabel = new Label(getNoteDate());
+        dateStampLabel.setFont(Font.font("Comic Sans MS,", FontWeight.LIGHT, 9));
 
-        // Skeleton for date of note added
-        // !!!!!
-        // !!!!!
-        // Label dateStampLabel = new Label(Instant.now().toString());
-        // !!!!!
-        //____________
-
-
-        // set positions of text and buttons in note
+        // set positions of labels and buttons in note
         AnchorPane.setBottomAnchor(previewLabel, 0.0);
         AnchorPane.setLeftAnchor(previewLabel, 5.0);
+
+        AnchorPane.setTopAnchor(dateStampLabel, 3.0);
+        AnchorPane.setRightAnchor(dateStampLabel, 40.0);
+
         AnchorPane.setLeftAnchor(titleLabel, 5.0);
         AnchorPane.setTopAnchor(titleLabel, 0.0);
+
         AnchorPane.setRightAnchor(trashButton, 5.0);
         AnchorPane.setTopAnchor(trashButton, 5.0);
         AnchorPane.setBottomAnchor(trashButton, 5.0);
-        this.getChildren().addAll(titleLabel, previewLabel, trashButton);
+        this.getChildren().addAll(titleLabel, previewLabel, trashButton, dateStampLabel);
         this.setMaxWidth(260.0);
-        this.setOnMouseClicked(event -> noteEditor.noteEditWindow(this));
+        this.setOnMouseClicked(event -> {
+            if (!View.isNoteEditorShow) Utility.noteEditor.editNote(this);
+        });
     }
 
     private Button createTrashButton(){

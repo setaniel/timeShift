@@ -14,17 +14,17 @@ import javafx.scene.paint.Color;
 import javafx.scene.paint.Paint;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
-import javafx.scene.text.TextAlignment;
 import javafx.stage.Stage;
 
 public class Utility {
-    public static Node root;
+    private static Node root;
     private static Stage primaryStage;
     private static VBox content;
     private static Label netLabel;
     private static Label weatherLabel;
     private static boolean appClosingState = false;
     private static int pomodoroTime = 25;
+    public static NoteEditor noteEditor = NoteEditor.getInstance();
 
     // Setters
     public static void setWeatherLabel(Label fxWeather){
@@ -68,8 +68,14 @@ public class Utility {
     public static void setPomodoroTime(int time){
         pomodoroTime = time;
     }
+  /*  public static void setNoteEditor(NoteEditor newNoteEditor){
+        noteEditor = newNoteEditor;
+    }*/
 
     // Getters
+    public static Node getRoot(){
+        return root;
+    }
     public static Label getWeatherLabel(){
         return weatherLabel;
     }

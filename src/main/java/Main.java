@@ -12,10 +12,11 @@ public class Main extends Application {
      * the application, do not contain any logic. The
      * main window is designed here. This class loads
      * the FXML that describes the appearance of the program. */
+    public static Stage primeStage;
 
     @Override
     public void start(Stage primaryStage) throws Exception {
-
+        primeStage = primaryStage;
         Parent root = FXMLLoader.load(getClass().getResource("MainWindow.fxml"));
         Scene scene = new Scene(root, 420, 565, Color.TRANSPARENT);
         primaryStage.initStyle(StageStyle.TRANSPARENT);

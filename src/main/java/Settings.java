@@ -41,15 +41,15 @@ public class Settings {
         layout.setPadding(new Insets(10, 10, 0, 10));
 
 
-        text.setFont(Font.font("Lucida Console", FontWeight.BOLD, 15));
+        text.setFont(Font.font("Comic Sans MS,", FontWeight.BOLD, 15));
         Utility.setDropShadow(text, Color.BLACK);
         Utility.setDropShadow(okButton, Color.BLACK);
-        text.setPrefSize(20, 10);
+        text.setPrefSize(25, 10);
         text.setBackground(new Background(new BackgroundFill(Paint.valueOf("white"), new CornerRadii(16), Insets.EMPTY)));
         Label label = new Label("Pomodoro timer");
-        label.setFont(Font.font("monospace", FontWeight.BOLD, 12));
-        label.setPrefHeight(15.0);
-        label.setBackground(new Background(new BackgroundFill(Paint.valueOf("white"), new CornerRadii(16), Insets.EMPTY)));
+        label.setFont(Font.font("Comic Sans MS,", FontWeight.BOLD, 13));
+        label.setPrefHeight(20.0);
+        label.setBackground(new Background(new BackgroundFill(Paint.valueOf("transparent"), new CornerRadii(16), Insets.EMPTY)));
         layout.getChildren().addAll(label, text, okButton);
 
         Stage stage = new Stage(StageStyle.UNDECORATED);

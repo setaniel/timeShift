@@ -8,6 +8,7 @@ public class Model implements Serializable {
     private String noteText;
     private String titleLabelText;
     private String previewLabelText;
+    private String noteDate;
     private int index;
 
     public void setNoteText(String text){
@@ -19,9 +20,13 @@ public class Model implements Serializable {
     public void setTitleLabelText(String titleText) {
         this.titleLabelText = titleText;
     }
+    public void setNoteDate(String date){
+        noteDate = date;
+    }
     public void setIndex(int contentIndex){
         this.index = contentIndex;
     }
+
 
     public String getNoteText(){
         return noteText;
@@ -32,6 +37,7 @@ public class Model implements Serializable {
     public String getPreviewLabelText(){
         return previewLabelText;
     }
+    public String getNoteDate(){return noteDate;}
     public int getIndex(){
         return index;
     }

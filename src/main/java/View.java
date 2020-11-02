@@ -1,16 +1,16 @@
 import javafx.fxml.FXML;
-import javafx.scene.image.ImageView;
 
 /**
  * Create a view frame.
  * Managing notes
  * */
 class View {
-    private  final NoteEditor noteEditor = new NoteEditor();
-    static boolean isPomodoroStarted = false;
 
-    protected void addNote(){
-        noteEditor.noteEditWindow(new Note());
+    static boolean isPomodoroStarted = false;
+    static boolean isNoteEditorShow = false;
+
+    public static void addNote(){
+        if (!isNoteEditorShow) Utility.noteEditor.editNote(new Note());
     }
     protected void startPomodoro(){
         if (isPomodoroStarted) return;
