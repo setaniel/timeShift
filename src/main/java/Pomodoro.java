@@ -1,11 +1,10 @@
 import javafx.application.Platform;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
-import javafx.scene.effect.Bloom;
-import javafx.scene.effect.MotionBlur;
+import javafx.scene.effect.DropShadow;
+import javafx.scene.effect.InnerShadow;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
@@ -14,6 +13,7 @@ import javafx.scene.text.FontWeight;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
+
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -35,6 +35,9 @@ public class Pomodoro {
 
     public void startPomodoro(){
         button = createAnchorButton(25, 43, "Start");
+        DropShadow dropShadow = new DropShadow();
+        button.setEffect(dropShadow);
+
         setImage("Tomato");
 
         anchorPane.getChildren().add(button);
@@ -138,7 +141,7 @@ public class Pomodoro {
         button = new Button(text);
         AnchorPane.setBottomAnchor(button, 15.0);
         AnchorPane.setLeftAnchor(button, leftAnchor);
-        button.setFont(Font.font("Lucida console", FontWeight.EXTRA_BOLD,13));
+        button.setFont(Font.font("Courier New", FontWeight.EXTRA_BOLD,12));
         button.setStyle(String.format(
                 "-fx-background-radius: 5em; " +
                         "-fx-min-width: %dpx; " +
@@ -151,7 +154,7 @@ public class Pomodoro {
                         "-fx-background-color: #22CC00; " //+
                         , width, width
         ));
-        Utility.setInnerShadow(button, Color.BLACK);
+        Utility.setSwitchInnerShadows(button, Color.BLACK, Color.RED);
         return button;
     }
 }

@@ -27,33 +27,35 @@ public class Settings {
         okButton.setStyle("-fx-background-color : transparent;");
         //____
         VBox layout = new VBox();
-        TextField text = new TextField("0 - 999");
+        TextField text = new TextField("0-999");
+        text.setAlignment(Pos.TOP_CENTER);
+        text.setMaxWidth(80.0);
         AnchorPane anchorPane = new AnchorPane();
         anchorPane.getChildren().add(layout);
-        AnchorPane.setRightAnchor(okButton, 15.0);
-        AnchorPane.setLeftAnchor(text, 15.0);
+
         AnchorPane.setBottomAnchor(layout, 10.0);
         AnchorPane.setLeftAnchor(layout, 10.0);
         AnchorPane.setRightAnchor(layout, 10.0);
         AnchorPane.setTopAnchor(layout, 10.0);
+
         layout.setBackground(new Background(new BackgroundFill(Paint.valueOf("#e8e4db"), new CornerRadii(16), Insets.EMPTY)));
         layout.setAlignment(Pos.CENTER);
-        layout.setPadding(new Insets(10, 10, 0, 10));
+        layout.setPadding(new Insets(10, 10, 10, 10));
 
 
-        text.setFont(Font.font("Comic Sans MS,", FontWeight.BOLD, 15));
+        text.setFont(Font.font("Courier New", FontWeight.BOLD, 15));
         Utility.setDropShadow(text, Color.BLACK);
         Utility.setDropShadow(okButton, Color.BLACK);
-        text.setPrefSize(25, 10);
+//        text.setPrefSize(15, 10);
         text.setBackground(new Background(new BackgroundFill(Paint.valueOf("white"), new CornerRadii(16), Insets.EMPTY)));
         Label label = new Label("Pomodoro timer");
-        label.setFont(Font.font("Comic Sans MS,", FontWeight.BOLD, 13));
+        label.setFont(Font.font("Courier New", FontWeight.BOLD, 12));
         label.setPrefHeight(20.0);
         label.setBackground(new Background(new BackgroundFill(Paint.valueOf("transparent"), new CornerRadii(16), Insets.EMPTY)));
         layout.getChildren().addAll(label, text, okButton);
 
         Stage stage = new Stage(StageStyle.UNDECORATED);
-        Scene scene = new Scene(anchorPane, 170, 100, Color.TRANSPARENT);
+        Scene scene = new Scene(anchorPane, 170, 110, Color.TRANSPARENT);
         stage.setScene(scene);
         stage.initModality(Modality.NONE);
         stage.initStyle(StageStyle.TRANSPARENT);

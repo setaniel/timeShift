@@ -8,7 +8,7 @@ import javafx.scene.effect.InnerShadow;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.input.ScrollEvent;
-import javafx.scene.layout.Pane;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 
@@ -21,6 +21,7 @@ import java.util.ResourceBundle;
  * of links is initialized and translated into Java code.
  * */
 public class Controller extends View implements Initializable{
+    @FXML private AnchorPane fxTrafficPane;
     @FXML private Label weatherLabel;
     @FXML private Label netLabel;
     @FXML private ImageView minimize;
@@ -48,37 +49,23 @@ public class Controller extends View implements Initializable{
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+        Utility.setTraffic(fxTrafficPane);
+        Utility.noteEditor.fxAddButton = addButton;
         Utility.setNetLabel(netLabel);
         Utility.setWeatherLabel(weatherLabel);
         Utility.setContent(content);
         scroll.getStylesheets().add(Controller.class.getResource("/styles.css").toExternalForm());
         scroll.setVbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
         setScrollVisible();
-        setDropShadow(minimize, Color.BLACK);
-        setDropShadow(info, Color.BLACK);
-        setDropShadow(settings, Color.BLACK);
-        setDropShadow(addButton, Color.BLACK);
-        setDropShadow(closeButton, Color.BLACK);
-        setDropShadow(pomodoro, Color.BLACK);
+        Utility.setDropShadow(minimize, Color.BLACK);
+        Utility.setDropShadow(info, Color.BLACK);
+        Utility.setDropShadow(settings, Color.BLACK);
+        Utility.setDropShadow(addButton, Color.BLACK);
+        Utility.setDropShadow(closeButton, Color.BLACK);
+        Utility.setDropShadow(pomodoro, Color.BLACK);
         Serializer.serializeNotes();
         NetChecker.ping();
         Weather.drawWeather();
-    }
-    static void setDropShadow(Node node, Color color){
-        DropShadow shadow = new DropShadow();
-        shadow.setColor(color);
-        // Adding the shadow when the mouse cursor is on
-        node.addEventHandler(MouseEvent.MOUSE_ENTERED, e -> node.setEffect(shadow));
-        // Removing the shadow when the mouse cursor is off
-        node.addEventHandler(MouseEvent.MOUSE_EXITED, e -> node.setEffect(null));
-
-    }static void setInnerShadow(Node node, Color color){
-        InnerShadow shadow = new InnerShadow();
-        shadow.setColor(color);
-        // Adding the shadow when the mouse cursor is on
-        node.addEventHandler(MouseEvent.MOUSE_ENTERED, e -> node.setEffect(shadow));
-        // Removing the shadow when the mouse cursor is off
-        node.addEventHandler(MouseEvent.MOUSE_EXITED, e -> node.setEffect(null));
     }
     private void setScrollVisible(){
         // Start scrolling

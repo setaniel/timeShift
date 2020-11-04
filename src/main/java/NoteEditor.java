@@ -1,12 +1,9 @@
-import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.scene.Scene;
 import javafx.scene.control.TextArea;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
-import javafx.scene.input.KeyEvent;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
@@ -26,6 +23,7 @@ public class NoteEditor {
     private static TextArea text;
     private static Note editableNote;
     private static NoteEditor instance;
+    public static ImageView fxAddButton;
 
     private NoteEditor(){
         noteEditWindow();
@@ -91,18 +89,17 @@ public class NoteEditor {
     }
 
     private static void removeEventHandlers(){
-        System.out.println("removeEventHandlers");
 
         okButton.setOnMouseClicked(null);
         Main.primeStage.getScene().setOnMouseClicked(null);
         stage.getScene().setOnKeyPressed(null);
         stage.getScene().setOnMouseExited(null);
+        fxAddButton.setOnMouseExited(null);
     }
 
     private void setEventPrimeClick(){
         // On out of node click event
         Main.primeStage.getScene().setOnMouseClicked(event -> {
-            System.out.println("primeStageClicked");
             event.consume();
             textChecks();
         });
@@ -112,18 +109,17 @@ public class NoteEditor {
 
         // okButton press event
         okButton.setOnMouseClicked(event -> {
-            System.out.println("okButtonPressedEvent");
             event.consume();
             textChecks();
         });
         // part of event
         stage.getScene().setOnMouseExited(event -> setEventPrimeClick());
+        fxAddButton.setOnMouseExited(event -> setEventPrimeClick());
 
         // Close on Esc pressed event
         stage.getScene().setOnKeyPressed(event -> {
             if (event.getCode() == KeyCode.ESCAPE) {
                 // ----
-                System.out.println("keyPressEvent");
                 event.consume();
                 textChecks();
                 // ----

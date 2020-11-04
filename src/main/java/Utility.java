@@ -3,13 +3,13 @@ import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.control.Label;
+import javafx.scene.effect.DropShadow;
 import javafx.scene.effect.InnerShadow;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.Background;
-import javafx.scene.layout.BackgroundFill;
-import javafx.scene.layout.CornerRadii;
-import javafx.scene.layout.VBox;
+import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.Paint;
 import javafx.scene.text.Font;
@@ -27,6 +27,16 @@ public class Utility {
     public static NoteEditor noteEditor = NoteEditor.getInstance();
 
     // Setters
+    public static void setTraffic(AnchorPane fxTrafficPane){
+        StackPane buildedTraffic = Traffic.getTraffic();
+        ImageView yaImage = new ImageView(new Image(Utility.class.getResourceAsStream("images/ya.png")));
+        Label trafficText = new Label("Traffic");
+        trafficText.setFont(Font.font("Courier New", FontWeight.BOLD, 13));
+        fxTrafficPane.getChildren().addAll(yaImage, trafficText, buildedTraffic);
+        AnchorPane.setLeftAnchor(yaImage, 2.0);
+        AnchorPane.setLeftAnchor(trafficText, 30.0);
+        AnchorPane.setRightAnchor(buildedTraffic, 10.0);
+    }
     public static void setWeatherLabel(Label fxWeather){
         weatherLabel = fxWeather;
         // Adding the shadow
@@ -34,7 +44,7 @@ public class Utility {
         weatherLabel.setEffect(shadow);
         weatherLabel.setAlignment(Pos.CENTER);
         weatherLabel.setPadding(new Insets(5, 8, 5, 8));
-        weatherLabel.setFont(Font.font("Verdana", FontWeight.BOLD, 12));
+        weatherLabel.setFont(Font.font("Courier New", FontWeight.BOLD, 13));
         weatherLabel.setBackground(new Background(new BackgroundFill(Paint.valueOf("#98ecf2"),
                 new CornerRadii(16), Insets.EMPTY)));
     }
@@ -45,7 +55,7 @@ public class Utility {
         netLabel.setEffect(shadow);
         netLabel.setAlignment(Pos.CENTER);
         netLabel.setPadding(new Insets(5, 8, 5, 8));
-        netLabel.setFont(Font.font("Verdana", FontWeight.BOLD, 12));
+        netLabel.setFont(Font.font("Courier New", FontWeight.BOLD, 12));
     }
     public static void setContent(VBox fxContent){
         content = fxContent;
@@ -54,10 +64,18 @@ public class Utility {
         primaryStage = primeStage;
     }
     public static void setDropShadow(Node node, Color color){
-        Controller.setDropShadow(node, color);
+        DropShadow shadow = new DropShadow(10.0, color);
+        // Adding the shadow when the mouse cursor is on
+        node.addEventHandler(MouseEvent.MOUSE_ENTERED, e -> node.setEffect(shadow));
+        // Removing the shadow when the mouse cursor is off
+        node.addEventHandler(MouseEvent.MOUSE_EXITED, e -> node.setEffect(null));
     }
     public static void setInnerShadow(Node node, Color color){
-        Controller.setInnerShadow(node, color);
+        InnerShadow shadow = new InnerShadow(10.0, color);
+        // Adding the shadow when the mouse cursor is on
+        node.addEventHandler(MouseEvent.MOUSE_ENTERED, e -> node.setEffect(shadow));
+        // Removing the shadow when the mouse cursor is off
+        node.addEventHandler(MouseEvent.MOUSE_EXITED, e -> node.setEffect(null));
     }
     public static void setIsAppClosing(boolean state){
         appClosingState = state;
@@ -68,9 +86,7 @@ public class Utility {
     public static void setPomodoroTime(int time){
         pomodoroTime = time;
     }
-  /*  public static void setNoteEditor(NoteEditor newNoteEditor){
-        noteEditor = newNoteEditor;
-    }*/
+
 
     // Getters
     public static Node getRoot(){
@@ -93,6 +109,14 @@ public class Utility {
     }
     public static boolean isAppClosing() {
         return appClosingState;
+    }
+
+    public static void setSwitchInnerShadows(Node node, Color viewColor, Color actionColor){
+        InnerShadow viewShadow = new InnerShadow(10.0, viewColor);
+        InnerShadow actionShadow = new InnerShadow(10.0, actionColor);
+        node.setEffect(viewShadow);
+        node.setOnMouseEntered(event -> node.setEffect(actionShadow));
+        node.setOnMouseExited(event -> node.setEffect(viewShadow));
     }
 
     public static void closeOnActions(Stage modalStage) {

@@ -47,7 +47,7 @@ public class Info {
         Label mail = new Label("i4data@ya.ru");
         setLabelFont(mail);
         Hyperlink site = new Hyperlink("setaniel.github.io");
-        site.setFont(Font.font("monospace", FontWeight.BOLD, 12));
+        site.setFont(Font.font("Courier New", FontWeight.BOLD, 12));
         site.setOnMouseClicked(event -> {
             try {
                 Desktop.getDesktop().browse(new URI("https://setaniel.github.io"));
@@ -84,6 +84,6 @@ public class Info {
         });
     }
     private static void setLabelFont(Label label){
-        label.setFont(Font.font("monospace", FontWeight.BOLD, 14));
+        label.setFont(Font.font("Courier New", FontWeight.BOLD, 14));
     }
 }

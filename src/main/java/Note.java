@@ -37,12 +37,12 @@ public class Note extends AnchorPane {
     }
     public void setTitle(String title){
         noteModel.setTitleLabelText(title);
-        titleLabel.setFont(Font.font("Comic Sans MS,", FontWeight.BOLD, 15));
+        titleLabel.setFont(Font.font("Courier New", FontWeight.EXTRA_BOLD, 14));
         titleLabel.setText(title);
     }
     public void setPreview(String preview){
         noteModel.setPreviewLabelText(preview);
-        previewLabel.setFont(Font.font("Comic Sans MS,", 12));
+        previewLabel.setFont(Font.font("Courier New", 12));
         previewLabel.setText(preview);
     }
     public void setNoteDate(){
@@ -57,11 +57,15 @@ public class Note extends AnchorPane {
     }
     public void update(String text){
         if (text.contains("\n")){
-            setTitle(text.indexOf("\n") > 14 ? text.substring(0, 14) + "..." : text.substring(0, text.indexOf("\n")));
+            setTitle(text.indexOf("\n") > 15 ? text.substring(0, 15) + "..." : text.substring(0, text.indexOf("\n")));
             String s = text.substring(text.indexOf("\n")+1); // for code length economy
-            setPreview(s.length() > 18 ? s.substring(0, 18) + "..." : s);
-        }else {
+            setPreview(s.length() > 26 ? s.substring(0, 26) + "..." : s);
+        }else{
             setTitle(text.length() > 15 ? text.substring(0, 15)+"..." : text);
+            setPreview("Нет дополнительного текста");
+        }
+        if (text.length() < 16 && !text.contains("\n") || text.charAt(text.length()-1) == '\n') {
+            setTitle(text);
             setPreview("Нет дополнительного текста");
         }
         setText(text);
@@ -100,7 +104,7 @@ public class Note extends AnchorPane {
         // isScale
         previewLabel = new Label(getPreview());
         dateStampLabel = new Label(getNoteDate());
-        dateStampLabel.setFont(Font.font("Comic Sans MS,", FontWeight.LIGHT, 9));
+        dateStampLabel.setFont(Font.font("Courier New", FontWeight.LIGHT, 9));
 
         // set positions of labels and buttons in note
         AnchorPane.setBottomAnchor(previewLabel, 0.0);
@@ -113,8 +117,8 @@ public class Note extends AnchorPane {
         AnchorPane.setTopAnchor(titleLabel, 0.0);
 
         AnchorPane.setRightAnchor(trashButton, 5.0);
-        AnchorPane.setTopAnchor(trashButton, 5.0);
-        AnchorPane.setBottomAnchor(trashButton, 5.0);
+        AnchorPane.setTopAnchor(trashButton, 3.0);
+        AnchorPane.setBottomAnchor(trashButton, 3.0);
         this.getChildren().addAll(titleLabel, previewLabel, trashButton, dateStampLabel);
         this.setMaxWidth(260.0);
         this.setOnMouseClicked(event -> {
