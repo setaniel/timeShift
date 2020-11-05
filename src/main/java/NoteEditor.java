@@ -34,7 +34,7 @@ public class NoteEditor {
     }
 
     private static void noteEditWindow() {
-        Utility.setDropShadow(okButton, Color.ALICEBLUE);
+        Utility.setSwitchShadows(okButton, Color.WHITE, Color.BLUE);
         text = new TextArea();
         text.setWrapText(true);
         stage = new Stage(StageStyle.UNDECORATED);

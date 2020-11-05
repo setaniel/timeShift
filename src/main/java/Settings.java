@@ -45,7 +45,7 @@ public class Settings {
 
         text.setFont(Font.font("Courier New", FontWeight.BOLD, 15));
         Utility.setDropShadow(text, Color.BLACK);
-        Utility.setDropShadow(okButton, Color.BLACK);
+        Utility.setUtilStaticShadows(okButton);
 //        text.setPrefSize(15, 10);
         text.setBackground(new Background(new BackgroundFill(Paint.valueOf("white"), new CornerRadii(16), Insets.EMPTY)));
         Label label = new Label("Pomodoro timer");

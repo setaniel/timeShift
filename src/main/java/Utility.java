@@ -27,16 +27,6 @@ public class Utility {
     public static NoteEditor noteEditor = NoteEditor.getInstance();
 
     // Setters
-    public static void setTraffic(AnchorPane fxTrafficPane){
-        StackPane buildedTraffic = Traffic.getTraffic();
-        ImageView yaImage = new ImageView(new Image(Utility.class.getResourceAsStream("images/ya.png")));
-        Label trafficText = new Label("Traffic");
-        trafficText.setFont(Font.font("Courier New", FontWeight.BOLD, 13));
-        fxTrafficPane.getChildren().addAll(yaImage, trafficText, buildedTraffic);
-        AnchorPane.setLeftAnchor(yaImage, 2.0);
-        AnchorPane.setLeftAnchor(trafficText, 30.0);
-        AnchorPane.setRightAnchor(buildedTraffic, 10.0);
-    }
     public static void setWeatherLabel(Label fxWeather){
         weatherLabel = fxWeather;
         // Adding the shadow
@@ -63,6 +53,16 @@ public class Utility {
     public static void setPrimaryStage(Stage primeStage){
         primaryStage = primeStage;
     }
+    public static void setIsAppClosing(boolean state){
+        appClosingState = state;
+    }
+    public static void setRoot(Node node){
+        root = node;
+    }
+    public static void setPomodoroTime(int time){
+        pomodoroTime = time;
+    }
+
     public static void setDropShadow(Node node, Color color){
         DropShadow shadow = new DropShadow(10.0, color);
         // Adding the shadow when the mouse cursor is on
@@ -77,14 +77,33 @@ public class Utility {
         // Removing the shadow when the mouse cursor is off
         node.addEventHandler(MouseEvent.MOUSE_EXITED, e -> node.setEffect(null));
     }
-    public static void setIsAppClosing(boolean state){
-        appClosingState = state;
+    public static void setUtilStaticShadows(Node node){
+        DropShadow blackShadow = new DropShadow(10.0, Color.BLACK);
+        DropShadow greenShadow = new DropShadow(10.0, Color.GREEN);
+        node.setEffect(blackShadow);
+        node.addEventHandler(MouseEvent.MOUSE_ENTERED, e -> node.setEffect(greenShadow));
+        node.addEventHandler(MouseEvent.MOUSE_EXITED, e -> node.setEffect(blackShadow));
     }
-    public static void setRoot(Node node){
-        root = node;
+    public static void setInterfaceStaticShadows(Node node){
+        DropShadow blackShadow = new DropShadow(10.0, Color.BLACK);
+        DropShadow redShadow = new DropShadow(10.0, Color.RED);
+        node.setEffect(blackShadow);
+        node.addEventHandler(MouseEvent.MOUSE_ENTERED, e -> node.setEffect(redShadow));
+        node.addEventHandler(MouseEvent.MOUSE_EXITED, e -> node.setEffect(blackShadow));
     }
-    public static void setPomodoroTime(int time){
-        pomodoroTime = time;
+    public static void setSwitchInnerShadows(Node node, Color viewColor, Color actionColor){
+        InnerShadow viewShadow = new InnerShadow(10.0, viewColor);
+        InnerShadow actionShadow = new InnerShadow(10.0, actionColor);
+        node.setEffect(viewShadow);
+        node.setOnMouseEntered(event -> node.setEffect(actionShadow));
+        node.setOnMouseExited(event -> node.setEffect(viewShadow));
+    }
+    public static void setSwitchShadows(Node node, Color viewColor, Color actionColor){
+        DropShadow viewShadow = new DropShadow(10.0, viewColor);
+        InnerShadow actionShadow = new InnerShadow(10.0, actionColor);
+        node.setEffect(viewShadow);
+        node.setOnMouseEntered(event -> node.setEffect(actionShadow));
+        node.setOnMouseExited(event -> node.setEffect(viewShadow));
     }
 
 
@@ -110,15 +129,6 @@ public class Utility {
     public static boolean isAppClosing() {
         return appClosingState;
     }
-
-    public static void setSwitchInnerShadows(Node node, Color viewColor, Color actionColor){
-        InnerShadow viewShadow = new InnerShadow(10.0, viewColor);
-        InnerShadow actionShadow = new InnerShadow(10.0, actionColor);
-        node.setEffect(viewShadow);
-        node.setOnMouseEntered(event -> node.setEffect(actionShadow));
-        node.setOnMouseExited(event -> node.setEffect(viewShadow));
-    }
-
     public static void closeOnActions(Stage modalStage) {
         EventHandler<MouseEvent> primeStageClicked=new EventHandler<MouseEvent>() {
             @Override

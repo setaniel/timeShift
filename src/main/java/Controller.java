@@ -1,16 +1,11 @@
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.Node;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
-import javafx.scene.effect.DropShadow;
-import javafx.scene.effect.InnerShadow;
 import javafx.scene.image.ImageView;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.input.ScrollEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
-import javafx.scene.paint.Color;
 
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -49,7 +44,7 @@ public class Controller extends View implements Initializable{
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        Utility.setTraffic(fxTrafficPane);
+        Traffic.showTraffic(fxTrafficPane);
         Utility.noteEditor.fxAddButton = addButton;
         Utility.setNetLabel(netLabel);
         Utility.setWeatherLabel(weatherLabel);
@@ -57,12 +52,12 @@ public class Controller extends View implements Initializable{
         scroll.getStylesheets().add(Controller.class.getResource("/styles.css").toExternalForm());
         scroll.setVbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
         setScrollVisible();
-        Utility.setDropShadow(minimize, Color.BLACK);
-        Utility.setDropShadow(info, Color.BLACK);
-        Utility.setDropShadow(settings, Color.BLACK);
-        Utility.setDropShadow(addButton, Color.BLACK);
-        Utility.setDropShadow(closeButton, Color.BLACK);
-        Utility.setDropShadow(pomodoro, Color.BLACK);
+        Utility.setInterfaceStaticShadows(minimize);
+        Utility.setInterfaceStaticShadows(info);
+        Utility.setInterfaceStaticShadows(settings);
+        Utility.setInterfaceStaticShadows(addButton);
+        Utility.setInterfaceStaticShadows(closeButton);
+        Utility.setInterfaceStaticShadows(pomodoro);
         Serializer.serializeNotes();
         NetChecker.ping();
         Weather.drawWeather();
