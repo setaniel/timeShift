@@ -43,7 +43,7 @@ public class Traffic {
         parsedStackTraffic.setAlignment(Pos.CENTER);
 
         AnchorPane.setLeftAnchor(yaLogo, 30.0);
-        AnchorPane.setRightAnchor(parsedStackTraffic, 50.0);
+        AnchorPane.setRightAnchor(parsedStackTraffic, 65.0);
     }
     private static void setTrafficColor(){
         int val = Integer.parseInt(trafficLabelValue.getText());
