@@ -19,7 +19,7 @@ public class Weather {
         }
     }
 
-    public static void drawWeather() {
+    public static void showWeather() {
         weatherParse();
         // Long running operation runs on different thread
         Thread thread = new Thread(() -> {
@@ -27,7 +27,7 @@ public class Weather {
             // Thread sleep every 2 seconds and start Platform.runLater(updater)
             while (true) {
                 try {
-                    Thread.sleep(600000);
+                    Thread.sleep(60000);
                 } catch (InterruptedException ex) {
                     ex.getStackTrace();
                 }

@@ -2,10 +2,8 @@ import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
 import javafx.scene.control.Hyperlink;
 import javafx.scene.control.Label;
-import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
 import javafx.scene.layout.*;
@@ -16,6 +14,7 @@ import javafx.scene.text.FontWeight;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
+
 import java.awt.*;
 import java.io.IOException;
 import java.net.URI;
@@ -25,8 +24,8 @@ import java.net.URISyntaxException;
 public class Info {
     private static double xOffset = 0;
     private static double yOffset = 0;
-    public static void drawInfo(){
-        //____
+    static boolean isInfoShow = false;
+    public static void showInfo(ImageView fxButton){
         VBox layout = new VBox();
         AnchorPane anchorPane = new AnchorPane();
         anchorPane.getChildren().add(layout);
@@ -72,7 +71,7 @@ public class Info {
                 "-fx-background-color: rgb(45, 45, 50), rgb(60, 60, 65);");
 
         //-----------------------------------
-        Utility.closeOnActions(stage);
+//        Utility.closeOnActions(stage);
         // Drag window
         layout.setOnMousePressed(event -> {
             xOffset = event.getSceneX();
@@ -82,8 +81,34 @@ public class Info {
             stage.setX(event.getScreenX() - xOffset);
             stage.setY(event.getScreenY() - yOffset);
         });
+        closeOnActions(stage, fxButton);
     }
     private static void setLabelFont(Label label){
         label.setFont(Font.font("Courier New", FontWeight.BOLD, 14));
+    }
+
+    public static void closeOnActions(Stage modalStage, Node fxButton) {
+
+        fxButton.setOnMouseExited(event -> {
+            Utility.getPrimaryStage().getScene().setOnMouseClicked(event1 -> {
+                modalStage.close();
+                removeOnActEvents(fxButton, modalStage);
+
+            });
+            // Close on Esc pressed
+            modalStage.getScene().setOnKeyPressed(event2 -> {
+                if (event2.getCode() == KeyCode.ESCAPE) modalStage.close();
+                removeOnActEvents(fxButton, modalStage);
+            });
+        });
+    }
+
+
+
+    private static void removeOnActEvents(Node fxButton, Stage modalStage) {
+        Utility.getPrimaryStage().getScene().setOnMouseClicked(null);
+        modalStage.getScene().setOnKeyPressed(null);
+        fxButton.setOnMouseExited(null);
+        isInfoShow = false;
     }
 }

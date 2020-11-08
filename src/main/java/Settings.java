@@ -1,5 +1,6 @@
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
+import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -7,6 +8,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.effect.DropShadow;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.KeyCode;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.Paint;
@@ -20,7 +22,8 @@ import org.apache.commons.lang3.StringUtils;
 public class Settings {
     private static double xOffset = 0;
     private static double yOffset = 0;
-    public static void drawSettings(){
+    static boolean isSettingsShow = false;
+    public static void showSettings(ImageView fxButton){
         Image image = new Image(NoteEditor.class.getResourceAsStream("images/done.png"));
         ImageView imageView = new ImageView(image);
         Button okButton = new Button("", imageView);
@@ -45,7 +48,7 @@ public class Settings {
 
         text.setFont(Font.font("Courier New", FontWeight.BOLD, 15));
         Utility.setDropShadow(text, Color.BLACK);
-        Utility.setUtilStaticShadows(okButton);
+        Utility.setUIShadows(okButton);
 //        text.setPrefSize(15, 10);
         text.setBackground(new Background(new BackgroundFill(Paint.valueOf("white"), new CornerRadii(16), Insets.EMPTY)));
         Label label = new Label("Pomodoro timer");
@@ -91,9 +94,6 @@ public class Settings {
             }
 
         });
-        // on out of node click
-        Utility.closeOnActions(stage);
-
 
         // Drag window
         layout.setOnMousePressed(event -> {
@@ -104,5 +104,31 @@ public class Settings {
             stage.setX(event.getScreenX() - xOffset);
             stage.setY(event.getScreenY() - yOffset);
         });
+        closeOnActions(stage, fxButton);
+    }
+
+    public static void closeOnActions(Stage modalStage, Node fxButton) {
+
+        fxButton.setOnMouseExited(event -> {
+            Utility.getPrimaryStage().getScene().setOnMouseClicked(event1 -> {
+                modalStage.close();
+                removeOnActEvents(fxButton, modalStage);
+
+            });
+            // Close on Esc pressed
+            modalStage.getScene().setOnKeyPressed(event2 -> {
+                if (event2.getCode() == KeyCode.ESCAPE) modalStage.close();
+                removeOnActEvents(fxButton, modalStage);
+            });
+        });
+    }
+
+
+
+    private static void removeOnActEvents(Node fxButton, Stage modalStage) {
+        Utility.getPrimaryStage().getScene().setOnMouseClicked(null);
+        modalStage.getScene().setOnKeyPressed(null);
+        fxButton.setOnMouseExited(null);
+        isSettingsShow = false;
     }
 }

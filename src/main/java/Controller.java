@@ -17,60 +17,62 @@ import java.util.ResourceBundle;
  * */
 public class Controller extends View implements Initializable{
     @FXML private AnchorPane fxTrafficPane;
-    @FXML private Label weatherLabel;
-    @FXML private Label netLabel;
-    @FXML private ImageView minimize;
-    @FXML private ScrollPane scroll;
-    @FXML private ImageView info;
-    @FXML private ImageView settings;
-    @FXML private ImageView addButton;
-    @FXML private ImageView closeButton;
-    @FXML private ImageView pomodoro;
-    @FXML private VBox content;
+    @FXML private Label fxWeatherLabel;
+    @FXML private Label fxNetLabel;
+    @FXML private ImageView fxMinimize;
+    @FXML private ScrollPane fxScroll;
+    @FXML private ImageView fxInfo;
+    @FXML private ImageView fxSettings;
+    @FXML private ImageView fxAddNoteButton;
+    @FXML private ImageView fxCloseButton;
+    @FXML private ImageView fxPomodoro;
+    @FXML private VBox fxContent;
 
-    @FXML private void onNewNoteClick(){
+    @FXML private void onNewNoteClick() {
         addNote();
     }
-    @FXML private void onPomodoroClick(){
+    @FXML private void onPomodoroClick() {
         startPomodoro();
     }
-    @FXML private void onInfoClick(){
-        Info.drawInfo();
+    @FXML private void onInfoClick() {
+        if (!Info.isInfoShow) Info.showInfo(fxInfo);
+        Info.isInfoShow = true;
     }
-    @FXML private void onSettingsClick(){
-        Settings.drawSettings();
+    @FXML private void onSettingsClick() {
+        if (!Settings.isSettingsShow) Settings.showSettings(fxSettings);
+        Settings.isSettingsShow = true;
     }
 
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        Traffic.showTraffic(fxTrafficPane);
-        Utility.noteEditor.fxAddButton = addButton;
-        Utility.setNetLabel(netLabel);
-        Utility.setWeatherLabel(weatherLabel);
-        Utility.setContent(content);
-        scroll.getStylesheets().add(Controller.class.getResource("/styles.css").toExternalForm());
-        scroll.setVbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
-        setScrollVisible();
-        Utility.setInterfaceStaticShadows(minimize);
-        Utility.setInterfaceStaticShadows(info);
-        Utility.setInterfaceStaticShadows(settings);
-        Utility.setInterfaceStaticShadows(addButton);
-        Utility.setInterfaceStaticShadows(closeButton);
-        Utility.setInterfaceStaticShadows(pomodoro);
+        Utility.setAddNoteButton(fxAddNoteButton);
+        Utility.setNetLabel(fxNetLabel);
+        Utility.setWeatherLabel(fxWeatherLabel);
+        Utility.setContent(fxContent);
+        fxScroll.getStylesheets().add(Controller.class.getResource("/styles.css").toExternalForm());
+        fxScroll.setVbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
+        setScrollVisibility();
+        Utility.setUIShadows(fxMinimize);
+        Utility.setUIShadows(fxInfo);
+        Utility.setUIShadows(fxSettings);
+        Utility.setUIShadows(fxAddNoteButton);
+        Utility.setUIShadows(fxCloseButton);
+        Utility.setUIShadows(fxPomodoro);
         Serializer.serializeNotes();
         NetChecker.ping();
-        Weather.drawWeather();
+        Weather.showWeather();
+        Traffic.showTraffic(fxTrafficPane);
     }
-    private void setScrollVisible(){
+    private void setScrollVisibility() {
         // Start scrolling
-        scroll.addEventHandler(ScrollEvent.SCROLL_STARTED, event ->
-                scroll.setVbarPolicy(ScrollPane.ScrollBarPolicy.AS_NEEDED));
+        fxScroll.addEventHandler(ScrollEvent.SCROLL_STARTED, event ->
+                fxScroll.setVbarPolicy(ScrollPane.ScrollBarPolicy.AS_NEEDED));
         // Finish scrolling
-        scroll.addEventHandler(ScrollEvent.SCROLL_FINISHED, event ->
-                scroll.setVbarPolicy(ScrollPane.ScrollBarPolicy.NEVER));
+        fxScroll.addEventHandler(ScrollEvent.SCROLL_FINISHED, event ->
+                fxScroll.setVbarPolicy(ScrollPane.ScrollBarPolicy.NEVER));
     }
-    @FXML private void minimizeApp(){
+    @FXML private void minimizeApp() {
         Utility.getPrimaryStage().setIconified(true);
     }
 }

@@ -33,16 +33,13 @@ public class Pomodoro {
     }
 
     public void startPomodoro(){
-        button = createAnchorButton(25, 43, "Start");
+        createAnchorButton(25, 43, "Start");
         DropShadow dropShadow = new DropShadow();
         button.setEffect(dropShadow);
-
         setImage("Tomato");
-
         anchorPane.getChildren().add(button);
         // on click, set timer on button
         setDefaultButton();
-
         setStage();
     }
 
@@ -101,7 +98,7 @@ public class Pomodoro {
     }
     private void setDefaultButton(){
         anchorPane.getChildren().remove(button);
-        button = createAnchorButton(25, 43, "Start");
+        createAnchorButton(25, 43, "Start");
         anchorPane.getChildren().add(button);
         button.setOnAction(event -> startTimerButton());
     }
@@ -109,7 +106,7 @@ public class Pomodoro {
     private void startTimerButton(){
         pomTimer = Utility.getPomodoroTime();
         anchorPane.getChildren().remove(button);
-        button = createAnchorButton(37.0, 26, String.valueOf(pomTimer));
+        createAnchorButton(37.0, 26, String.valueOf(pomTimer));
         anchorPane.getChildren().add(button);
 
         timer = new Timer();
@@ -121,7 +118,7 @@ public class Pomodoro {
                     if (pomTimer == -1){
                         timer.cancel();
                         pomTimer = Utility.getPomodoroTime();
-                        setImage("CongraTomato");
+                        setImage("sadTomato");
                         setDefaultButton();
                         button.setText("Clear");
                     }
@@ -136,7 +133,7 @@ public class Pomodoro {
         },0, 60 * 1000);
     }
 
-    private Button createAnchorButton(double leftAnchor, int width, String text){
+    private void createAnchorButton(double leftAnchor, int width, String text){
         button = new Button(text);
         AnchorPane.setBottomAnchor(button, 15.0);
         AnchorPane.setLeftAnchor(button, leftAnchor);
@@ -154,6 +151,5 @@ public class Pomodoro {
                         , width, width
         ));
         Utility.setSwitchInnerShadows(button, Color.BLACK, Color.RED);
-        return button;
     }
 }

@@ -23,7 +23,7 @@ public class NoteEditor {
     private static TextArea text;
     private static Note editableNote;
     private static NoteEditor instance;
-    public static ImageView fxAddButton;
+    private static ImageView fxAddButton;
 
     private NoteEditor(){
         noteEditWindow();
@@ -58,7 +58,6 @@ public class NoteEditor {
         }
         stage.show();
         View.isNoteEditorShow = true;
-        stage.setAlwaysOnTop(true);
         stage.requestFocus();
 
         // set position this modal on parent frame
@@ -99,14 +98,13 @@ public class NoteEditor {
 
     private void setEventPrimeClick(){
         // On out of node click event
-        Main.primeStage.getScene().setOnMouseClicked(event -> {
+        Utility.getPrimaryStage().getScene().setOnMouseClicked(event -> {
             event.consume();
             textChecks();
         });
     }
 
     private void setEventHandlers(){
-
         // okButton press event
         okButton.setOnMouseClicked(event -> {
             event.consume();
@@ -114,6 +112,7 @@ public class NoteEditor {
         });
         // part of event
         stage.getScene().setOnMouseExited(event -> setEventPrimeClick());
+        fxAddButton = Utility.getAddNoteButton();
         fxAddButton.setOnMouseExited(event -> setEventPrimeClick());
 
         // Close on Esc pressed event

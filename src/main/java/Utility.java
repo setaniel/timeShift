@@ -5,11 +5,13 @@ import javafx.scene.Node;
 import javafx.scene.control.Label;
 import javafx.scene.effect.DropShadow;
 import javafx.scene.effect.InnerShadow;
-import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.*;
+import javafx.scene.layout.Background;
+import javafx.scene.layout.BackgroundFill;
+import javafx.scene.layout.CornerRadii;
+import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.Paint;
 import javafx.scene.text.Font;
@@ -25,8 +27,13 @@ public class Utility {
     private static boolean appClosingState = false;
     private static int pomodoroTime = 25;
     public static NoteEditor noteEditor = NoteEditor.getInstance();
+    public static ImageView addNoteButton;
+
 
     // Setters
+    public static void setAddNoteButton(ImageView fxAddNoteButton){
+        addNoteButton = fxAddNoteButton;
+    }
     public static void setWeatherLabel(Label fxWeather){
         weatherLabel = fxWeather;
         // Adding the shadow
@@ -77,14 +84,14 @@ public class Utility {
         // Removing the shadow when the mouse cursor is off
         node.addEventHandler(MouseEvent.MOUSE_EXITED, e -> node.setEffect(null));
     }
-    public static void setUtilStaticShadows(Node node){
+    public static void setOKButtonShadows(Node node){
         DropShadow blackShadow = new DropShadow(10.0, Color.BLACK);
         DropShadow greenShadow = new DropShadow(10.0, Color.GREEN);
         node.setEffect(blackShadow);
         node.addEventHandler(MouseEvent.MOUSE_ENTERED, e -> node.setEffect(greenShadow));
         node.addEventHandler(MouseEvent.MOUSE_EXITED, e -> node.setEffect(blackShadow));
     }
-    public static void setInterfaceStaticShadows(Node node){
+    public static void setUIShadows(Node node){
         DropShadow blackShadow = new DropShadow(10.0, Color.BLACK);
         DropShadow redShadow = new DropShadow(10.0, Color.RED);
         node.setEffect(blackShadow);
@@ -108,6 +115,9 @@ public class Utility {
 
 
     // Getters
+    public static ImageView getAddNoteButton(){
+        return addNoteButton;
+    }
     public static Node getRoot(){
         return root;
     }
@@ -129,19 +139,5 @@ public class Utility {
     public static boolean isAppClosing() {
         return appClosingState;
     }
-    public static void closeOnActions(Stage modalStage) {
-        EventHandler<MouseEvent> primeStageClicked=new EventHandler<MouseEvent>() {
-            @Override
-            public void handle(MouseEvent event) {
-                // on click actions here
-                modalStage.close();
-                Utility.root.removeEventFilter(MouseEvent.MOUSE_CLICKED, this); // at the bottom
-            }
-        };
-        Utility.root.addEventFilter(MouseEvent.MOUSE_CLICKED, primeStageClicked); // add the eventhandler to the node
-        // Close on Esc pressed
-        modalStage.getScene().setOnKeyPressed(event -> {
-            if (event.getCode() == KeyCode.ESCAPE) modalStage.close();
-        });
-    }
+
 }

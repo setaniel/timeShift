@@ -1,4 +1,6 @@
 import javafx.fxml.FXML;
+import javafx.scene.image.ImageView;
+
 
 /**
  * Create a view frame.
@@ -9,16 +11,16 @@ class View {
     static boolean isPomodoroStarted = false;
     static boolean isNoteEditorShow = false;
 
-    public static void addNote(){
+    static void addNote() {
         if (!isNoteEditorShow) Utility.noteEditor.editNote(new Note());
     }
-    protected void startPomodoro(){
+    static void startPomodoro() {
         if (isPomodoroStarted) return;
         new Pomodoro().startPomodoro();
         isPomodoroStarted = true;
     }
 
-    protected static void manageNotes(Note note){
+    static void manageNotes(Note note) {
         if (note.getText() != null) {
             Utility.getContent().getChildren().remove(note);
             Utility.getContent().getChildren().add(0, note);
@@ -27,9 +29,8 @@ class View {
         }
     }
 
-
     // Closing app, run serialization
-    @FXML private void closeApp(){
+    @FXML private void closeApp() {
         Utility.setIsAppClosing(true);
         Serializer.serializeNotes();
     }
