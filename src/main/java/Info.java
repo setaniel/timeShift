@@ -68,10 +68,9 @@ public class Info {
         stage.show();
         com.sun.glass.ui.Window.getWindows().get(0).setUndecoratedMoveRectangle(22);
         anchorPane.setStyle("-fx-background-radius: 16;" +
-                "-fx-background-color: rgb(45, 45, 50), rgb(60, 60, 65);");
+                "-fx-background-color: rgb(66, 112, 112), rgb(66, 112, 112);");
 
         //-----------------------------------
-//        Utility.closeOnActions(stage);
         // Drag window
         layout.setOnMousePressed(event -> {
             xOffset = event.getSceneX();

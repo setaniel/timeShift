@@ -38,7 +38,7 @@ public class NoteEditor {
         text = new TextArea();
         text.setWrapText(true);
         stage = new Stage(StageStyle.UNDECORATED);
-        Scene scene = new Scene(setLayout(text, stage), 300, 300, Color.TRANSPARENT);
+        Scene scene = new Scene(setLayout(text), 300, 240, Color.TRANSPARENT);
         scene.getStylesheets().add(NoteEditor.class.getResource("notepad.css").toExternalForm());
         stage.setScene(scene);
         stage.initModality(Modality.NONE);
@@ -126,7 +126,7 @@ public class NoteEditor {
         });
     }
 
-    private static VBox setLayout(TextArea editableText, Stage stage){
+    private static VBox setLayout(TextArea editableText){
         AnchorPane anchorPane = new AnchorPane(okButton);
         AnchorPane.setRightAnchor(okButton, 10.0);
         AnchorPane.setTopAnchor(okButton, 4.0);
@@ -134,7 +134,7 @@ public class NoteEditor {
         VBox layout = new VBox(editableText, anchorPane);
         layout.setPadding(new Insets(10, 10, 0, 10));
         layout.setStyle("-fx-background-radius: 16;" +
-                "-fx-background-color: rgb(45, 45, 50), rgb(60, 60, 65);" +
+                "-fx-background-color: rgb(66, 112, 112), rgb(66, 112, 112);" +
                 "-fx-background-insets: 0, 0 1.ser 1.ser 0;");
         VBox.setVgrow(editableText, Priority.ALWAYS);
 

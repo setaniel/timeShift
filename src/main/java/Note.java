@@ -57,14 +57,14 @@ public class Note extends AnchorPane {
     }
     public void update(String text){
         if (text.contains("\n")){
-            setTitle(text.indexOf("\n") > 22 ? text.substring(0, 22) + "..." : text.substring(0, text.indexOf("\n")));
+            setTitle(text.indexOf("\n") > 21 ? text.substring(0, 21) + "..." : text.substring(0, text.indexOf("\n")));
             String s = text.substring(text.indexOf("\n")+1);
             setPreview(s.length() > 26 ? s.substring(0, 26) + "..." : s);
         }else{
-            setTitle(text.length() > 22 ? text.substring(0, 22)+"..." : text);
+            setTitle(text.length() > 21 ? text.substring(0, 21)+"..." : text);
             setPreview("Нет дополнительного текста");
         }
-        if (text.length() < 22 && !text.contains("\n") || text.charAt(text.length()-1) == '\n') {
+        if (text.length() < 21 && !text.contains("\n") || text.charAt(text.length()-1) == '\n') {
             setTitle(text);
             setPreview("Нет дополнительного текста");
         }
@@ -122,7 +122,7 @@ public class Note extends AnchorPane {
         AnchorPane.setTopAnchor(trashButton, 3.0);
         AnchorPane.setBottomAnchor(trashButton, 3.0);
         this.getChildren().addAll(titleLabel, previewLabel, trashButton, dateStampLabel);
-        this.setMaxWidth(260.0);
+        this.setMaxWidth(252.0);
         this.setOnMouseClicked(event -> {
             if (!View.isNoteEditorShow) Utility.noteEditor.editNote(this);
         });

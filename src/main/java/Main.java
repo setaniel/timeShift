@@ -18,16 +18,16 @@ public class Main extends Application {
     public void start(Stage primaryStage) throws Exception {
         primeStage = primaryStage;
         Parent root = FXMLLoader.load(getClass().getResource("MainWindow.fxml"));
-        Scene scene = new Scene(root, 420, 565, Color.TRANSPARENT); //width 420 height 565
+        Scene scene = new Scene(root, 400, 545, Color.TRANSPARENT); //width 420 height 565
         primaryStage.initStyle(StageStyle.TRANSPARENT);
         primaryStage.setScene(scene);
         primaryStage.show();
 
         // Undecorated window cap. Create a 22-wide top border and set drag and drop:
-        com.sun.glass.ui.Window.getWindows().get(0).setUndecoratedMoveRectangle(22);
+        com.sun.glass.ui.Window.getWindows().get(0).setUndecoratedMoveRectangle(17);
         // background bottom transparent window
         root.setStyle("-fx-background-radius: 16;" +
-                "-fx-background-color: rgb(45, 45, 50), rgb(60, 60, 65);");
+                "-fx-background-color: rgb(66, 112, 112), rgb(66, 112, 112);"); // 1- 45,45,50    2-60,60,65
         // send stage on View, for close button use
         Utility.setPrimaryStage(primaryStage);
         Serializer.deserializeNotes();
