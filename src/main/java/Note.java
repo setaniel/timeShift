@@ -59,7 +59,9 @@ public class Note extends AnchorPane {
         if (text.contains("\n")){
             setTitle(text.indexOf("\n") > 21 ? text.substring(0, 21) + "..." : text.substring(0, text.indexOf("\n")));
             String s = text.substring(text.indexOf("\n")+1);
+//            String prev = s.substring(0, s.indexOf("\n"));
             setPreview(s.length() > 26 ? s.substring(0, 26) + "..." : s);
+//            setPreview(s.length() > 26 && !s.contains("\n") ? s.substring(0, 26) + "..." : s);
         }else{
             setTitle(text.length() > 21 ? text.substring(0, 21)+"..." : text);
             setPreview("Нет дополнительного текста");
@@ -101,7 +103,6 @@ public class Note extends AnchorPane {
         Button trashButton = createTrashButton();
         // set note title and text, getting out model
         titleLabel = new Label(getTitle());
-        // isScale
         previewLabel = new Label(getPreview());
         dateStampLabel = new Label(getNoteDate());
         dateStampLabel.setTextFill(Color.valueOf("#008500"));

@@ -6,6 +6,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Priority;
+import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.stage.Modality;
@@ -38,7 +39,7 @@ public class NoteEditor {
         text = new TextArea();
         text.setWrapText(true);
         stage = new Stage(StageStyle.UNDECORATED);
-        Scene scene = new Scene(setLayout(text), 300, 240, Color.TRANSPARENT);
+        Scene scene = new Scene(setLayout(text, stage), 300, 240, Color.TRANSPARENT);
         scene.getStylesheets().add(NoteEditor.class.getResource("notepad.css").toExternalForm());
         stage.setScene(scene);
         stage.initModality(Modality.NONE);
@@ -126,11 +127,12 @@ public class NoteEditor {
         });
     }
 
-    private static VBox setLayout(TextArea editableText){
+    private static VBox setLayout(TextArea editableText, Stage stage){
+        StackPane stackPane = new StackPane();
         AnchorPane anchorPane = new AnchorPane(okButton);
         AnchorPane.setRightAnchor(okButton, 10.0);
         AnchorPane.setTopAnchor(okButton, 4.0);
-        AnchorPane.setBottomAnchor(okButton, 4.0);
+        AnchorPane.setBottomAnchor(okButton, 40.0);
         VBox layout = new VBox(editableText, anchorPane);
         layout.setPadding(new Insets(10, 10, 0, 10));
         layout.setStyle("-fx-background-radius: 16;" +
