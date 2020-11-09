@@ -57,14 +57,14 @@ public class Note extends AnchorPane {
     }
     public void update(String text){
         if (text.contains("\n")){
-            setTitle(text.indexOf("\n") > 15 ? text.substring(0, 15) + "..." : text.substring(0, text.indexOf("\n")));
-            String s = text.substring(text.indexOf("\n")+1); // for code length economy
+            setTitle(text.indexOf("\n") > 22 ? text.substring(0, 22) + "..." : text.substring(0, text.indexOf("\n")));
+            String s = text.substring(text.indexOf("\n")+1);
             setPreview(s.length() > 26 ? s.substring(0, 26) + "..." : s);
         }else{
-            setTitle(text.length() > 15 ? text.substring(0, 15)+"..." : text);
+            setTitle(text.length() > 22 ? text.substring(0, 22)+"..." : text);
             setPreview("Нет дополнительного текста");
         }
-        if (text.length() < 16 && !text.contains("\n") || text.charAt(text.length()-1) == '\n') {
+        if (text.length() < 22 && !text.contains("\n") || text.charAt(text.length()-1) == '\n') {
             setTitle(text);
             setPreview("Нет дополнительного текста");
         }
@@ -104,14 +104,16 @@ public class Note extends AnchorPane {
         // isScale
         previewLabel = new Label(getPreview());
         dateStampLabel = new Label(getNoteDate());
+        dateStampLabel.setTextFill(Color.valueOf("#008500"));
         dateStampLabel.setFont(Font.font("Courier New", FontWeight.LIGHT, 9));
 
         // set positions of labels and buttons in note
         AnchorPane.setBottomAnchor(previewLabel, 0.0);
         AnchorPane.setLeftAnchor(previewLabel, 5.0);
 
-        AnchorPane.setTopAnchor(dateStampLabel, 3.0);
-        AnchorPane.setRightAnchor(dateStampLabel, 40.0);
+        AnchorPane.setTopAnchor(dateStampLabel, 17.0);
+        AnchorPane.setBottomAnchor(dateStampLabel, 15.0);
+        AnchorPane.setLeftAnchor(dateStampLabel, 5.0);
 
         AnchorPane.setLeftAnchor(titleLabel, 5.0);
         AnchorPane.setTopAnchor(titleLabel, 0.0);

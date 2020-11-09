@@ -74,7 +74,7 @@ public class Traffic {
             // Thread sleep every 2 seconds and start Platform.runLater(updater)
             while (true) {
                 try {
-                    Thread.sleep(60000);
+                    Thread.sleep(5*60000);
                 } catch (InterruptedException ex) {
                     ex.getStackTrace();
                 }

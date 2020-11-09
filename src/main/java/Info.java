@@ -25,7 +25,7 @@ public class Info {
     private static double xOffset = 0;
     private static double yOffset = 0;
     static boolean isInfoShow = false;
-    public static void showInfo(ImageView fxButton){
+    public static void showInfo(ImageView fxButton) {
         VBox layout = new VBox();
         AnchorPane anchorPane = new AnchorPane();
         anchorPane.getChildren().add(layout);
@@ -83,7 +83,7 @@ public class Info {
         });
         closeOnActions(stage, fxButton);
     }
-    private static void setLabelFont(Label label){
+    private static void setLabelFont(Label label) {
         label.setFont(Font.font("Courier New", FontWeight.BOLD, 14));
     }
 

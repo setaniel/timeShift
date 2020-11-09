@@ -19,7 +19,6 @@ import javafx.scene.text.FontWeight;
 import javafx.stage.Stage;
 
 public class Utility {
-    private static Node root;
     private static Stage primaryStage;
     private static VBox content;
     private static Label netLabel;
@@ -63,9 +62,6 @@ public class Utility {
     public static void setIsAppClosing(boolean state){
         appClosingState = state;
     }
-    public static void setRoot(Node node){
-        root = node;
-    }
     public static void setPomodoroTime(int time){
         pomodoroTime = time;
     }
@@ -93,7 +89,7 @@ public class Utility {
     }
     public static void setUIShadows(Node node){
         DropShadow blackShadow = new DropShadow(10.0, Color.BLACK);
-        DropShadow redShadow = new DropShadow(10.0, Color.RED);
+        DropShadow redShadow = new DropShadow(17.0, Color.RED);
         node.setEffect(blackShadow);
         node.addEventHandler(MouseEvent.MOUSE_ENTERED, e -> node.setEffect(redShadow));
         node.addEventHandler(MouseEvent.MOUSE_EXITED, e -> node.setEffect(blackShadow));
@@ -117,9 +113,6 @@ public class Utility {
     // Getters
     public static ImageView getAddNoteButton(){
         return addNoteButton;
-    }
-    public static Node getRoot(){
-        return root;
     }
     public static Label getWeatherLabel(){
         return weatherLabel;

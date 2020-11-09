@@ -48,7 +48,7 @@ public class NoteEditor {
 
     public void editNote(Note note){
         editableNote = note;
-        Utility.setDropShadow(editableNote, Color.DARKGREY);
+        Utility.setDropShadow(editableNote, Color.valueOf("#98ecf2"));
         if (editableNote.getText() == null){
             noteObjectText = null;
             text.setText("");

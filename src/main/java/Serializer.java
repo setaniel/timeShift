@@ -41,7 +41,7 @@ public class Serializer {
                     FileInputStream fileIn = new FileInputStream(file);
                     ObjectInputStream in = new ObjectInputStream(fileIn);
                     Note note = new Note((Model) in.readObject());
-                    Utility.setDropShadow(note, Color.DARKGREY);
+                    Utility.setDropShadow(note, Color.valueOf("#98ecf2"));
                     Utility.getContent().getChildren().add(note.getIndex(), note);
                     in.close();
                     fileIn.close();

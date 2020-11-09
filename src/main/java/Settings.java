@@ -34,7 +34,10 @@ public class Settings {
         text.setAlignment(Pos.TOP_CENTER);
         text.setMaxWidth(80.0);
         AnchorPane anchorPane = new AnchorPane();
-        anchorPane.getChildren().add(layout);
+        anchorPane.getChildren().addAll(layout, okButton);
+
+        AnchorPane.setBottomAnchor(okButton, 12.0);
+        AnchorPane.setRightAnchor(okButton, 13.0);
 
         AnchorPane.setBottomAnchor(layout, 10.0);
         AnchorPane.setLeftAnchor(layout, 10.0);
@@ -42,7 +45,8 @@ public class Settings {
         AnchorPane.setTopAnchor(layout, 10.0);
 
         layout.setBackground(new Background(new BackgroundFill(Paint.valueOf("#e8e4db"), new CornerRadii(16), Insets.EMPTY)));
-        layout.setAlignment(Pos.CENTER);
+//        layout.setAlignment(Pos.CENTER);
+        layout.setSpacing(10.0);
         layout.setPadding(new Insets(10, 10, 10, 10));
 
 
@@ -55,10 +59,10 @@ public class Settings {
         label.setFont(Font.font("Courier New", FontWeight.BOLD, 12));
         label.setPrefHeight(20.0);
         label.setBackground(new Background(new BackgroundFill(Paint.valueOf("transparent"), new CornerRadii(16), Insets.EMPTY)));
-        layout.getChildren().addAll(label, text, okButton);
+        layout.getChildren().addAll(label, text);
 
         Stage stage = new Stage(StageStyle.UNDECORATED);
-        Scene scene = new Scene(anchorPane, 170, 110, Color.TRANSPARENT);
+        Scene scene = new Scene(anchorPane, 165, 90, Color.TRANSPARENT);
         stage.setScene(scene);
         stage.initModality(Modality.NONE);
         stage.initStyle(StageStyle.TRANSPARENT);

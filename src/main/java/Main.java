@@ -18,7 +18,7 @@ public class Main extends Application {
     public void start(Stage primaryStage) throws Exception {
         primeStage = primaryStage;
         Parent root = FXMLLoader.load(getClass().getResource("MainWindow.fxml"));
-        Scene scene = new Scene(root, 420, 565, Color.TRANSPARENT);
+        Scene scene = new Scene(root, 420, 565, Color.TRANSPARENT); //width 420 height 565
         primaryStage.initStyle(StageStyle.TRANSPARENT);
         primaryStage.setScene(scene);
         primaryStage.show();
@@ -30,7 +30,6 @@ public class Main extends Application {
                 "-fx-background-color: rgb(45, 45, 50), rgb(60, 60, 65);");
         // send stage on View, for close button use
         Utility.setPrimaryStage(primaryStage);
-        Utility.setRoot(root);
         Serializer.deserializeNotes();
     }
     @FXML public static void main(String[] args) {
