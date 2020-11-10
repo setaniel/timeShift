@@ -131,13 +131,13 @@ public class NoteEditor {
         StackPane stackPane = new StackPane();
         AnchorPane anchorPane = new AnchorPane(okButton);
         AnchorPane.setRightAnchor(okButton, 10.0);
-        AnchorPane.setTopAnchor(okButton, 4.0);
-        AnchorPane.setBottomAnchor(okButton, 40.0);
-        VBox layout = new VBox(editableText, anchorPane);
-        layout.setPadding(new Insets(10, 10, 0, 10));
+        AnchorPane.setBottomAnchor(okButton, 10.0);
+        VBox textBox = new VBox(editableText);
+        stackPane.getChildren().addAll(textBox, anchorPane);
+        VBox layout = new VBox(stackPane);
+        layout.setPadding(new Insets(10, 10, 10, 10));
         layout.setStyle("-fx-background-radius: 16;" +
-                "-fx-background-color: rgb(66, 112, 112), rgb(66, 112, 112);" +
-                "-fx-background-insets: 0, 0 1.ser 1.ser 0;");
+                "-fx-background-color: rgb(66, 112, 112), rgb(66, 112, 112);");
         VBox.setVgrow(editableText, Priority.ALWAYS);
 
         layout.setOnMousePressed(event -> {
