@@ -16,6 +16,8 @@ import java.util.ResourceBundle;
  * of links is initialized and translated into Java code.
  * */
 public class Controller extends View implements Initializable{
+    @FXML private AnchorPane contentAnchor;
+    @FXML private AnchorPane rootUI;
     @FXML private AnchorPane fxTrafficPane;
     @FXML private Label fxWeatherLabel;
     @FXML private Label fxNetLabel;
@@ -46,6 +48,8 @@ public class Controller extends View implements Initializable{
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+        Utility.contentAnchor = contentAnchor;
+        Utility.rootUI = rootUI;
         Utility.setAddNoteButton(fxAddNoteButton);
         Utility.setNetLabel(fxNetLabel);
         Utility.setWeatherLabel(fxWeatherLabel);

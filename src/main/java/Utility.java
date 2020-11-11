@@ -8,10 +8,7 @@ import javafx.scene.effect.InnerShadow;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.Background;
-import javafx.scene.layout.BackgroundFill;
-import javafx.scene.layout.CornerRadii;
-import javafx.scene.layout.VBox;
+import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.Paint;
 import javafx.scene.text.Font;
@@ -26,7 +23,9 @@ public class Utility {
     private static boolean appClosingState = false;
     private static int pomodoroTime = 25;
     public static NoteEditor noteEditor = NoteEditor.getInstance();
-    public static ImageView addNoteButton;
+    private static ImageView addNoteButton;
+    public static AnchorPane rootUI;
+    public static AnchorPane contentAnchor;
 
 
     // Setters

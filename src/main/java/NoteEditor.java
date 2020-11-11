@@ -16,8 +16,8 @@ import javafx.stage.StageStyle;
 public class NoteEditor {
     private static double xOffset = 0;
     private static double yOffset = 0;
-    private static final Image image = new Image(NoteEditor.class.getResourceAsStream("images/done.png"));
-    private static final ImageView okButton = new ImageView(image);
+    private static final ImageView okButton = new ImageView(
+            new Image(NoteEditor.class.getResourceAsStream("images/done.png")));
 
     private static Stage stage;
     private static String noteObjectText;
@@ -39,7 +39,7 @@ public class NoteEditor {
         text = new TextArea();
         text.setWrapText(true);
         stage = new Stage(StageStyle.UNDECORATED);
-        Scene scene = new Scene(setLayout(text, stage), 300, 240, Color.TRANSPARENT);
+        Scene scene = new Scene(setLayout(text, stage), 300, 200, Color.TRANSPARENT);
         scene.getStylesheets().add(NoteEditor.class.getResource("notepad.css").toExternalForm());
         stage.setScene(scene);
         stage.initModality(Modality.NONE);
@@ -129,12 +129,24 @@ public class NoteEditor {
 
     private static VBox setLayout(TextArea editableText, Stage stage){
         StackPane stackPane = new StackPane();
+
         AnchorPane anchorPane = new AnchorPane(okButton);
-        AnchorPane.setRightAnchor(okButton, 10.0);
-        AnchorPane.setBottomAnchor(okButton, 10.0);
+        AnchorPane.setRightAnchor(okButton, 1.0);
+        AnchorPane.setBottomAnchor(okButton, 1.0);
+
         VBox textBox = new VBox(editableText);
-        stackPane.getChildren().addAll(textBox, anchorPane);
-        VBox layout = new VBox(stackPane);
+        textBox.setMaxHeight(150);
+        textBox.setMinHeight(150);
+        TextArea buttonArea = new TextArea();
+        buttonArea.setMaxHeight(30);
+        buttonArea.setMinHeight(30);
+        stackPane.getChildren().addAll(buttonArea, okButton);
+        okButton.relocate(288, 188);
+
+
+        VBox layout = new VBox(textBox, stackPane);
+
+
         layout.setPadding(new Insets(10, 10, 10, 10));
         layout.setStyle("-fx-background-radius: 16;" +
                 "-fx-background-color: rgb(66, 112, 112), rgb(66, 112, 112);");
