@@ -42,7 +42,7 @@ public class SlideScene extends Application
         scene.getStylesheets().add(SlideScene.class.getResource("notepad.css").toExternalForm());
         stage.setScene(scene);
         stage.show();
-        nextSceneBtn.setOnAction(event -> btnAction(parentContainer));
+        nextSceneBtn.setOnAction(event -> showEditor(parentContainer));
     }
 
     AnchorPane nextScene() {
@@ -52,14 +52,14 @@ public class SlideScene extends Application
         anchorPane.setPrefSize(400, 400);
         vBox.setPrefSize(400, 400);
         button.setOnAction(event -> {
-            btnDelAction(anchorPane);
+            hideEditor(anchorPane);
 
         });
         return anchorPane;
     }
 
 
-    void btnDelAction(AnchorPane root){
+    void hideEditor(AnchorPane root){
         root.translateXProperty().set(0);
 
         Timeline timeline = new Timeline();
@@ -71,11 +71,11 @@ public class SlideScene extends Application
     }
 
 
-    void btnAction(StackPane parentContainer){
+    void showEditor(StackPane parentContainer){
         AnchorPane root = nextScene(); // куда впихиваю
         root.translateXProperty().set(paneRoot.getWidth());
         parentContainer.getChildren().add(root);
-        if (parentContainer.getChildren().size() == 3) parentContainer.getChildren().remove(2);
+        if (parentContainer.getChildren().size() == 3) parentContainer.getChildren().remove(1);
 
         Timeline timeline = new Timeline();
         KeyValue keyValue = new KeyValue(root.translateXProperty(), 0, Interpolator.EASE_IN);
