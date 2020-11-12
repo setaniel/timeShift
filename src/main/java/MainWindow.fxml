@@ -23,10 +23,12 @@
                     </padding>
                 </HBox>
                 <AnchorPane fx:id="contentAnchor" layoutX="20.0" layoutY="39.0" prefHeight="450.0" prefWidth="270.0">
-                    <ScrollPane fx:id="fxScroll" fitToWidth="true"  prefHeight="200.0" prefWidth="280.0"
-                                AnchorPane.bottomAnchor="30.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-                        <VBox fx:id="fxContent" prefHeight="395.0" prefWidth="260.0" spacing="10.0"/>
-                    </ScrollPane>
+                    <StackPane fx:id="contentStack">
+                        <ScrollPane fx:id="fxScroll" fitToWidth="true"  prefHeight="200.0" prefWidth="280.0"
+                                    AnchorPane.bottomAnchor="30.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                            <VBox fx:id="fxContent" prefHeight="395.0" prefWidth="260.0" spacing="10.0"/>
+                        </ScrollPane>
+                    </StackPane>
                 </AnchorPane>
                 <ImageView fx:id="fxCloseButton" layoutX="11.0" layoutY="10.0" onMouseClicked="#closeApp">
                     <Image url="@images/close_red.png" />

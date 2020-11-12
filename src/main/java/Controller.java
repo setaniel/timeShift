@@ -5,6 +5,7 @@ import javafx.scene.control.ScrollPane;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.ScrollEvent;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 
 import java.net.URL;
@@ -16,6 +17,7 @@ import java.util.ResourceBundle;
  * of links is initialized and translated into Java code.
  * */
 public class Controller extends View implements Initializable{
+    @FXML private StackPane contentStack;
     @FXML private AnchorPane contentAnchor;
     @FXML private AnchorPane rootUI;
     @FXML private AnchorPane fxTrafficPane;
@@ -48,6 +50,7 @@ public class Controller extends View implements Initializable{
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+        Utility.contentStack = contentStack;
         Utility.contentAnchor = contentAnchor;
         Utility.rootUI = rootUI;
         Utility.setAddNoteButton(fxAddNoteButton);

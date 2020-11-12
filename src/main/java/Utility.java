@@ -26,6 +26,7 @@ public class Utility {
     private static ImageView addNoteButton;
     public static AnchorPane rootUI;
     public static AnchorPane contentAnchor;
+    public static StackPane contentStack;
 
 
     // Setters

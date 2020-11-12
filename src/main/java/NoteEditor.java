@@ -1,17 +1,19 @@
+import javafx.animation.Interpolator;
+import javafx.animation.KeyFrame;
+import javafx.animation.KeyValue;
+import javafx.animation.Timeline;
 import javafx.geometry.Insets;
 import javafx.scene.Scene;
 import javafx.scene.control.TextArea;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
-import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.Priority;
-import javafx.scene.layout.StackPane;
-import javafx.scene.layout.VBox;
+import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
+import javafx.util.Duration;
 
 public class NoteEditor {
     private static double xOffset = 0;
@@ -26,6 +28,8 @@ public class NoteEditor {
     private static NoteEditor instance;
     private static ImageView fxAddButton;
 
+    private static StackPane parentContainer = Utility.contentStack;
+
     private NoteEditor(){
         noteEditWindow();
     }
@@ -38,13 +42,33 @@ public class NoteEditor {
         Utility.setSwitchShadows(okButton, Color.WHITE, Color.BLUE);
         text = new TextArea();
         text.setWrapText(true);
+        text.getStylesheets().add(NoteEditor.class.getResource("notepad.css").toExternalForm());
+
+        StackPane root = new StackPane();
+        root.setPrefSize(270, 450);
+        Utility.contentAnchor.getChildren().add(root);
+        AnchorPane note = new AnchorPane(text);
+        note.setPrefSize(270, 450);
+
+        note.translateXProperty().set(Utility.contentAnchor.getWidth());
+        note.getChildren().add(text);
+        if (Utility.contentAnchor.getChildren().size() == 3) Utility.contentAnchor.getChildren().remove(1);
+
+        Timeline timeline = new Timeline();
+        KeyValue keyValue = new KeyValue(root.translateXProperty(), 0, Interpolator.EASE_IN);
+        KeyFrame keyFrame = new KeyFrame(Duration.seconds(0.6), keyValue);
+        timeline.getKeyFrames().add(keyFrame);
+        timeline.play();
+
+
+
+        /*Scene scene = new Scene(text, 270, 450, Color.TRANSPARENT);
         stage = new Stage(StageStyle.UNDECORATED);
-        Scene scene = new Scene(setLayout(text, stage), 300, 200, Color.TRANSPARENT);
         scene.getStylesheets().add(NoteEditor.class.getResource("notepad.css").toExternalForm());
         stage.setScene(scene);
         stage.initModality(Modality.NONE);
         stage.initStyle(StageStyle.TRANSPARENT);
-        stage.initOwner(Utility.getPrimaryStage());
+        stage.initOwner(Utility.getPrimaryStage());*/
     }
 
     public void editNote(Note note){
@@ -127,39 +151,4 @@ public class NoteEditor {
         });
     }
 
-    private static VBox setLayout(TextArea editableText, Stage stage){
-        StackPane stackPane = new StackPane();
-
-        AnchorPane anchorPane = new AnchorPane(okButton);
-        AnchorPane.setRightAnchor(okButton, 1.0);
-        AnchorPane.setBottomAnchor(okButton, 1.0);
-
-        VBox textBox = new VBox(editableText);
-        textBox.setMaxHeight(150);
-        textBox.setMinHeight(150);
-        TextArea buttonArea = new TextArea();
-        buttonArea.setMaxHeight(30);
-        buttonArea.setMinHeight(30);
-        stackPane.getChildren().addAll(buttonArea, okButton);
-        okButton.relocate(288, 188);
-
-
-        VBox layout = new VBox(textBox, stackPane);
-
-
-        layout.setPadding(new Insets(10, 10, 10, 10));
-        layout.setStyle("-fx-background-radius: 16;" +
-                "-fx-background-color: rgb(66, 112, 112), rgb(66, 112, 112);");
-        VBox.setVgrow(editableText, Priority.ALWAYS);
-
-        layout.setOnMousePressed(event -> {
-            xOffset = event.getSceneX();
-            yOffset = event.getSceneY();
-        });
-        layout.setOnMouseDragged(event -> {
-            stage.setX(event.getScreenX() - xOffset);
-            stage.setY(event.getScreenY() - yOffset);
-        });
-        return layout;
-    }
 }
