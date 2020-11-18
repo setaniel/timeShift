@@ -11,7 +11,9 @@ import javafx.scene.control.TextArea;
 import javafx.scene.layout.*;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 import javafx.util.Duration;
 import org.omg.PortableServer.POA;
 
@@ -29,12 +31,14 @@ public class SlideScene extends Application
 
     @Override
     public void start(Stage stage) {
+        // first init?
         Label text = new Label("THIS IS <-FIRST-> SCENE");
         Button nextSceneBtn = new Button("Next scene");
         VBox vBox = new VBox(text, nextSceneBtn);
         AnchorPane anchorPane = new AnchorPane(vBox);
+        // ________
 
-        parentContainer = new StackPane(anchorPane);
+        parentContainer = new StackPane(nextScene());
         parentRoot = new Pane(parentContainer);
         parentRoot.setMaxSize(200, 200);
         vBox.setAlignment(Pos.CENTER);
@@ -45,6 +49,9 @@ public class SlideScene extends Application
         scene = new Scene(pane);
         scene.getStylesheets().add(SlideScene.class.getResource("notepad.css").toExternalForm());
         stage.setScene(scene);
+        stage.initModality(Modality.NONE);
+        stage.initStyle(StageStyle.TRANSPARENT);
+        stage.initOwner(Utility.getPrimaryStage());
         stage.show();
         nextSceneBtn.setOnAction(event -> showEditor(parentContainer));
     }
