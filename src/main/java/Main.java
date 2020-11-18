@@ -7,6 +7,10 @@ import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 
+import java.net.URL;
+import java.util.Enumeration;
+import java.util.ResourceBundle;
+
 public class Main extends Application {
     /** The starting point of the program. Only run
      * the application, do not contain any logic. The
@@ -22,6 +26,7 @@ public class Main extends Application {
         primaryStage.initStyle(StageStyle.TRANSPARENT);
         primaryStage.setScene(scene);
         primaryStage.show();
+        scene.getStylesheets().add(NoteEditor.class.getResource("notepad.css").toExternalForm());
 
         // Undecorated window cap. Create a 22-wide top border and set drag and drop:
         com.sun.glass.ui.Window.getWindows().get(0).setUndecoratedMoveRectangle(17);

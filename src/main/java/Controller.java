@@ -17,9 +17,9 @@ import java.util.ResourceBundle;
  * of links is initialized and translated into Java code.
  * */
 public class Controller extends View implements Initializable{
-    @FXML private StackPane contentStack;
-    @FXML private AnchorPane contentAnchor;
-    @FXML private AnchorPane rootUI;
+    @FXML private StackPane fxContentStack;
+    @FXML private AnchorPane fxContentAnchor;
+    @FXML private AnchorPane fxRootUI;
     @FXML private AnchorPane fxTrafficPane;
     @FXML private Label fxWeatherLabel;
     @FXML private Label fxNetLabel;
@@ -50,14 +50,14 @@ public class Controller extends View implements Initializable{
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        Utility.contentStack = contentStack;
-        Utility.contentAnchor = contentAnchor;
-        Utility.rootUI = rootUI;
+        Utility.setContentStack(fxContentStack);
+        Utility.setContentAnchor(fxContentAnchor);
+        Utility.rootUI = fxRootUI;
         Utility.setAddNoteButton(fxAddNoteButton);
         Utility.setNetLabel(fxNetLabel);
         Utility.setWeatherLabel(fxWeatherLabel);
         Utility.setContent(fxContent);
-        fxScroll.getStylesheets().add(Controller.class.getResource("/styles.css").toExternalForm());
+        fxScroll.getStylesheets().add(Controller.class.getResource("/scroll.css").toExternalForm());
         fxScroll.setVbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
         setScrollVisibility();
         Utility.setUIShadows(fxMinimize);

@@ -19,7 +19,7 @@ import org.omg.PortableServer.POA;
 public class SlideScene extends Application
 {
     Scene scene;
-    Pane paneRoot;
+    Pane parentRoot;
     StackPane parentContainer;
     AnchorPane temp;
     public static void main(String[] args)
@@ -33,12 +33,16 @@ public class SlideScene extends Application
         Button nextSceneBtn = new Button("Next scene");
         VBox vBox = new VBox(text, nextSceneBtn);
         AnchorPane anchorPane = new AnchorPane(vBox);
+
         parentContainer = new StackPane(anchorPane);
-        paneRoot = new Pane(parentContainer);
+        parentRoot = new Pane(parentContainer);
+        parentRoot.setMaxSize(200, 200);
         vBox.setAlignment(Pos.CENTER);
-        vBox.setPrefSize(400, 400);
+        vBox.setPrefSize(200, 200);
         // Create the Scene
-        scene = new Scene(paneRoot);
+        Pane pane = new Pane(parentRoot);
+        pane.setPrefSize(200, 200);
+        scene = new Scene(pane);
         scene.getStylesheets().add(SlideScene.class.getResource("notepad.css").toExternalForm());
         stage.setScene(scene);
         stage.show();
@@ -49,8 +53,8 @@ public class SlideScene extends Application
         Button button = new Button("Close");
         VBox vBox = new VBox(new TextArea(), button);
         AnchorPane anchorPane = new AnchorPane(vBox);
-        anchorPane.setPrefSize(400, 400);
-        vBox.setPrefSize(400, 400);
+        anchorPane.setPrefSize(200, 200);
+        vBox.setPrefSize(200, 200);
         button.setOnAction(event -> {
             hideEditor(anchorPane);
 
@@ -63,7 +67,7 @@ public class SlideScene extends Application
         root.translateXProperty().set(0);
 
         Timeline timeline = new Timeline();
-        KeyValue keyValue = new KeyValue(root.translateXProperty(), 400, Interpolator.EASE_OUT);
+        KeyValue keyValue = new KeyValue(root.translateXProperty(), 200, Interpolator.EASE_OUT);
         KeyFrame keyFrame = new KeyFrame(Duration.seconds(0.6), keyValue);
         timeline.getKeyFrames().add(keyFrame);
         timeline.play();
@@ -73,7 +77,7 @@ public class SlideScene extends Application
 
     void showEditor(StackPane parentContainer){
         AnchorPane root = nextScene(); // куда впихиваю
-        root.translateXProperty().set(paneRoot.getWidth());
+        root.translateXProperty().set(parentRoot.getWidth());
         parentContainer.getChildren().add(root);
         if (parentContainer.getChildren().size() == 3) parentContainer.getChildren().remove(1);
 

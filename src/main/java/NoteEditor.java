@@ -16,19 +16,17 @@ import javafx.stage.StageStyle;
 import javafx.util.Duration;
 
 public class NoteEditor {
-    private static double xOffset = 0;
-    private static double yOffset = 0;
+
     private static final ImageView okButton = new ImageView(
             new Image(NoteEditor.class.getResourceAsStream("images/done.png")));
-
     private static Stage stage;
     private static String noteObjectText;
-    private static TextArea text;
+    public static TextArea text;
     private static Note editableNote;
     private static NoteEditor instance;
     private static ImageView fxAddButton;
-
-    private static StackPane parentContainer = Utility.contentStack;
+    public static final StackPane parentContainer = new StackPane();
+    public static final Pane parentRoot = new Pane(parentContainer);
 
     private NoteEditor(){
         noteEditWindow();
@@ -39,41 +37,28 @@ public class NoteEditor {
     }
 
     private static void noteEditWindow() {
-        Utility.setSwitchShadows(okButton, Color.WHITE, Color.BLUE);
+        Utility.setUIShadows(okButton);
         text = new TextArea();
         text.setWrapText(true);
-        text.getStylesheets().add(NoteEditor.class.getResource("notepad.css").toExternalForm());
-
-        StackPane root = new StackPane();
-        root.setPrefSize(270, 450);
-        Utility.contentAnchor.getChildren().add(root);
-        AnchorPane note = new AnchorPane(text);
-        note.setPrefSize(270, 450);
-
-        note.translateXProperty().set(Utility.contentAnchor.getWidth());
-        note.getChildren().add(text);
-        if (Utility.contentAnchor.getChildren().size() == 3) Utility.contentAnchor.getChildren().remove(1);
-
-        Timeline timeline = new Timeline();
-        KeyValue keyValue = new KeyValue(root.translateXProperty(), 0, Interpolator.EASE_IN);
-        KeyFrame keyFrame = new KeyFrame(Duration.seconds(0.6), keyValue);
-        timeline.getKeyFrames().add(keyFrame);
-        timeline.play();
-
-
-
-        /*Scene scene = new Scene(text, 270, 450, Color.TRANSPARENT);
+        text.setPrefSize(280, 395);
+        parentRoot.setBackground(Background.EMPTY);
         stage = new Stage(StageStyle.UNDECORATED);
+        Scene scene = new Scene(parentRoot, 280, 395, Color.TRANSPARENT);
         scene.getStylesheets().add(NoteEditor.class.getResource("notepad.css").toExternalForm());
         stage.setScene(scene);
         stage.initModality(Modality.NONE);
         stage.initStyle(StageStyle.TRANSPARENT);
-        stage.initOwner(Utility.getPrimaryStage());*/
+        stage.initOwner(Utility.getPrimaryStage());
+        stage.show();
     }
 
-    public void editNote(Note note){
+    public void showEditor(Note note){
+        Utility.rootUI.getChildren().add(okButton);
+        AnchorPane.setRightAnchor(okButton, 5.0);
+        AnchorPane.setTopAnchor(okButton, 140.0);
+
         editableNote = note;
-        Utility.setDropShadow(editableNote, Color.valueOf("#98ecf2"));
+        Utility.setDropShadow(editableNote, Color.DARKGREY);
         if (editableNote.getText() == null){
             noteObjectText = null;
             text.setText("");
@@ -81,15 +66,26 @@ public class NoteEditor {
             noteObjectText = editableNote.getText();
             text.setText(noteObjectText);
         }
-        stage.show();
+
         View.isNoteEditorShow = true;
         stage.requestFocus();
 
         // set position this modal on parent frame
         stage.setX(Utility.getPrimaryStage().getX() + 30);
-        stage.setY(Utility.getPrimaryStage().getY() + 60);
-        com.sun.glass.ui.Window.getWindows().get(0).setUndecoratedMoveRectangle(22);
+        stage.setY(Utility.getPrimaryStage().getY() + 50);
+//        com.sun.glass.ui.Window.getWindows().get(0).setUndecoratedMoveRectangle(22);
         setEventHandlers();
+
+
+        text.translateXProperty().set(parentRoot.getWidth());
+
+        parentContainer.getChildren().add(text);
+
+        Timeline timeline = new Timeline();
+        KeyValue keyValue = new KeyValue(text.translateXProperty(), 0, Interpolator.EASE_IN);
+        KeyFrame keyFrame = new KeyFrame(Duration.seconds(3), keyValue);
+        timeline.getKeyFrames().add(keyFrame);
+        timeline.play();
     }
 
     private static void textChecks(){
@@ -108,8 +104,18 @@ public class NoteEditor {
             Utility.getContent().getChildren().remove(editableNote);
         }
         removeEventHandlers();
-        stage.hide();
+//        stage.hide();
         View.isNoteEditorShow = false;
+
+        text.translateXProperty().set(0);
+
+        Timeline timeline = new Timeline();
+        KeyValue keyValue = new KeyValue(text.translateXProperty(), 280, Interpolator.EASE_OUT);
+        KeyFrame keyFrame = new KeyFrame(Duration.seconds(3), keyValue);
+        timeline.getKeyFrames().add(keyFrame);
+        timeline.play();
+        System.out.println(parentContainer.getChildren().size());
+        Utility.rootUI.getChildren().remove(okButton);
     }
 
     private static void removeEventHandlers(){
@@ -143,12 +149,29 @@ public class NoteEditor {
         // Close on Esc pressed event
         stage.getScene().setOnKeyPressed(event -> {
             if (event.getCode() == KeyCode.ESCAPE) {
-                // ----
                 event.consume();
                 textChecks();
-                // ----
             }
         });
     }
 
+/*    private static VBox setLayout(TextArea editableText){
+
+        VBox layout = new VBox(editableText *//*anchorPane*//*);
+        layout.setPadding(new Insets(10, 10, 0, 10));
+        layout.setStyle("-fx-background-radius: 16;" +
+                "-fx-background-color: rgb(45, 45, 50), rgb(60, 60, 65);" +
+                "-fx-background-insets: 0, 0 1.ser 1.ser 0;");
+        VBox.setVgrow(editableText, Priority.ALWAYS);
+
+        layout.setOnMousePressed(event -> {
+            xOffset = event.getSceneX();
+            yOffset = event.getSceneY();
+        });
+        layout.setOnMouseDragged(event -> {
+            stage.setX(event.getScreenX() - xOffset);
+            stage.setY(event.getScreenY() - yOffset);
+        });
+        return layout;
+    }*/
 }

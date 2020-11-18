@@ -1,5 +1,6 @@
 import javafx.fxml.FXML;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.StackPane;
 
 
 /**
@@ -11,9 +12,14 @@ class View {
     static boolean isPomodoroStarted = false;
     static boolean isNoteEditorShow = false;
 
+
+
     static void addNote() {
-        if (!isNoteEditorShow) Utility.noteEditor.editNote(new Note());
+        if (NoteEditor.parentContainer.getChildren().size() == 3) NoteEditor.parentContainer.getChildren().remove(1);
+        NoteEditor.parentContainer.getChildren().remove(NoteEditor.text);
+        if (!isNoteEditorShow) Utility.noteEditor.showEditor(new Note());
     }
+
     static void startPomodoro() {
         if (isPomodoroStarted) return;
         new Pomodoro().startPomodoro();

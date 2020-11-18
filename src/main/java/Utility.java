@@ -23,13 +23,23 @@ public class Utility {
     private static boolean appClosingState = false;
     private static int pomodoroTime = 25;
     public static NoteEditor noteEditor = NoteEditor.getInstance();
-    private static ImageView addNoteButton;
-    public static AnchorPane rootUI;
     public static AnchorPane contentAnchor;
     public static StackPane contentStack;
+    private static ImageView addNoteButton;
+    public static AnchorPane rootUI;
+
+
+
+
 
 
     // Setters
+    public static void setContentAnchor(AnchorPane contentAnchor) {
+        Utility.contentAnchor = contentAnchor;
+    }
+    public static void setContentStack(StackPane contentStack) {
+        Utility.contentStack = contentStack;
+    }
     public static void setAddNoteButton(ImageView fxAddNoteButton){
         addNoteButton = fxAddNoteButton;
     }
@@ -111,6 +121,12 @@ public class Utility {
 
 
     // Getters
+    public static AnchorPane getContentAnchor() {
+        return contentAnchor;
+    }
+    public static StackPane getContentStack() {
+        return contentStack;
+    }
     public static ImageView getAddNoteButton(){
         return addNoteButton;
     }
