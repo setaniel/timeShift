@@ -12,6 +12,10 @@ import java.util.Enumeration;
 import java.util.ResourceBundle;
 
 public class Main extends Application {
+    public static Stage getPrimeStage() {
+        return primeStage;
+    }
+
     /** The starting point of the program. Only run
      * the application, do not contain any logic. The
      * main window is designed here. This class loads
@@ -36,6 +40,7 @@ public class Main extends Application {
         // send stage on View, for close button use
         Utility.setPrimaryStage(primaryStage);
         Serializer.deserializeNotes();
+        SlideScene.initScene();
     }
     @FXML public static void main(String[] args) {
         launch(args);

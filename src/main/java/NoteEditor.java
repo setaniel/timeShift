@@ -25,8 +25,6 @@ public class NoteEditor {
     private static Note editableNote;
     private static NoteEditor instance;
     private static ImageView fxAddButton;
-    public static final StackPane parentContainer = new StackPane();
-    public static final Pane parentRoot = new Pane(parentContainer);
 
     private NoteEditor(){
         noteEditWindow();
@@ -41,15 +39,6 @@ public class NoteEditor {
         text = new TextArea();
         text.setWrapText(true);
         text.setPrefSize(280, 395);
-        parentRoot.setBackground(Background.EMPTY);
-        stage = new Stage(StageStyle.UNDECORATED);
-        Scene scene = new Scene(parentRoot, 280, 395, Color.TRANSPARENT);
-        scene.getStylesheets().add(NoteEditor.class.getResource("notepad.css").toExternalForm());
-        stage.setScene(scene);
-        stage.initModality(Modality.NONE);
-        stage.initStyle(StageStyle.TRANSPARENT);
-        stage.initOwner(Utility.getPrimaryStage());
-        stage.show();
     }
 
     public void showEditor(Note note){
@@ -75,17 +64,6 @@ public class NoteEditor {
         stage.setY(Utility.getPrimaryStage().getY() + 50);
 //        com.sun.glass.ui.Window.getWindows().get(0).setUndecoratedMoveRectangle(22);
         setEventHandlers();
-
-
-        text.translateXProperty().set(parentRoot.getWidth());
-
-        parentContainer.getChildren().add(text);
-
-        Timeline timeline = new Timeline();
-        KeyValue keyValue = new KeyValue(text.translateXProperty(), 0, Interpolator.EASE_IN);
-        KeyFrame keyFrame = new KeyFrame(Duration.seconds(3), keyValue);
-        timeline.getKeyFrames().add(keyFrame);
-        timeline.play();
     }
 
     private static void textChecks(){
@@ -107,15 +85,6 @@ public class NoteEditor {
 //        stage.hide();
         View.isNoteEditorShow = false;
 
-        text.translateXProperty().set(0);
-
-        Timeline timeline = new Timeline();
-        KeyValue keyValue = new KeyValue(text.translateXProperty(), 280, Interpolator.EASE_OUT);
-        KeyFrame keyFrame = new KeyFrame(Duration.seconds(3), keyValue);
-        timeline.getKeyFrames().add(keyFrame);
-        timeline.play();
-        System.out.println(parentContainer.getChildren().size());
-        Utility.rootUI.getChildren().remove(okButton);
     }
 
     private static void removeEventHandlers(){
@@ -154,24 +123,4 @@ public class NoteEditor {
             }
         });
     }
-
-/*    private static VBox setLayout(TextArea editableText){
-
-        VBox layout = new VBox(editableText *//*anchorPane*//*);
-        layout.setPadding(new Insets(10, 10, 0, 10));
-        layout.setStyle("-fx-background-radius: 16;" +
-                "-fx-background-color: rgb(45, 45, 50), rgb(60, 60, 65);" +
-                "-fx-background-insets: 0, 0 1.ser 1.ser 0;");
-        VBox.setVgrow(editableText, Priority.ALWAYS);
-
-        layout.setOnMousePressed(event -> {
-            xOffset = event.getSceneX();
-            yOffset = event.getSceneY();
-        });
-        layout.setOnMouseDragged(event -> {
-            stage.setX(event.getScreenX() - xOffset);
-            stage.setY(event.getScreenY() - yOffset);
-        });
-        return layout;
-    }*/
 }

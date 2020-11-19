@@ -9,24 +9,56 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
 import javafx.scene.layout.*;
-import javafx.scene.text.Font;
-import javafx.scene.text.Text;
+import javafx.scene.paint.Color;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import javafx.util.Duration;
-import org.omg.PortableServer.POA;
 
 
 public class SlideScene extends Application
 {
-    Scene scene;
-    Pane parentRoot;
-    StackPane parentContainer;
-    AnchorPane temp;
+    static Scene scene;
+    static Pane parentRoot;
+    static StackPane parentContainer;
+    static AnchorPane temp;
+    static NoteEditor noteEditor = Utility.noteEditor;
     public static void main(String[] args)
     {
         Application.launch(args);
+    }
+    SlideScene(){
+        initScene();
+    }
+
+    public static void initScene(){
+        Stage stage = new Stage();
+        // first init?
+        Label text = new Label("THIS IS <-FIRST-> SCENE");
+        Button nextSceneBtn = new Button("Next scene");
+        VBox vBox = new VBox(text, nextSceneBtn);
+        AnchorPane anchorPane = new AnchorPane(vBox);
+        // ________
+
+        parentContainer = new StackPane();
+        parentRoot = new Pane(parentContainer);
+        vBox.setAlignment(Pos.CENTER);
+        // Create the Scene
+        Pane scenePane = new Pane(parentRoot);
+        scenePane.setPrefSize(280, 395);
+        scenePane.setBackground(Background.EMPTY);
+        scenePane.setStyle("-fx-border-color: red");
+        scene = new Scene(scenePane, Color.TRANSPARENT);
+        scene.getStylesheets().add(SlideScene.class.getResource("notepad.css").toExternalForm());
+        stage.setScene(scene);
+        stage.initModality(Modality.WINDOW_MODAL);
+        stage.initStyle(StageStyle.TRANSPARENT);
+        stage.initOwner(Main.getPrimeStage());
+        stage.show();
+        nextSceneBtn.setOnAction(event -> showEditor());
+        // set position this modal on parent frame
+        stage.setX(Main.getPrimeStage().getX() + 30);
+        stage.setY(Main.getPrimeStage().getY() + 50);
     }
 
     @Override
@@ -40,28 +72,30 @@ public class SlideScene extends Application
 
         parentContainer = new StackPane(nextScene());
         parentRoot = new Pane(parentContainer);
-        parentRoot.setMaxSize(200, 200);
         vBox.setAlignment(Pos.CENTER);
-        vBox.setPrefSize(200, 200);
         // Create the Scene
-        Pane pane = new Pane(parentRoot);
-        pane.setPrefSize(200, 200);
-        scene = new Scene(pane);
+        Pane scenePane = new Pane(parentRoot);
+        scenePane.setBackground(Background.EMPTY);
+        scenePane.setPrefSize(280, 395);
+        scene = new Scene(scenePane);
         scene.getStylesheets().add(SlideScene.class.getResource("notepad.css").toExternalForm());
         stage.setScene(scene);
         stage.initModality(Modality.NONE);
         stage.initStyle(StageStyle.TRANSPARENT);
-        stage.initOwner(Utility.getPrimaryStage());
+        stage.initOwner(Main.getPrimeStage());
         stage.show();
-        nextSceneBtn.setOnAction(event -> showEditor(parentContainer));
+        nextSceneBtn.setOnAction(event -> showEditor());
+        // set position this modal on parent frame
+        stage.setX(Main.getPrimeStage().getX() + 30);
+        stage.setY(Main.getPrimeStage().getY() + 50);
     }
 
-    AnchorPane nextScene() {
+    static AnchorPane nextScene() {
         Button button = new Button("Close");
         VBox vBox = new VBox(new TextArea(), button);
         AnchorPane anchorPane = new AnchorPane(vBox);
-        anchorPane.setPrefSize(200, 200);
-        vBox.setPrefSize(200, 200);
+        anchorPane.setPrefSize(280, 395);
+        vBox.setPrefSize(280, 395);
         button.setOnAction(event -> {
             hideEditor(anchorPane);
 
@@ -69,12 +103,11 @@ public class SlideScene extends Application
         return anchorPane;
     }
 
-
-    void hideEditor(AnchorPane root){
+    static void hideEditor(AnchorPane root){
         root.translateXProperty().set(0);
 
         Timeline timeline = new Timeline();
-        KeyValue keyValue = new KeyValue(root.translateXProperty(), 200, Interpolator.EASE_OUT);
+        KeyValue keyValue = new KeyValue(root.translateXProperty(), 280, Interpolator.EASE_OUT);
         KeyFrame keyFrame = new KeyFrame(Duration.seconds(0.6), keyValue);
         timeline.getKeyFrames().add(keyFrame);
         timeline.play();
@@ -82,7 +115,8 @@ public class SlideScene extends Application
     }
 
 
-    void showEditor(StackPane parentContainer){
+    public static void showEditor(){
+        System.out.println("showEditor");
         AnchorPane root = nextScene(); // куда впихиваю
         root.translateXProperty().set(parentRoot.getWidth());
         parentContainer.getChildren().add(root);
