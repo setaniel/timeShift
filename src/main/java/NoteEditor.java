@@ -1,49 +1,31 @@
-import javafx.animation.Interpolator;
-import javafx.animation.KeyFrame;
-import javafx.animation.KeyValue;
-import javafx.animation.Timeline;
-import javafx.geometry.Insets;
-import javafx.scene.Scene;
 import javafx.scene.control.TextArea;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
-import javafx.scene.layout.*;
+import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
-import javafx.stage.Modality;
 import javafx.stage.Stage;
-import javafx.stage.StageStyle;
-import javafx.util.Duration;
 
-public class NoteEditor {
+public class NoteEditor extends Pane{
 
-    private static final ImageView okButton = new ImageView(
+    private final ImageView okButton = new ImageView(
             new Image(NoteEditor.class.getResourceAsStream("images/done.png")));
-    private static Stage stage;
-    private static String noteObjectText;
-    public static TextArea text;
-    private static Note editableNote;
-    private static NoteEditor instance;
-    private static ImageView fxAddButton;
+    private String noteObjectText;
+    private TextArea text;
+    private Note editableNote;
+    private ImageView fxAddButton;
 
-    private NoteEditor(){
-        noteEditWindow();
-    }
-    public static NoteEditor getInstance(){
-        if (instance == null) instance = new NoteEditor();
-        return instance;
-    }
-
-    private static void noteEditWindow() {
+    public void initEditor(Note note){
+        if (this.getChildren().size() > 0) this.getChildren().remove(0);
+        this.setPrefSize(250, 395);
+        Utility.getRootUI().getChildren().add(okButton);
         Utility.setUIShadows(okButton);
         text = new TextArea();
+        this.getChildren().add(text);
         text.setWrapText(true);
         text.setPrefSize(280, 395);
-    }
-
-    public void showEditor(Note note){
-        Utility.rootUI.getChildren().add(okButton);
-        AnchorPane.setRightAnchor(okButton, 5.0);
+        AnchorPane.setRightAnchor(okButton, 17.0);
         AnchorPane.setTopAnchor(okButton, 140.0);
 
         editableNote = note;
@@ -55,18 +37,11 @@ public class NoteEditor {
             noteObjectText = editableNote.getText();
             text.setText(noteObjectText);
         }
-
         View.isNoteEditorShow = true;
-        stage.requestFocus();
-
-        // set position this modal on parent frame
-        stage.setX(Utility.getPrimaryStage().getX() + 30);
-        stage.setY(Utility.getPrimaryStage().getY() + 50);
-//        com.sun.glass.ui.Window.getWindows().get(0).setUndecoratedMoveRectangle(22);
         setEventHandlers();
     }
 
-    private static void textChecks(){
+    private void textChecks(){
         if (noteObjectText == null){ // new note object, if symbols >= 1 - create note
             if (text.getText().length() > 0){
                 editableNote.update(text.getText());
@@ -82,17 +57,18 @@ public class NoteEditor {
             Utility.getContent().getChildren().remove(editableNote);
         }
         removeEventHandlers();
-//        stage.hide();
-        View.isNoteEditorShow = false;
+        SlideScene.hideEditor(this);
+        Utility.getRootUI().getChildren().remove(okButton);
 
+        View.isNoteEditorShow = false;
     }
 
-    private static void removeEventHandlers(){
+    private void removeEventHandlers(){
 
         okButton.setOnMouseClicked(null);
-        Main.primeStage.getScene().setOnMouseClicked(null);
-        stage.getScene().setOnKeyPressed(null);
-        stage.getScene().setOnMouseExited(null);
+        Utility.getPrimaryStage().getScene().setOnMouseClicked(null);
+        this.setOnKeyPressed(null);
+        this.setOnMouseExited(null);
         fxAddButton.setOnMouseExited(null);
     }
 
@@ -111,12 +87,12 @@ public class NoteEditor {
             textChecks();
         });
         // part of event
-        stage.getScene().setOnMouseExited(event -> setEventPrimeClick());
+        this.setOnMouseExited(event -> setEventPrimeClick());
         fxAddButton = Utility.getAddNoteButton();
         fxAddButton.setOnMouseExited(event -> setEventPrimeClick());
 
         // Close on Esc pressed event
-        stage.getScene().setOnKeyPressed(event -> {
+        this.setOnKeyPressed(event -> {
             if (event.getCode() == KeyCode.ESCAPE) {
                 event.consume();
                 textChecks();

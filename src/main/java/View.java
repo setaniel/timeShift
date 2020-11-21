@@ -1,6 +1,7 @@
 import javafx.fxml.FXML;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.StackPane;
+import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
 
@@ -9,22 +10,13 @@ import javafx.stage.Stage;
  * Managing notes
  * */
 class View {
-
-    static boolean isPomodoroStarted = false;
     static boolean isNoteEditorShow = false;
-    static SlideScene slideScene = new SlideScene();
 
-
-
-    void addNote() {
-//        if (!isNoteEditorShow) Utility.noteEditor.showEditor(new Note());
-        slideScene.showEditor();
-    }
-
-    static void startPomodoro() {
-        if (isPomodoroStarted) return;
-        new Pomodoro().startPomodoro();
-        isPomodoroStarted = true;
+    static void addNote(Note note) {
+        if (!isNoteEditorShow) {
+            Utility.getNoteEditor().initEditor(note);
+            SlideScene.showEditor();
+        }
     }
 
     static void manageNotes(Note note) {

@@ -29,10 +29,10 @@ public class Info {
         VBox layout = new VBox();
         AnchorPane anchorPane = new AnchorPane();
         anchorPane.getChildren().add(layout);
-        AnchorPane.setBottomAnchor(layout, 10.0);
-        AnchorPane.setLeftAnchor(layout, 10.0);
-        AnchorPane.setRightAnchor(layout, 10.0);
-        AnchorPane.setTopAnchor(layout, 10.0);
+        AnchorPane.setBottomAnchor(layout, 3.0);
+        AnchorPane.setLeftAnchor(layout, 3.0);
+        AnchorPane.setRightAnchor(layout, 3.0);
+        AnchorPane.setTopAnchor(layout, 3.0);
         layout.setBackground(new Background(new BackgroundFill(Paint.valueOf("#e8e4db"), new CornerRadii(16), Insets.EMPTY)));
         layout.setAlignment(Pos.TOP_CENTER);
         layout.setPadding(new Insets(10, 10, 10, 10));
@@ -67,8 +67,9 @@ public class Info {
         stage.setY(Utility.getPrimaryStage().getY() + 330);
         stage.show();
         com.sun.glass.ui.Window.getWindows().get(0).setUndecoratedMoveRectangle(22);
-        anchorPane.setStyle("-fx-background-radius: 16;" +
-                "-fx-background-color: rgb(66, 112, 112), rgb(66, 112, 112);");
+        anchorPane.setStyle("-fx-background-radius: 22;" +
+                "-fx-background-insets: 10; " +
+                "-fx-effect: dropShadow(three-pass-box, black, 10, 0, 0, 0);");
 
         //-----------------------------------
         // Drag window

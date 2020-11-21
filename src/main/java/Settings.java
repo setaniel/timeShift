@@ -39,10 +39,10 @@ public class Settings {
         AnchorPane.setBottomAnchor(okButton, 12.0);
         AnchorPane.setRightAnchor(okButton, 13.0);
 
-        AnchorPane.setBottomAnchor(layout, 10.0);
-        AnchorPane.setLeftAnchor(layout, 10.0);
-        AnchorPane.setRightAnchor(layout, 10.0);
-        AnchorPane.setTopAnchor(layout, 10.0);
+        AnchorPane.setBottomAnchor(layout, 3.0);
+        AnchorPane.setLeftAnchor(layout, 3.0);
+        AnchorPane.setRightAnchor(layout, 3.0);
+        AnchorPane.setTopAnchor(layout, 3.0);
 
         layout.setBackground(new Background(new BackgroundFill(Paint.valueOf("#e8e4db"), new CornerRadii(16), Insets.EMPTY)));
 //        layout.setAlignment(Pos.CENTER);
@@ -72,8 +72,9 @@ public class Settings {
         stage.setY(Utility.getPrimaryStage().getY() + 320);
         stage.show();
         com.sun.glass.ui.Window.getWindows().get(0).setUndecoratedMoveRectangle(22);
-        anchorPane.setStyle("-fx-background-radius: 16;" +
-                "-fx-background-color: rgb(66, 112, 112), rgb(66, 112, 112);");
+        anchorPane.setStyle("-fx-background-radius: 22;" +
+                "-fx-background-insets: 10; " +
+                "-fx-effect: dropShadow(three-pass-box, black, 10, 0, 0, 0);");
 
         //-----------------------------------
         okButton.setOnAction(event -> {

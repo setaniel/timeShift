@@ -5,6 +5,7 @@ import javafx.scene.control.ScrollPane;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.ScrollEvent;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 
@@ -17,26 +18,31 @@ import java.util.ResourceBundle;
  * of links is initialized and translated into Java code.
  * */
 public class Controller extends View implements Initializable{
-    @FXML private StackPane fxContentStack;
-    @FXML private AnchorPane fxContentAnchor;
-    @FXML private AnchorPane fxRootUI;
     @FXML private AnchorPane fxTrafficPane;
-    @FXML private Label fxWeatherLabel;
-    @FXML private Label fxNetLabel;
     @FXML private ImageView fxMinimize;
     @FXML private ScrollPane fxScroll;
     @FXML private ImageView fxInfo;
     @FXML private ImageView fxSettings;
-    @FXML private ImageView fxAddNoteButton;
     @FXML private ImageView fxCloseButton;
     @FXML private ImageView fxPomodoro;
-    @FXML private VBox fxContent;
+    @FXML AnchorPane fxRootUI;
+    @FXML StackPane fxContentStack;
+    @FXML Pane fxContentAnchor;
+    @FXML Label fxWeatherLabel;
+    @FXML Label fxNetLabel;
+    @FXML ImageView fxAddNoteButton;
+    @FXML VBox fxContent;
 
     @FXML private void onNewNoteClick() {
-        addNote();
+        addNote(new Note());
     }
     @FXML private void onPomodoroClick() {
-        startPomodoro();
+        System.out.println("onPomClick");
+        if (!Pomodoro.isPomodoroStarted) {
+            System.out.println("pom not started");
+            new Pomodoro().startPomodoro();
+            Pomodoro.isPomodoroStarted = true;
+        }
     }
     @FXML private void onInfoClick() {
         if (!Info.isInfoShow) Info.showInfo(fxInfo);
@@ -50,13 +56,7 @@ public class Controller extends View implements Initializable{
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        Utility.setContentStack(fxContentStack);
-        Utility.setContentAnchor(fxContentAnchor);
-        Utility.rootUI = fxRootUI;
-        Utility.setAddNoteButton(fxAddNoteButton);
-        Utility.setNetLabel(fxNetLabel);
-        Utility.setWeatherLabel(fxWeatherLabel);
-        Utility.setContent(fxContent);
+        Utility.setController(this);
         fxScroll.getStylesheets().add(Controller.class.getResource("/scroll.css").toExternalForm());
         fxScroll.setVbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
         setScrollVisibility();
@@ -70,6 +70,7 @@ public class Controller extends View implements Initializable{
         NetChecker.ping();
         Weather.showWeather();
         Traffic.showTraffic(fxTrafficPane);
+        SlideScene.initScene();
     }
     private void setScrollVisibility() {
         // Start scrolling

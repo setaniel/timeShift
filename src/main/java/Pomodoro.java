@@ -17,6 +17,7 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 public class Pomodoro {
+    static boolean isPomodoroStarted = false;
     private double xOffset = 0;
     private double yOffset = 0;
     private static Button button;
@@ -61,11 +62,11 @@ public class Pomodoro {
         stage.setY(Utility.getPrimaryStage().getY() + 50);
         stage.show();
 
-        stackPane.setOnMousePressed(event -> {
+        scene.setOnMousePressed(event -> {
             xOffset = event.getSceneX();
             yOffset = event.getSceneY();
         });
-        stackPane.setOnMouseDragged(event -> {
+        scene.setOnMouseDragged(event -> {
             stage.setX(event.getScreenX() - xOffset);
             stage.setY(event.getScreenY() - yOffset);
         });
@@ -91,7 +92,7 @@ public class Pomodoro {
         closeImageView.setOnMouseClicked(event -> {
             stage.close();
             if (timer != null) timer.cancel();
-            View.isPomodoroStarted = false;
+            isPomodoroStarted = false;
         });
         Utility.setInnerShadow(closeImageView, Color.RED);
         return closeImageView;

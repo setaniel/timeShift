@@ -1,4 +1,5 @@
 import javafx.event.EventHandler;
+import javafx.fxml.FXMLLoader;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
@@ -16,55 +17,18 @@ import javafx.scene.text.FontWeight;
 import javafx.stage.Stage;
 
 public class Utility {
+    private static Controller controller;
     private static Stage primaryStage;
-    private static VBox content;
-    private static Label netLabel;
-    private static Label weatherLabel;
     private static boolean appClosingState = false;
     private static int pomodoroTime = 25;
-    public static NoteEditor noteEditor = NoteEditor.getInstance();
-    public static AnchorPane contentAnchor;
-    public static StackPane contentStack;
-    private static ImageView addNoteButton;
-    public static AnchorPane rootUI;
-
-
+    private static NoteEditor noteEditor = new NoteEditor();
 
 
 
 
     // Setters
-    public static void setContentAnchor(AnchorPane contentAnchor) {
-        Utility.contentAnchor = contentAnchor;
-    }
-    public static void setContentStack(StackPane contentStack) {
-        Utility.contentStack = contentStack;
-    }
-    public static void setAddNoteButton(ImageView fxAddNoteButton){
-        addNoteButton = fxAddNoteButton;
-    }
-    public static void setWeatherLabel(Label fxWeather){
-        weatherLabel = fxWeather;
-        // Adding the shadow
-        InnerShadow shadow = new InnerShadow();
-        weatherLabel.setEffect(shadow);
-        weatherLabel.setAlignment(Pos.CENTER);
-        weatherLabel.setPadding(new Insets(5, 8, 5, 8));
-        weatherLabel.setFont(Font.font("Courier New", FontWeight.BOLD, 13));
-        weatherLabel.setBackground(new Background(new BackgroundFill(Paint.valueOf("#98ecf2"),
-                new CornerRadii(16), Insets.EMPTY)));
-    }
-    public static void setNetLabel(Label fxNetLabel){
-        // Adding the shadow
-        InnerShadow shadow = new InnerShadow();
-        netLabel = fxNetLabel;
-        netLabel.setEffect(shadow);
-        netLabel.setAlignment(Pos.CENTER);
-        netLabel.setPadding(new Insets(5, 8, 5, 8));
-        netLabel.setFont(Font.font("Courier New", FontWeight.BOLD, 12));
-    }
-    public static void setContent(VBox fxContent){
-        content = fxContent;
+    public static void setController(Controller controller) {
+        Utility.controller = controller;
     }
     public static void setPrimaryStage(Stage primeStage){
         primaryStage = primeStage;
@@ -90,13 +54,6 @@ public class Utility {
         // Removing the shadow when the mouse cursor is off
         node.addEventHandler(MouseEvent.MOUSE_EXITED, e -> node.setEffect(null));
     }
-    public static void setOKButtonShadows(Node node){
-        DropShadow blackShadow = new DropShadow(10.0, Color.BLACK);
-        DropShadow greenShadow = new DropShadow(10.0, Color.GREEN);
-        node.setEffect(blackShadow);
-        node.addEventHandler(MouseEvent.MOUSE_ENTERED, e -> node.setEffect(greenShadow));
-        node.addEventHandler(MouseEvent.MOUSE_EXITED, e -> node.setEffect(blackShadow));
-    }
     public static void setUIShadows(Node node){
         DropShadow blackShadow = new DropShadow(10.0, Color.BLACK);
         DropShadow redShadow = new DropShadow(17.0, Color.RED);
@@ -118,35 +75,62 @@ public class Utility {
         node.setOnMouseEntered(event -> node.setEffect(actionShadow));
         node.setOnMouseExited(event -> node.setEffect(viewShadow));
     }
+    public static void setOKButtonShadows(Node node){
+        DropShadow blackShadow = new DropShadow(10.0, Color.BLACK);
+        DropShadow greenShadow = new DropShadow(10.0, Color.GREEN);
+        node.setEffect(blackShadow);
+        node.addEventHandler(MouseEvent.MOUSE_ENTERED, e -> node.setEffect(greenShadow));
+        node.addEventHandler(MouseEvent.MOUSE_EXITED, e -> node.setEffect(blackShadow));
+    }
 
 
     // Getters
-    public static AnchorPane getContentAnchor() {
-        return contentAnchor;
+    public static Pane getContentAnchor() {
+        return controller.fxContentAnchor;
     }
     public static StackPane getContentStack() {
-        return contentStack;
+        return controller.fxContentStack;
     }
     public static ImageView getAddNoteButton(){
-        return addNoteButton;
+        return controller.fxAddNoteButton;
     }
     public static Label getWeatherLabel(){
-        return weatherLabel;
+        // Adding the shadow
+        InnerShadow shadow = new InnerShadow();
+        controller.fxWeatherLabel.setEffect(shadow);
+        controller.fxWeatherLabel.setAlignment(Pos.CENTER);
+        controller.fxWeatherLabel.setPadding(new Insets(5, 8, 5, 8));
+        controller.fxWeatherLabel.setFont(Font.font("Courier New", FontWeight.BOLD, 13));
+        controller.fxWeatherLabel.setBackground(new Background(new BackgroundFill(Paint.valueOf("#98ecf2"),
+                new CornerRadii(16), Insets.EMPTY)));
+        return controller.fxWeatherLabel;
     }
     public static Label getNetLabel(){
-        return netLabel;
+        // Adding the shadow
+        InnerShadow shadow = new InnerShadow();
+        controller.fxNetLabel.setEffect(shadow);
+        controller.fxNetLabel.setAlignment(Pos.CENTER);
+        controller.fxNetLabel.setPadding(new Insets(5, 8, 5, 8));
+        controller.fxNetLabel.setFont(Font.font("Courier New", FontWeight.BOLD, 12));
+        return controller.fxNetLabel;
     }
     public static int getPomodoroTime(){
         return pomodoroTime;
     }
     public static VBox getContent(){
-        return content;
+        return controller.fxContent;
+    }
+    public static AnchorPane getRootUI() {
+        return controller.fxRootUI;
     }
     public static Stage getPrimaryStage(){
         return primaryStage;
     }
     public static boolean isAppClosing() {
         return appClosingState;
+    }
+    public static NoteEditor getNoteEditor() {
+        return noteEditor;
     }
 
 }

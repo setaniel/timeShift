@@ -125,7 +125,7 @@ public class Note extends AnchorPane {
         this.getChildren().addAll(titleLabel, previewLabel, trashButton, dateStampLabel);
         this.setMaxWidth(252.0);
         this.setOnMouseClicked(event -> {
-            if (!View.isNoteEditorShow) Utility.noteEditor.showEditor(this);
+            if (!View.isNoteEditorShow) View.addNote(this);
         });
     }
 

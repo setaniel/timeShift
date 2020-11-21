@@ -5,16 +5,13 @@
 <?import javafx.scene.image.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane prefHeight="545.0" prefWidth="400.0" xmlns="http://javafx.com/javafx/1.8.0.271" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller">
-    <StackPane AnchorPane.bottomAnchor="20.0" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="20.0">
+<AnchorPane prefHeight="528.0" prefWidth="386.0" xmlns="http://javafx.com/javafx/1.8.0.271" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller">
+    <StackPane AnchorPane.bottomAnchor="3.0" AnchorPane.leftAnchor="3.0" AnchorPane.rightAnchor="3.0" AnchorPane.topAnchor="3.0">
         <ImageView fitHeight="522.0" fitWidth="380.0">
             <Image url="@images/notes.png" />
         </ImageView>
         <VBox prefHeight="200.0" prefWidth="100.0">
             <AnchorPane fx:id="fxRootUI" prefHeight="466.0" prefWidth="285.0">
-                <ImageView fx:id="fxPomodoro" fitHeight="46.0" fitWidth="54.0" layoutX="333.0" onMouseClicked="#onPomodoroClick" pickOnBounds="true" preserveRatio="true">
-                    <Image url="@images/Tomato.png" />
-                </ImageView>
                 <HBox alignment="TOP_RIGHT" prefHeight="22.0" prefWidth="355.0" spacing="20.0" AnchorPane.leftAnchor="10.0" AnchorPane.topAnchor="490.0">
                     <Label fx:id="fxWeatherLabel" HBox.hgrow="ALWAYS" />
                     <AnchorPane fx:id="fxTrafficPane" HBox.hgrow="ALWAYS" />
@@ -24,12 +21,14 @@
                     </padding>
                 </HBox>
                 <AnchorPane layoutX="20.0" layoutY="39.0">
-                    <AnchorPane fx:id="fxContentAnchor" prefHeight="395.0" prefWidth="280.0">
+                    <AnchorPane prefHeight="395.0" prefWidth="280.0">
+                        <Pane fx:id="fxContentAnchor">
                         <StackPane fx:id="fxContentStack">
                         <ScrollPane fx:id="fxScroll" fitToWidth="true" prefHeight="395.0" prefWidth="280.0" AnchorPane.bottomAnchor="30.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                             <VBox fx:id="fxContent" prefHeight="439.0" prefWidth="262.0" spacing="10.0" />
                         </ScrollPane>
                         </StackPane>
+                        </Pane>
                     </AnchorPane>
                 </AnchorPane>
                 <ImageView fx:id="fxCloseButton" layoutX="11.0" layoutY="10.0" onMouseClicked="#closeApp">
@@ -47,6 +46,9 @@
                 </ImageView>
                 <ImageView fx:id="fxInfo" layoutX="333.0" layoutY="420.0" onMouseClicked="#onInfoClick" pickOnBounds="true" preserveRatio="true">
                     <Image url="@images/info.png" />
+                </ImageView>
+                <ImageView fx:id="fxPomodoro" onMouseClicked="#onPomodoroClick" fitHeight="46.0" fitWidth="54.0" layoutX="333.0" pickOnBounds="true" preserveRatio="true">
+                    <Image url="@images/Tomato.png" />
                 </ImageView>
             </AnchorPane>
         </VBox>
