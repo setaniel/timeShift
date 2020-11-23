@@ -1,3 +1,9 @@
+import javafx.animation.Animation;
+import javafx.animation.KeyFrame;
+import javafx.animation.KeyValue;
+import javafx.animation.Timeline;
+import javafx.application.Platform;
+import javafx.beans.property.DoubleProperty;
 import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Insets;
@@ -15,6 +21,10 @@ import javafx.scene.paint.Paint;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.stage.Stage;
+import javafx.util.Duration;
+
+import java.util.Timer;
+import java.util.TimerTask;
 
 public class Utility {
     private static Controller controller;
@@ -133,4 +143,31 @@ public class Utility {
         return noteEditor;
     }
 
+    // Animations
+
+    /** Usage:
+     * Node.setOpacity( 1 );
+     * getFadeInAnimation( Node.opacityProperty() ).play();
+     */
+    public static Animation getFadeInAnimation(DoubleProperty property ) {
+        Timeline timeline = new Timeline();
+        timeline.getKeyFrames().addAll(
+                new KeyFrame( Duration.ONE, new KeyValue( property, 1 ) ),
+                new KeyFrame( Duration.seconds(0.4), new KeyValue( property, 0 ) )
+        );
+        return timeline;
+    }
+
+    /** Usage: <br>
+     * Node.setOpacity( 0 ); <br>
+     * getFadeOutAnimation( Node.opacityProperty() ).play();
+     */
+    public static Animation getFadeOutAnimation(DoubleProperty property ) {
+        Timeline timeline = new Timeline();
+        timeline.getKeyFrames().addAll(
+                new KeyFrame( Duration.ZERO, new KeyValue( property, 0 ) ),
+                new KeyFrame( Duration.seconds(0.4), new KeyValue( property, 1 ) )
+        );
+        return timeline;
+    }
 }

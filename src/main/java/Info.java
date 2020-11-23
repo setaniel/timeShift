@@ -25,6 +25,14 @@ public class Info {
     private static double xOffset = 0;
     private static double yOffset = 0;
     static boolean isInfoShow = false;
+    private static Stage stage;
+
+    public static void stageClose(){
+        if (stage != null && stage.isShowing()) {
+            stage.close();
+        }
+    }
+
     public static void showInfo(ImageView fxButton) {
         VBox layout = new VBox();
         AnchorPane anchorPane = new AnchorPane();
@@ -56,14 +64,14 @@ public class Info {
             }
         });
         layout.getChildren().addAll(version, nickName, author, mail, site);
-        Stage stage = new Stage(StageStyle.UNDECORATED);
+        stage = new Stage(StageStyle.UNDECORATED);
         Scene scene = new Scene(anchorPane, 200, 120, Color.TRANSPARENT);
         stage.setScene(scene);
         stage.initModality(Modality.NONE);
         stage.initStyle(StageStyle.TRANSPARENT);
         stage.initOwner(Utility.getPrimaryStage());
         // set position this modal on parent frame
-        stage.setX(Utility.getPrimaryStage().getX() + 145);
+        stage.setX(Utility.getPrimaryStage().getX() + 125);
         stage.setY(Utility.getPrimaryStage().getY() + 330);
         stage.show();
         com.sun.glass.ui.Window.getWindows().get(0).setUndecoratedMoveRectangle(22);
@@ -81,34 +89,32 @@ public class Info {
             stage.setX(event.getScreenX() - xOffset);
             stage.setY(event.getScreenY() - yOffset);
         });
-        closeOnActions(stage, fxButton);
+        closeOnActions(fxButton);
+
+        stage.setOpacity(0);
+        Utility.getFadeOutAnimation(stage.opacityProperty()).play();
+        layout.getChildren().get(4).requestFocus();
     }
     private static void setLabelFont(Label label) {
         label.setFont(Font.font("Courier New", FontWeight.BOLD, 14));
     }
 
-    public static void closeOnActions(Stage modalStage, Node fxButton) {
+    public static void closeOnActions(Node fxButton) {
 
         fxButton.setOnMouseExited(event -> {
-            Utility.getPrimaryStage().getScene().setOnMouseClicked(event1 -> {
-                modalStage.close();
-                removeOnActEvents(fxButton, modalStage);
-
-            });
+            Utility.getPrimaryStage().getScene().setOnMouseClicked(event1 -> removeOnActEvents(fxButton));
             // Close on Esc pressed
-            modalStage.getScene().setOnKeyPressed(event2 -> {
-                if (event2.getCode() == KeyCode.ESCAPE) modalStage.close();
-                removeOnActEvents(fxButton, modalStage);
+            stage.getScene().setOnKeyPressed(event2 -> {
+                if (event2.getCode() == KeyCode.ESCAPE) removeOnActEvents(fxButton);
             });
         });
     }
 
-
-
-    private static void removeOnActEvents(Node fxButton, Stage modalStage) {
+    private static void removeOnActEvents(Node fxButton) {
         Utility.getPrimaryStage().getScene().setOnMouseClicked(null);
-        modalStage.getScene().setOnKeyPressed(null);
+        stage.getScene().setOnKeyPressed(null);
         fxButton.setOnMouseExited(null);
         isInfoShow = false;
+        Utility.getFadeInAnimation(stage.opacityProperty()).play();
     }
 }

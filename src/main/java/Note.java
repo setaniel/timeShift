@@ -10,6 +10,8 @@ import javafx.scene.text.FontWeight;
 import java.time.Instant;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * Note is a fabric-class of notes.
@@ -55,12 +57,49 @@ public class Note extends AnchorPane {
     public void setIndex(int index){
         noteModel.setIndex(index);
     }
+
     public void update(String text){
-        if (text.contains("\n")){
+        setText(text);
+
+        Pattern pattern = Pattern.compile("\\S*\\s*\\w*\\s*\\S", Pattern.UNICODE_CHARACTER_CLASS);
+        Matcher matcher;
+
+        String[] splitted = text.split("\n");
+        int count = 0;
+
+        for (String s : splitted) {
+//            System.out.println(s + " matches? - " + s.matches(pattern));
+            matcher = pattern.matcher(s);
+            if (matcher.find()) {
+                s = s.trim();
+                count++;
+                System.out.println("trimmed == " + s);
+                if (count == 1) setTitle(s.length() > 21 ? s.substring(0, 21) + "..." : s);
+
+                if (count == 2) {
+                    setPreview(s.length() > 26 ? s.substring(0, 26) + "..." : s);
+                    break;
+                }
+            }
+        }
+        if (count != 2) setPreview("Нет дополнительного текста");
+
+
+
+
+       /* if (splitted.length > 0) setTitle(splitted[0].length() > 21 ? splitted[0].substring(0, 21) + "..." : splitted[0]);
+        if (splitted.length > 1) {
+            setPreview(splitted[1].length() > 26 ? splitted[1].substring(0, 26) + "..." : splitted[1]);
+        } else {
+            setPreview("Нет дополнительного текста");
+        }
+        setText(text);*/
+
+       /* if (text.contains("\n")){
             setTitle(text.indexOf("\n") > 21 ? text.substring(0, 21) + "..." : text.substring(0, text.indexOf("\n")));
-            String s = text.substring(text.indexOf("\n")+1);
+            String ss = text.substring(text.indexOf("\n")+1);
 //            String prev = s.substring(0, s.indexOf("\n"));
-            setPreview(s.length() > 26 ? s.substring(0, 26) + "..." : s);
+            setPreview(ss.indexOf("\n") > 26 ? ss.substring(0, 26) + "..." : ss.substring(0, text.indexOf("\n")));
 //            setPreview(s.length() > 26 && !s.contains("\n") ? s.substring(0, 26) + "..." : s);
         }else{
             setTitle(text.length() > 21 ? text.substring(0, 21)+"..." : text);
@@ -69,8 +108,7 @@ public class Note extends AnchorPane {
         if (text.length() < 21 && !text.contains("\n") || text.charAt(text.length()-1) == '\n') {
             setTitle(text);
             setPreview("Нет дополнительного текста");
-        }
-        setText(text);
+        }*/
     }
     public String getText(){
         return noteModel.getNoteText();

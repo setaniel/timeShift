@@ -11,9 +11,18 @@ import javafx.stage.Stage;
  * */
 class View {
     static boolean isNoteEditorShow = false;
+    static ImageView fxAddNoteButton;
+
+    public static void setFxAddNoteButton(ImageView fxAddNoteButton) {
+        View.fxAddNoteButton = fxAddNoteButton;
+    }
+
+
+
 
     static void addNote(Note note) {
         if (!isNoteEditorShow) {
+            NoteEditor.removeOkButton(fxAddNoteButton);
             Utility.getNoteEditor().initEditor(note);
             SlideScene.showEditor();
         }

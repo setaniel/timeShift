@@ -34,22 +34,29 @@ public class Controller extends View implements Initializable{
     @FXML VBox fxContent;
 
     @FXML private void onNewNoteClick() {
+        View.setFxAddNoteButton(fxAddNoteButton);
+        NoteEditor.removeOkButton(fxAddNoteButton);
         addNote(new Note());
     }
     @FXML private void onPomodoroClick() {
-        System.out.println("onPomClick");
         if (!Pomodoro.isPomodoroStarted) {
-            System.out.println("pom not started");
+            Pomodoro.stageClose();
             new Pomodoro().startPomodoro();
-            Pomodoro.isPomodoroStarted = true;
         }
+        Pomodoro.isPomodoroStarted = true;
     }
     @FXML private void onInfoClick() {
-        if (!Info.isInfoShow) Info.showInfo(fxInfo);
+        if (!Info.isInfoShow) {
+            Info.stageClose();
+            Info.showInfo(fxInfo);
+        }
         Info.isInfoShow = true;
     }
     @FXML private void onSettingsClick() {
-        if (!Settings.isSettingsShow) Settings.showSettings(fxSettings);
+        if (!Settings.isSettingsShow) {
+            Settings.stageClose();
+            Settings.showSettings(fxSettings);
+        }
         Settings.isSettingsShow = true;
     }
 
@@ -57,7 +64,7 @@ public class Controller extends View implements Initializable{
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         Utility.setController(this);
-        fxScroll.getStylesheets().add(Controller.class.getResource("/scroll.css").toExternalForm());
+        fxScroll.getStylesheets().add(Controller.class.getResource("scroll.css").toExternalForm());
         fxScroll.setVbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
         setScrollVisibility();
         Utility.setUIShadows(fxMinimize);

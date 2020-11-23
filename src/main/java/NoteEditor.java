@@ -1,3 +1,6 @@
+import javafx.application.Platform;
+import javafx.scene.Node;
+import javafx.scene.control.Button;
 import javafx.scene.control.TextArea;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -7,20 +10,36 @@ import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 
-public class NoteEditor extends Pane{
+import java.util.Timer;
+import java.util.TimerTask;
 
-    private final ImageView okButton = new ImageView(
+public class NoteEditor extends Pane{
+    private static final ImageView okButton = new ImageView(
             new Image(NoteEditor.class.getResourceAsStream("images/done.png")));
     private String noteObjectText;
     private TextArea text;
     private Note editableNote;
-    private ImageView fxAddButton;
+    private static ImageView fxAddButton;
+    private static int count = 0;
+
+    public static void removeOkButton(ImageView fxAddNoteButton){
+        fxAddButton = fxAddNoteButton;
+        Utility.getRootUI().getChildren().remove(okButton);
+
+        // fading fxAddNoteButton
+        Utility.getFadeInAnimation(fxAddButton.opacityProperty()).play();
+
+    }
 
     public void initEditor(Note note){
         if (this.getChildren().size() > 0) this.getChildren().remove(0);
         this.setPrefSize(250, 395);
         Utility.getRootUI().getChildren().add(okButton);
         Utility.setUIShadows(okButton);
+
+        okButton.setOpacity(0);
+        Utility.getFadeOutAnimation(okButton.opacityProperty()).play();
+
         text = new TextArea();
         this.getChildren().add(text);
         text.setWrapText(true);
@@ -58,7 +77,9 @@ public class NoteEditor extends Pane{
         }
         removeEventHandlers();
         SlideScene.hideEditor(this);
-        Utility.getRootUI().getChildren().remove(okButton);
+
+        Utility.getFadeInAnimation(okButton.opacityProperty()).play();
+        Utility.getFadeOutAnimation(fxAddButton.opacityProperty()).play();
 
         View.isNoteEditorShow = false;
     }

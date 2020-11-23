@@ -23,11 +23,17 @@ public class Pomodoro {
     private static Button button;
     private static AnchorPane anchorPane;
     private final StackPane stackPane = new StackPane();
-    private Stage stage;
+    private static Stage stage;
     private Timer timer;
     private Image image;
     Scene scene;
     private static int pomTimer;
+
+    public static void stageClose(){
+        if (stage != null && stage.isShowing()) {
+            stage.close();
+        }
+    }
 
     public Pomodoro(){
         setImage("Tomato");
@@ -62,6 +68,9 @@ public class Pomodoro {
         stage.setY(Utility.getPrimaryStage().getY() + 50);
         stage.show();
 
+        stage.setOpacity(0);
+        Utility.getFadeOutAnimation(stage.opacityProperty()).play();
+
         scene.setOnMousePressed(event -> {
             xOffset = event.getSceneX();
             yOffset = event.getSceneY();
@@ -90,7 +99,7 @@ public class Pomodoro {
         AnchorPane.setRightAnchor(closeImageView, 0.0);
         AnchorPane.setTopAnchor(closeImageView,5.0);
         closeImageView.setOnMouseClicked(event -> {
-            stage.close();
+            Utility.getFadeInAnimation(stage.opacityProperty()).play();
             if (timer != null) timer.cancel();
             isPomodoroStarted = false;
         });

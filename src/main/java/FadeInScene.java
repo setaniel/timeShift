@@ -20,10 +20,12 @@ public class FadeInScene extends Application {
         primaryStage.setTitle("Hello World");
         primaryStage.setScene(new Scene(root, 300, 275));
         primaryStage.initStyle( StageStyle.TRANSPARENT );
-        primaryStage.setOpacity( 0 );
+//        primaryStage.setOpacity( 0 );
         primaryStage.show();
+        root.setOpacity(0);
 
-        Animation anim = getAnimation( primaryStage.opacityProperty() );
+
+        Animation anim = getAnimation( root.opacityProperty() );
         anim.play();
     }
 

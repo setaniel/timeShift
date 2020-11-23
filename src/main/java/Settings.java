@@ -1,3 +1,4 @@
+import javafx.application.Platform;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
@@ -19,10 +20,21 @@ import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import org.apache.commons.lang3.StringUtils;
 
+import java.util.Timer;
+import java.util.TimerTask;
+
 public class Settings {
     private static double xOffset = 0;
     private static double yOffset = 0;
     static boolean isSettingsShow = false;
+    private static Stage stage;
+
+    public static void stageClose(){
+        if (stage != null && stage.isShowing()) {
+            stage.close();
+        }
+    }
+
     public static void showSettings(ImageView fxButton){
         Image image = new Image(NoteEditor.class.getResourceAsStream("images/done.png"));
         ImageView imageView = new ImageView(image);
@@ -61,14 +73,14 @@ public class Settings {
         label.setBackground(new Background(new BackgroundFill(Paint.valueOf("transparent"), new CornerRadii(16), Insets.EMPTY)));
         layout.getChildren().addAll(label, text);
 
-        Stage stage = new Stage(StageStyle.UNDECORATED);
+        stage = new Stage(StageStyle.UNDECORATED);
         Scene scene = new Scene(anchorPane, 165, 90, Color.TRANSPARENT);
         stage.setScene(scene);
         stage.initModality(Modality.NONE);
         stage.initStyle(StageStyle.TRANSPARENT);
         stage.initOwner(Utility.getPrimaryStage());
         // set position this modal on parent frame
-        stage.setX(Utility.getPrimaryStage().getX() + 175);
+        stage.setX(Utility.getPrimaryStage().getX() + 160);
         stage.setY(Utility.getPrimaryStage().getY() + 320);
         stage.show();
         com.sun.glass.ui.Window.getWindows().get(0).setUndecoratedMoveRectangle(22);
@@ -109,31 +121,30 @@ public class Settings {
             stage.setX(event.getScreenX() - xOffset);
             stage.setY(event.getScreenY() - yOffset);
         });
-        closeOnActions(stage, fxButton);
+        closeOnActions(fxButton);
+        stage.setOpacity(0);
+        Utility.getFadeOutAnimation(stage.opacityProperty()).play();
+        layout.getChildren().get(1).requestFocus();
     }
 
-    public static void closeOnActions(Stage modalStage, Node fxButton) {
+    public static void closeOnActions(Node fxButton) {
 
         fxButton.setOnMouseExited(event -> {
-            Utility.getPrimaryStage().getScene().setOnMouseClicked(event1 -> {
-                modalStage.close();
-                removeOnActEvents(fxButton, modalStage);
-
-            });
+            Utility.getPrimaryStage().getScene().setOnMouseClicked(event1 -> removeOnActEvents(fxButton));
             // Close on Esc pressed
-            modalStage.getScene().setOnKeyPressed(event2 -> {
-                if (event2.getCode() == KeyCode.ESCAPE) modalStage.close();
-                removeOnActEvents(fxButton, modalStage);
+            stage.getScene().setOnKeyPressed(event2 -> {
+                if (event2.getCode() == KeyCode.ESCAPE) removeOnActEvents(fxButton);
             });
         });
     }
 
 
 
-    private static void removeOnActEvents(Node fxButton, Stage modalStage) {
+    private static void removeOnActEvents(Node fxButton) {
         Utility.getPrimaryStage().getScene().setOnMouseClicked(null);
-        modalStage.getScene().setOnKeyPressed(null);
+        stage.getScene().setOnKeyPressed(null);
         fxButton.setOnMouseExited(null);
         isSettingsShow = false;
+        Utility.getFadeInAnimation(stage.opacityProperty()).play();
     }
 }
