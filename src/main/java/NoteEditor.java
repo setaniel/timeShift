@@ -1,6 +1,3 @@
-import javafx.application.Platform;
-import javafx.scene.Node;
-import javafx.scene.control.Button;
 import javafx.scene.control.TextArea;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -8,10 +5,6 @@ import javafx.scene.input.KeyCode;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
-import javafx.stage.Stage;
-
-import java.util.Timer;
-import java.util.TimerTask;
 
 public class NoteEditor extends Pane{
     private static final ImageView okButton = new ImageView(
@@ -20,7 +13,6 @@ public class NoteEditor extends Pane{
     private TextArea text;
     private Note editableNote;
     private static ImageView fxAddButton;
-    private static int count = 0;
 
     public static void removeOkButton(ImageView fxAddNoteButton){
         fxAddButton = fxAddNoteButton;
@@ -61,7 +53,13 @@ public class NoteEditor extends Pane{
     }
 
     private void textChecks(){
-        if (noteObjectText == null){ // new note object, if symbols >= 1 - create note
+        if (editableNote.update(text.getText())){
+            editableNote.setNoteDate();
+            View.manageNotes(editableNote);
+        }else {
+            Utility.getContent().getChildren().remove(editableNote);
+        }
+        /*if (noteObjectText == null){ // new note object, if symbols >= 1 - create note
             if (text.getText().length() > 0){
                 editableNote.update(text.getText());
                 editableNote.setNoteDate();
@@ -71,10 +69,10 @@ public class NoteEditor extends Pane{
             editableNote.update(text.getText());
             View.manageNotes(editableNote);
             editableNote.setNoteDate();
-        }
-        if (noteObjectText != null && text.getText().length() == 0){ // Deleted all content, deleted note
+        }*/
+        /*if (noteObjectText != null && text.getText().length() == 0){ // Deleted all content, deleted note
             Utility.getContent().getChildren().remove(editableNote);
-        }
+        }*/
         removeEventHandlers();
         SlideScene.hideEditor(this);
 

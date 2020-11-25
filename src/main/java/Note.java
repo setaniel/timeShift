@@ -7,7 +7,6 @@ import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 
-import java.time.Instant;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.regex.Matcher;
@@ -37,16 +36,19 @@ public class Note extends AnchorPane {
     public void setText(String text){
         noteModel.setNoteText(text);
     }
+
     public void setTitle(String title){
         noteModel.setTitleLabelText(title);
         titleLabel.setFont(Font.font("Courier New", FontWeight.EXTRA_BOLD, 14));
         titleLabel.setText(title);
     }
+
     public void setPreview(String preview){
         noteModel.setPreviewLabelText(preview);
         previewLabel.setFont(Font.font("Courier New", 12));
         previewLabel.setText(preview);
     }
+
     public void setNoteDate(){
         LocalDateTime ldt = LocalDateTime.now();
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd.MM-HH:mm");
@@ -54,77 +56,58 @@ public class Note extends AnchorPane {
         dateStampLabel.setText(formatDateTime);
         noteModel.setNoteDate(formatDateTime);
     }
+
     public void setIndex(int index){
         noteModel.setIndex(index);
     }
 
-    public void update(String text){
+    public boolean update(String text){
+        boolean result = false;
         setText(text);
 
-        Pattern pattern = Pattern.compile("\\S*\\s*\\w*\\s*\\S", Pattern.UNICODE_CHARACTER_CLASS);
+        Pattern pattern = Pattern.compile(".*\\S", Pattern.UNICODE_CHARACTER_CLASS);
         Matcher matcher;
 
         String[] splitted = text.split("\n");
-        int count = 0;
 
         for (String s : splitted) {
-//            System.out.println(s + " matches? - " + s.matches(pattern));
             matcher = pattern.matcher(s);
             if (matcher.find()) {
+                result = true;
                 s = s.trim();
-                count++;
-                System.out.println("trimmed == " + s);
-                if (count == 1) setTitle(s.length() > 21 ? s.substring(0, 21) + "..." : s);
 
-                if (count == 2) {
+                if (titleLabel.getText() != null) {
                     setPreview(s.length() > 26 ? s.substring(0, 26) + "..." : s);
                     break;
+                }else {
+                    setTitle(s.length() > 21 ? s.substring(0, 21) + "..." : s);
                 }
             }
         }
-        if (count != 2) setPreview("Нет дополнительного текста");
-
-
-
-
-       /* if (splitted.length > 0) setTitle(splitted[0].length() > 21 ? splitted[0].substring(0, 21) + "..." : splitted[0]);
-        if (splitted.length > 1) {
-            setPreview(splitted[1].length() > 26 ? splitted[1].substring(0, 26) + "..." : splitted[1]);
-        } else {
-            setPreview("Нет дополнительного текста");
-        }
-        setText(text);*/
-
-       /* if (text.contains("\n")){
-            setTitle(text.indexOf("\n") > 21 ? text.substring(0, 21) + "..." : text.substring(0, text.indexOf("\n")));
-            String ss = text.substring(text.indexOf("\n")+1);
-//            String prev = s.substring(0, s.indexOf("\n"));
-            setPreview(ss.indexOf("\n") > 26 ? ss.substring(0, 26) + "..." : ss.substring(0, text.indexOf("\n")));
-//            setPreview(s.length() > 26 && !s.contains("\n") ? s.substring(0, 26) + "..." : s);
-        }else{
-            setTitle(text.length() > 21 ? text.substring(0, 21)+"..." : text);
-            setPreview("Нет дополнительного текста");
-        }
-        if (text.length() < 21 && !text.contains("\n") || text.charAt(text.length()-1) == '\n') {
-            setTitle(text);
-            setPreview("Нет дополнительного текста");
-        }*/
+        if (previewLabel.getText() == null) setPreview("Нет дополнительного текста");
+        return result;
     }
+
     public String getText(){
         return noteModel.getNoteText();
     }
+
     public String getTitle(){
         return noteModel.getTitleLabelText();
     }
+
     public String getPreview(){
         return noteModel.getPreviewLabelText();
     }
+
     public String getNoteDate(){
         return noteModel.getNoteDate();
     }
+
     public int getIndex(){
         return noteModel.getIndex();
     }
+
     public Model getNoteModel(){
         return noteModel;
     }
