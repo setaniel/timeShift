@@ -35,9 +35,10 @@ public class Settings {
         }
     }
 
-    public static void showSettings(ImageView fxButton){
-        Image image = new Image(NoteEditor.class.getResourceAsStream("images/done.png"));
-        ImageView imageView = new ImageView(image);
+    public static void showSettings(ImageView fxButton, StackPane rootStackPane){
+//        Button button = new Button();
+//        button.setOnMouseClicked(event -> rootStackPane);   ???????????????????????
+        ImageView imageView = new ImageView(new Image(NoteEditor.class.getResourceAsStream("images/done.png")));
         Button okButton = new Button("", imageView);
         okButton.setStyle("-fx-background-color : transparent;");
         //____

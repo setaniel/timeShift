@@ -6,9 +6,9 @@
 <?import javafx.scene.layout.*?>
 
 <AnchorPane prefHeight="528.0" prefWidth="386.0" xmlns="http://javafx.com/javafx/1.8.0.271" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller">
-    <StackPane AnchorPane.bottomAnchor="3.0" AnchorPane.leftAnchor="3.0" AnchorPane.rightAnchor="3.0" AnchorPane.topAnchor="3.0">
+    <StackPane fx:id="fxRootStackPane" AnchorPane.bottomAnchor="3.0" AnchorPane.leftAnchor="3.0" AnchorPane.rightAnchor="3.0" AnchorPane.topAnchor="3.0">
         <ImageView fitHeight="522.0" fitWidth="380.0">
-            <Image url="@images/notes.png" />
+            <Image url="@images/d_notes.png" />
         </ImageView>
         <VBox prefHeight="200.0" prefWidth="100.0">
             <AnchorPane fx:id="fxRootUI" prefHeight="466.0" prefWidth="285.0">

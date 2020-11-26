@@ -5,6 +5,8 @@ import java.io.Serializable;
  * Each note uses its own instance of the model*/
 public class Model implements Serializable {
     private static final long serialVersionUID = 101;
+
+    private static ThemeSwitcher currentTheme;
     private String noteText;
     private String titleLabelText;
     private String previewLabelText;
@@ -26,6 +28,9 @@ public class Model implements Serializable {
     public void setIndex(int contentIndex){
         this.index = contentIndex;
     }
+    public void setCurrentTheme(ThemeSwitcher currentTheme) {
+        Model.currentTheme = currentTheme;
+    }
 
 
     public String getNoteText(){
@@ -40,5 +45,8 @@ public class Model implements Serializable {
     public String getNoteDate(){return noteDate;}
     public int getIndex(){
         return index;
+    }
+    public ThemeSwitcher getCurrentTheme() {
+        return currentTheme;
     }
 }

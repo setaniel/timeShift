@@ -85,12 +85,9 @@ public class Utility {
         node.setOnMouseEntered(event -> node.setEffect(actionShadow));
         node.setOnMouseExited(event -> node.setEffect(viewShadow));
     }
-    public static void setOKButtonShadows(Node node){
-        DropShadow blackShadow = new DropShadow(10.0, Color.BLACK);
-        DropShadow greenShadow = new DropShadow(10.0, Color.GREEN);
-        node.setEffect(blackShadow);
-        node.addEventHandler(MouseEvent.MOUSE_ENTERED, e -> node.setEffect(greenShadow));
-        node.addEventHandler(MouseEvent.MOUSE_EXITED, e -> node.setEffect(blackShadow));
+    public static void setStaticInnerShadow(Node node){
+        InnerShadow innerShadow = new InnerShadow(10.0, Color.BLACK);
+        node.setEffect(innerShadow);
     }
 
 

@@ -39,14 +39,16 @@ public class Note extends AnchorPane {
 
     public void setTitle(String title){
         noteModel.setTitleLabelText(title);
-        titleLabel.setFont(Font.font("Courier New", FontWeight.EXTRA_BOLD, 14));
         titleLabel.setText(title);
+        titleLabel.setFont(Font.font("Courier New", FontWeight.EXTRA_BOLD, 14));
+//        titleLabel.setTextFill(Color.WHITE);
     }
 
     public void setPreview(String preview){
         noteModel.setPreviewLabelText(preview);
-        previewLabel.setFont(Font.font("Courier New", 12));
         previewLabel.setText(preview);
+        previewLabel.setFont(Font.font("Courier New", 12));
+//        previewLabel.setTextFill(Color.WHITE);
     }
 
     public void setNoteDate(){
@@ -55,6 +57,8 @@ public class Note extends AnchorPane {
         String formatDateTime = ldt.format(formatter);
         dateStampLabel.setText(formatDateTime);
         noteModel.setNoteDate(formatDateTime);
+        dateStampLabel.setTextFill(Color.valueOf("#008500"));
+        dateStampLabel.setFont(Font.font("Courier New", FontWeight.LIGHT, 9));
     }
 
     public void setIndex(int index){
@@ -112,6 +116,13 @@ public class Note extends AnchorPane {
         return noteModel;
     }
 
+
+//
+//    dateStamp = #20db39
+//    Labels = white
+//    main font = #656b77
+//
+
     private void createNoteInstance(){
         final String cssNoteBorders = "-fx-border-color: blue;\n"
                 + "-fx-background-color: transparent;\n"
@@ -126,8 +137,6 @@ public class Note extends AnchorPane {
         titleLabel = new Label(getTitle());
         previewLabel = new Label(getPreview());
         dateStampLabel = new Label(getNoteDate());
-        dateStampLabel.setTextFill(Color.valueOf("#008500"));
-        dateStampLabel.setFont(Font.font("Courier New", FontWeight.LIGHT, 9));
 
         // set positions of labels and buttons in note
         AnchorPane.setBottomAnchor(previewLabel, 0.0);

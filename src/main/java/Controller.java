@@ -2,12 +2,14 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
+import javafx.scene.effect.InnerShadow;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.ScrollEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
+import javafx.scene.paint.Color;
 
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -18,6 +20,7 @@ import java.util.ResourceBundle;
  * of links is initialized and translated into Java code.
  * */
 public class Controller extends View implements Initializable{
+    @FXML private StackPane fxRootStackPane;
     @FXML private AnchorPane fxTrafficPane;
     @FXML private ImageView fxMinimize;
     @FXML private ScrollPane fxScroll;
@@ -65,7 +68,7 @@ public class Controller extends View implements Initializable{
     @FXML private void onSettingsClick() {
         if (!Settings.isSettingsShow) {
             Settings.stageClose();
-            Settings.showSettings(fxSettings);
+            Settings.showSettings(fxSettings, fxRootStackPane);
         }
         Settings.isSettingsShow = true;
     }
@@ -77,6 +80,7 @@ public class Controller extends View implements Initializable{
         fxScroll.getStylesheets().add(Controller.class.getResource("scroll.css").toExternalForm());
         fxScroll.setVbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
         setScrollVisibility();
+        Utility.setStaticInnerShadow(fxRootStackPane);
         Utility.setUIShadows(fxMinimize);
         Utility.setUIShadows(fxInfo);
         Utility.setUIShadows(fxSettings);
