@@ -37,7 +37,15 @@ public class Controller extends View implements Initializable{
         View.setFxAddNoteButton(fxAddNoteButton);
         NoteEditor.removeOkButton(fxAddNoteButton);
         addNote(new Note());
+
     }
+
+    public void onNoteClick(Note note) {
+        View.setFxAddNoteButton(fxAddNoteButton);
+        NoteEditor.removeOkButton(fxAddNoteButton);
+        addNote(note);
+    }
+
     @FXML private void onPomodoroClick() {
         if (!Pomodoro.isPomodoroStarted) {
             Pomodoro.stageClose();
@@ -45,6 +53,7 @@ public class Controller extends View implements Initializable{
         }
         Pomodoro.isPomodoroStarted = true;
     }
+
     @FXML private void onInfoClick() {
         if (!Info.isInfoShow) {
             Info.stageClose();
@@ -52,6 +61,7 @@ public class Controller extends View implements Initializable{
         }
         Info.isInfoShow = true;
     }
+
     @FXML private void onSettingsClick() {
         if (!Settings.isSettingsShow) {
             Settings.stageClose();

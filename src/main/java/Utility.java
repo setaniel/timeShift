@@ -142,6 +142,9 @@ public class Utility {
     public static NoteEditor getNoteEditor() {
         return noteEditor;
     }
+    public static Controller getController() {
+        return controller;
+    }
 
     // Animations
 
