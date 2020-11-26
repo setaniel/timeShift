@@ -7,7 +7,6 @@ import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 
-import java.net.URL;
 
 public class Main extends Application {
 
