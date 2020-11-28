@@ -29,12 +29,10 @@ class View {
     }
 
     static void manageNotes(Note note) {
-        if (note.getText() != null) {
-            Utility.getContent().getChildren().remove(note);
-            Utility.getContent().getChildren().add(0, note);
-            Serializer.deleteSerializeFiles();
-            Serializer.serializeNotes();
-        }
+        Utility.getContent().getChildren().remove(note);
+        Utility.getContent().getChildren().add(0, note);
+        Serializer.deleteSerializeFiles();
+        Serializer.serializeNotes();
     }
 
     // Closing app, run serialization

@@ -36,11 +36,11 @@ public class Controller extends View implements Initializable{
     @FXML ImageView fxAddNoteButton;
     @FXML VBox fxContent;
 
-    @FXML private void onNewNoteClick() {
+    public void onNewNoteClick() {
         View.setFxAddNoteButton(fxAddNoteButton);
         NoteEditor.removeOkButton(fxAddNoteButton);
         addNote(new Note());
-
+        Utility.removeButtonHandler(fxAddNoteButton);
     }
 
     public void onNoteClick(Note note) {

@@ -9,6 +9,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.effect.DropShadow;
 import javafx.scene.effect.InnerShadow;
@@ -191,5 +192,8 @@ public class Utility {
         Settings.isSettingsShow = false;
         Info.isInfoShow = false;
         Utility.getFadeInAnimation(stage.opacityProperty()).play();
+    }
+    public static void removeButtonHandler(ImageView fxButton){
+        fxButton.setOnMouseClicked(null);
     }
 }

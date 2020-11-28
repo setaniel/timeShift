@@ -17,7 +17,8 @@ public class Main extends Application {
 
     @Override
     public void start(Stage primaryStage) throws Exception {
-        Parent root = FXMLLoader.load(getClass().getResource("MainWindow.fxml"));
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("MainWindow.fxml"));
+        Parent root = loader.load();
         Scene scene = new Scene(root, 386, 528, Color.TRANSPARENT); //width 420 height 565
         primaryStage.initStyle(StageStyle.TRANSPARENT);
         primaryStage.setScene(scene);
@@ -34,6 +35,8 @@ public class Main extends Application {
         Utility.setPrimaryStage(primaryStage);
         Serializer.deserializeNotes();
 
+        Controller controller = loader.getController();
+        controller.fxAddNoteButton.setOnMouseClicked(event -> controller.onNewNoteClick());
     }
     @FXML public static void main(String[] args) {
         launch(args);

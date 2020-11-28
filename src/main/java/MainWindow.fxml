@@ -38,7 +38,7 @@
                     <Image url="@images/minimize.png" />
                 </ImageView>
                 <!-- right side buttons -->
-                <ImageView fx:id="fxAddNoteButton" layoutX="333.0" layoutY="90.0" onMouseClicked="#onNewNoteClick">
+                <ImageView fx:id="fxAddNoteButton" layoutX="333.0" layoutY="90.0" >
                     <Image url="@images/add.png" />
                 </ImageView>
                 <ImageView fx:id="fxSettings" layoutX="333.0" layoutY="370.0" onMouseClicked="#onSettingsClick" pickOnBounds="true" preserveRatio="true">

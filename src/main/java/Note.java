@@ -70,9 +70,9 @@ public class Note extends AnchorPane {
         Pattern pattern = Pattern.compile(".*\\S", Pattern.UNICODE_CHARACTER_CLASS);
         Matcher matcher;
 
-        String[] splitted = text.split("\n");
+        String[] splitSpace = text.split("\n");
 
-        for (String s : splitted) {
+        for (String s : splitSpace) {
             matcher = pattern.matcher(s);
             if (matcher.find()) {
                 result = true;
