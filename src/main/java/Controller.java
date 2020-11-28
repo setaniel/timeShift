@@ -68,7 +68,7 @@ public class Controller extends View implements Initializable{
     @FXML private void onSettingsClick() {
         if (!Settings.isSettingsShow) {
             Settings.closeStage();
-            Settings.showSettings(fxSettings, fxRootStackPane);
+            Settings.showSettings(fxSettings);
         }
         Settings.isSettingsShow = true;
     }

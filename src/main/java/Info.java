@@ -46,7 +46,7 @@ public class Info {
         layout.setAlignment(Pos.TOP_CENTER);
         layout.setPadding(new Insets(10, 10, 10, 10));
 
-        Label version = new Label("Ver.1.1.0 stable");
+        Label version = new Label("Ver.1.1.1a");
         setLabelFont(version);
         Label nickName = new Label("@Setaniel");
         setLabelFont(nickName);

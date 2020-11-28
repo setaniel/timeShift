@@ -1,7 +1,5 @@
-import javafx.application.Platform;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
-import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -10,7 +8,6 @@ import javafx.scene.control.ToggleButton;
 import javafx.scene.effect.DropShadow;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.input.KeyCode;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.Paint;
@@ -20,9 +17,6 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import org.apache.commons.lang3.StringUtils;
-
-import java.util.Timer;
-import java.util.TimerTask;
 
 public class Settings {
     private static double xOffset = 0;
@@ -39,13 +33,13 @@ public class Settings {
         }
     }
 
-    public static void showSettings(ImageView fxButton, StackPane rootStackPane){
+    public static void showSettings(ImageView fxButton){
         layout = new VBox();
         ToggleButton tgb = new ToggleButton();
-        tgb.setSelected(ThemeSwitcher.getCurrentTheme().isDark());
+        tgb.setSelected(ThemeSwitcher.isDark());
         tgb.setOnAction(event -> tgbOnAction(tgb));
         tgb.setFont(Font.font("Courier New", FontWeight.BOLD, 12));
-        if (ThemeSwitcher.getCurrentTheme().isDark()){
+        if (ThemeSwitcher.isDark()){
             tgb.setText("Dark theme");
             tgb.setGraphic(new ImageView(imgPowerOn));
         } else {
@@ -54,8 +48,8 @@ public class Settings {
         }
 
 
-        ImageView imageView = new ImageView(new Image(NoteEditor.class.getResourceAsStream("images/done.png")));
-        Button okButton = new Button("", imageView);
+        ImageView okButton = new ImageView(new Image(NoteEditor.class.getResourceAsStream("images/done.png")));
+//        Button okButton = new Button("", imageView);
         okButton.setStyle("-fx-background-color : transparent;");
         //____
 
@@ -65,9 +59,9 @@ public class Settings {
         AnchorPane anchorPane = new AnchorPane();
         anchorPane.getChildren().addAll(layout, okButton);
         setBackGroundColor();
-        AnchorPane.setBottomAnchor(okButton, 38.0);
-        AnchorPane.setRightAnchor(okButton, 13.0);
-        AnchorPane.setLeftAnchor(tgb, 100.0);
+        AnchorPane.setBottomAnchor(okButton, 44.0);
+        AnchorPane.setRightAnchor(okButton, 16.0);
+        AnchorPane.setRightAnchor(tgb, 0.0);
 
         AnchorPane.setBottomAnchor(layout, 3.0);
         AnchorPane.setLeftAnchor(layout, 3.0);
@@ -104,7 +98,7 @@ public class Settings {
                 "-fx-effect: dropShadow(three-pass-box, black, 10, 0, 0, 0);");
 
         //-----------------------------------
-        okButton.setOnAction(event -> {
+        okButton.setOnMouseClicked(event -> {
             DropShadow shadow = new DropShadow();
             shadow.setColor(Color.RED);
             if (StringUtils.isNumeric(text.getCharacters())){
@@ -144,17 +138,17 @@ public class Settings {
 
     static void tgbOnAction(ToggleButton tgb) {
         if (tgb.isSelected()) {
-            ThemeSwitcher.getCurrentTheme().setDark(true);
+            ThemeSwitcher.setDark(true);
             tgb.setText("Dark theme");
             tgb.setGraphic(new ImageView(imgPowerOn));
-            ThemeSwitcher.getCurrentTheme().setDarkTheme();
+            ThemeSwitcher.setDarkTheme();
             setBackGroundColor();
         }
         else {
-            ThemeSwitcher.getCurrentTheme().setDark(false);
+            ThemeSwitcher.setDark(false);
             tgb.setText("Light theme");
             tgb.setGraphic(new ImageView(imgPowerOff));
-            ThemeSwitcher.getCurrentTheme().setLightTheme();
+            ThemeSwitcher.setLightTheme();
             setBackGroundColor();
         }
     }

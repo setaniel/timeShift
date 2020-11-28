@@ -40,14 +40,12 @@ public class Note extends AnchorPane {
     public void setTitle(String title){
         noteModel.setTitleLabelText(title);
         titleLabel.setText(title);
-        titleLabel.setFont(Font.font("Courier New", FontWeight.EXTRA_BOLD, 14));
         setTitleLabelColor();
     }
 
     public void setPreview(String preview){
         noteModel.setPreviewLabelText(preview);
         previewLabel.setText(preview);
-        previewLabel.setFont(Font.font("Courier New", 12));
         setPreviewLabelColor();
     }
 
@@ -117,12 +115,13 @@ public class Note extends AnchorPane {
     }
 
     private void createNoteInstance(){
-        final String cssNoteBorders = "-fx-border-color: blue;\n"
-                + "-fx-background-color: transparent;\n"
+        final String cssNoteBorders =
+                "-fx-background-color: transparent;\n"
                 + "-fx-stroke-dash-array: 12 2 4 2;\n"
                 + "-fx-border-width: 0.3;\n"
-                + "-fx-border-color: brown;\n"
-                + "-fx-border-style: dashed;\n";
+                + "-fx-border-color: red;\n"
+                + "-fx-border-style: dashed;\n"
+                + "-fx-border-radius: 8;";
 
         this.setStyle(cssNoteBorders);
         Button trashButton = createTrashButton();
@@ -157,10 +156,12 @@ public class Note extends AnchorPane {
 
 
     public void setTitleLabelColor() {
+        titleLabel.setFont(Font.font("Courier New", FontWeight.BOLD, 13));
         titleLabel.setTextFill(ThemeSwitcher.getCurrentTheme().getTitleColor());
     }
 
     public void setPreviewLabelColor() {
+        previewLabel.setFont(Font.font("Courier New", 12));
         previewLabel.setTextFill(ThemeSwitcher.getCurrentTheme().getPreviewColor());
     }
 

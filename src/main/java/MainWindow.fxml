@@ -24,17 +24,17 @@
                     <AnchorPane prefHeight="395.0" prefWidth="280.0">
                         <Pane fx:id="fxContentAnchor">
                         <StackPane fx:id="fxContentStack">
-                        <ScrollPane fx:id="fxScroll" fitToWidth="true" prefHeight="395.0" prefWidth="280.0" AnchorPane.bottomAnchor="30.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                        <ScrollPane fx:id="fxScroll" fitToWidth="true" prefHeight="439.0" prefWidth="280.0" AnchorPane.bottomAnchor="30.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                             <VBox fx:id="fxContent" prefHeight="439.0" prefWidth="262.0" spacing="10.0" />
                         </ScrollPane>
                         </StackPane>
                         </Pane>
                     </AnchorPane>
                 </AnchorPane>
-                <ImageView fx:id="fxCloseButton" layoutX="11.0" layoutY="10.0" onMouseClicked="#closeApp">
+                <ImageView fx:id="fxCloseButton" layoutX="16.0" layoutY="16.0" onMouseClicked="#closeApp">
                     <Image url="@images/close_red.png" />
                 </ImageView>
-                <ImageView fx:id="fxMinimize" layoutX="37.0" layoutY="11.0" onMouseClicked="#minimizeApp">
+                <ImageView fx:id="fxMinimize" layoutX="42.0" layoutY="17.0" onMouseClicked="#minimizeApp">
                     <Image url="@images/minimize.png" />
                 </ImageView>
                 <!-- right side buttons -->
@@ -47,7 +47,7 @@
                 <ImageView fx:id="fxInfo" layoutX="333.0" layoutY="420.0" onMouseClicked="#onInfoClick" pickOnBounds="true" preserveRatio="true">
                     <Image url="@images/info.png" />
                 </ImageView>
-                <ImageView fx:id="fxPomodoro" onMouseClicked="#onPomodoroClick" fitHeight="46.0" fitWidth="54.0" layoutX="333.0" pickOnBounds="true" preserveRatio="true">
+                <ImageView fx:id="fxPomodoro" onMouseClicked="#onPomodoroClick" fitHeight="46.0" fitWidth="54.0" layoutX="333.0" layoutY="8.0" pickOnBounds="true" preserveRatio="true">
                     <Image url="@images/Tomato.png" />
                 </ImageView>
             </AnchorPane>
