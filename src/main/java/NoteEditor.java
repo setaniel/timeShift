@@ -53,19 +53,19 @@ public class NoteEditor extends Pane{
     }
 
     private void textChecks(){
-        if (currentObjectText == null) {
-            if (newNote.update(text.getText()) ){
-                newNote.setNoteDate();
+        if (!text.getText().equals("")) {
+
+            if (currentObjectText == null && newNote.update(text.getText())) {
                 View.manageNotes(newNote);
-            }/*else {
-                Utility.getContent().getChildren().remove(newNote);
-            }*/
-        }else {
-            if (!currentObjectText.equals(text.getText())){
+            }else if (!currentObjectText.equals(text.getText())){
                 newNote.update(text.getText());
                 View.manageNotes(newNote);
             }
+
+        } else {
+            Utility.getContent().getChildren().remove(newNote);
         }
+
 
 
         removeEventHandlers();

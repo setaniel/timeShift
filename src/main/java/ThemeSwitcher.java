@@ -40,8 +40,8 @@ public class ThemeSwitcher {
     public static void setLightTheme() {
         isDark = false;
         dateStampColor = Color.valueOf("#008500");
-        titleColor = Color.valueOf("black");
-        previewColor = Color.valueOf("black");
+        titleColor = Color.valueOf("#555249");
+        previewColor = Color.valueOf("#555249");
         backgroundColor = Color.valueOf("#e8e4db");
         backgroundAppImage = new ImageView(new Image(ThemeSwitcher.class.getResourceAsStream("images/notes.png")));
         applyCurrentTheme();

@@ -39,7 +39,7 @@ public class Serializer {
      * Deserializing all notes, from files in user home directory
      * */
     public static void deserializeNotes(){
-        Model model = null;
+        Model model;
         for (int i = 0; i < Integer.MAX_VALUE; i++) {
             File file = new File(String.format(System.getProperty("user.home") + "/documents/timeShift/serialize/%d.ser", i));
             if (file.exists()) {

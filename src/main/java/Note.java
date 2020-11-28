@@ -30,7 +30,6 @@ public class Note extends AnchorPane {
     public Note(Model deserializedModel){
         noteModel = deserializedModel;
         createNoteInstance();
-        this.update(noteModel.getNoteText());
     }
 
     public void setText(String text){
@@ -66,10 +65,12 @@ public class Note extends AnchorPane {
     public boolean update(String text){
         boolean result = false;
         setText(text);
+        titleLabel.setText(null);
+        previewLabel.setText(null);
+        dateStampLabel.setText(null);
 
         Pattern pattern = Pattern.compile(".*\\S", Pattern.UNICODE_CHARACTER_CLASS);
         Matcher matcher;
-
         String[] splitSpace = text.split("\n");
 
         for (String s : splitSpace) {
@@ -86,6 +87,7 @@ public class Note extends AnchorPane {
                 }
             }
         }
+        setNoteDate();
         if (previewLabel.getText() == null) setPreview("Нет дополнительного текста");
         return result;
     }
