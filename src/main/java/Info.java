@@ -26,26 +26,27 @@ public class Info {
     private static double yOffset = 0;
     static boolean isInfoShow = false;
     private static Stage stage;
+    private static VBox layout;
 
-    public static void stageClose(){
+    public static void closeStage(){
         if (stage != null && stage.isShowing()) {
             stage.close();
         }
     }
 
     public static void showInfo(ImageView fxButton) {
-        VBox layout = new VBox();
+        layout = new VBox();
         AnchorPane anchorPane = new AnchorPane();
         anchorPane.getChildren().add(layout);
         AnchorPane.setBottomAnchor(layout, 3.0);
         AnchorPane.setLeftAnchor(layout, 3.0);
         AnchorPane.setRightAnchor(layout, 3.0);
         AnchorPane.setTopAnchor(layout, 3.0);
-        layout.setBackground(new Background(new BackgroundFill(Paint.valueOf("#e8e4db"), new CornerRadii(16), Insets.EMPTY)));
+        setBackGroundColor();
         layout.setAlignment(Pos.TOP_CENTER);
         layout.setPadding(new Insets(10, 10, 10, 10));
 
-        Label version = new Label("Ver.1.0 release");
+        Label version = new Label("Ver.1.1.0 stable");
         setLabelFont(version);
         Label nickName = new Label("@Setaniel");
         setLabelFont(nickName);
@@ -74,7 +75,6 @@ public class Info {
         stage.setX(Utility.getPrimaryStage().getX() + 125);
         stage.setY(Utility.getPrimaryStage().getY() + 330);
         stage.show();
-        com.sun.glass.ui.Window.getWindows().get(0).setUndecoratedMoveRectangle(22);
         anchorPane.setStyle("-fx-background-radius: 22;" +
                 "-fx-background-insets: 10; " +
                 "-fx-effect: dropShadow(three-pass-box, black, 10, 0, 0, 0);");
@@ -89,32 +89,18 @@ public class Info {
             stage.setX(event.getScreenX() - xOffset);
             stage.setY(event.getScreenY() - yOffset);
         });
-        closeOnActions(fxButton);
+        Utility.closeOnActions(stage, fxButton);
 
         stage.setOpacity(0);
         Utility.getFadeOutAnimation(stage.opacityProperty()).play();
         layout.getChildren().get(4).requestFocus();
     }
+    public static void setBackGroundColor(){
+        layout.setBackground(new Background(new BackgroundFill(
+                ThemeSwitcher.getCurrentTheme().getBackgroundColor(), new CornerRadii(16), Insets.EMPTY)));
+    }
     private static void setLabelFont(Label label) {
         label.setFont(Font.font("Courier New", FontWeight.BOLD, 14));
     }
 
-    public static void closeOnActions(Node fxButton) {
-
-        fxButton.setOnMouseExited(event -> {
-            Utility.getPrimaryStage().getScene().setOnMouseClicked(event1 -> removeOnActEvents(fxButton));
-            // Close on Esc pressed
-            stage.getScene().setOnKeyPressed(event2 -> {
-                if (event2.getCode() == KeyCode.ESCAPE) removeOnActEvents(fxButton);
-            });
-        });
-    }
-
-    private static void removeOnActEvents(Node fxButton) {
-        Utility.getPrimaryStage().getScene().setOnMouseClicked(null);
-        stage.getScene().setOnKeyPressed(null);
-        fxButton.setOnMouseExited(null);
-        isInfoShow = false;
-        Utility.getFadeInAnimation(stage.opacityProperty()).play();
-    }
 }

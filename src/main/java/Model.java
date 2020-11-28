@@ -6,7 +6,7 @@ import java.io.Serializable;
 public class Model implements Serializable {
     private static final long serialVersionUID = 101;
 
-    private static ThemeSwitcher currentTheme;
+    private boolean currentTheme;
     private String noteText;
     private String titleLabelText;
     private String previewLabelText;
@@ -28,8 +28,8 @@ public class Model implements Serializable {
     public void setIndex(int contentIndex){
         this.index = contentIndex;
     }
-    public void setCurrentTheme(ThemeSwitcher currentTheme) {
-        Model.currentTheme = currentTheme;
+    public void setCurrentTheme(boolean currentTheme) {
+        this.currentTheme = currentTheme;
     }
 
 
@@ -46,7 +46,7 @@ public class Model implements Serializable {
     public int getIndex(){
         return index;
     }
-    public ThemeSwitcher getCurrentTheme() {
+    public boolean getCurrentTheme() {
         return currentTheme;
     }
 }

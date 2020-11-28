@@ -59,20 +59,7 @@ public class NoteEditor extends Pane{
         }else {
             Utility.getContent().getChildren().remove(editableNote);
         }
-        /*if (noteObjectText == null){ // new note object, if symbols >= 1 - create note
-            if (text.getText().length() > 0){
-                editableNote.update(text.getText());
-                editableNote.setNoteDate();
-                View.manageNotes(editableNote);
-            }
-        } else if (!noteObjectText.equals(text.getText())){ // existing note, but has changes
-            editableNote.update(text.getText());
-            View.manageNotes(editableNote);
-            editableNote.setNoteDate();
-        }*/
-        /*if (noteObjectText != null && text.getText().length() == 0){ // Deleted all content, deleted note
-            Utility.getContent().getChildren().remove(editableNote);
-        }*/
+
         removeEventHandlers();
         SlideScene.hideEditor(this);
 

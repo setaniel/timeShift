@@ -6,6 +6,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.scene.control.ToggleButton;
 import javafx.scene.effect.DropShadow;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -28,37 +29,51 @@ public class Settings {
     private static double yOffset = 0;
     static boolean isSettingsShow = false;
     private static Stage stage;
+    private static VBox layout;
+    private static final Image imgPowerOff = new Image(Settings.class.getResourceAsStream("images/powerOff.png"));
+    private static final Image imgPowerOn = new Image(Settings.class.getResourceAsStream("images/powerOn.png"));
 
-    public static void stageClose(){
+    public static void closeStage(){
         if (stage != null && stage.isShowing()) {
             stage.close();
         }
     }
 
     public static void showSettings(ImageView fxButton, StackPane rootStackPane){
-//        Button button = new Button();
-//        button.setOnMouseClicked(event -> rootStackPane);   ???????????????????????
+        layout = new VBox();
+        ToggleButton tgb = new ToggleButton();
+        tgb.setSelected(ThemeSwitcher.getCurrentTheme().isDark());
+        tgb.setOnAction(event -> tgbOnAction(tgb));
+        tgb.setFont(Font.font("Courier New", FontWeight.BOLD, 12));
+        if (ThemeSwitcher.getCurrentTheme().isDark()){
+            tgb.setText("Dark theme");
+            tgb.setGraphic(new ImageView(imgPowerOn));
+        } else {
+            tgb.setText("Light theme");
+            tgb.setGraphic(new ImageView(imgPowerOff));
+        }
+
+
         ImageView imageView = new ImageView(new Image(NoteEditor.class.getResourceAsStream("images/done.png")));
         Button okButton = new Button("", imageView);
         okButton.setStyle("-fx-background-color : transparent;");
         //____
-        VBox layout = new VBox();
+
         TextField text = new TextField("0-999");
         text.setAlignment(Pos.TOP_CENTER);
         text.setMaxWidth(80.0);
         AnchorPane anchorPane = new AnchorPane();
         anchorPane.getChildren().addAll(layout, okButton);
-
-        AnchorPane.setBottomAnchor(okButton, 12.0);
+        setBackGroundColor();
+        AnchorPane.setBottomAnchor(okButton, 38.0);
         AnchorPane.setRightAnchor(okButton, 13.0);
+        AnchorPane.setLeftAnchor(tgb, 100.0);
 
         AnchorPane.setBottomAnchor(layout, 3.0);
         AnchorPane.setLeftAnchor(layout, 3.0);
         AnchorPane.setRightAnchor(layout, 3.0);
         AnchorPane.setTopAnchor(layout, 3.0);
 
-        layout.setBackground(new Background(new BackgroundFill(Paint.valueOf("#e8e4db"), new CornerRadii(16), Insets.EMPTY)));
-//        layout.setAlignment(Pos.CENTER);
         layout.setSpacing(10.0);
         layout.setPadding(new Insets(10, 10, 10, 10));
 
@@ -66,23 +81,22 @@ public class Settings {
         text.setFont(Font.font("Courier New", FontWeight.BOLD, 15));
         Utility.setDropShadow(text, Color.BLACK);
         Utility.setUIShadows(okButton);
-//        text.setPrefSize(15, 10);
         text.setBackground(new Background(new BackgroundFill(Paint.valueOf("white"), new CornerRadii(16), Insets.EMPTY)));
         Label label = new Label("Pomodoro timer");
         label.setFont(Font.font("Courier New", FontWeight.BOLD, 12));
         label.setPrefHeight(20.0);
         label.setBackground(new Background(new BackgroundFill(Paint.valueOf("transparent"), new CornerRadii(16), Insets.EMPTY)));
-        layout.getChildren().addAll(label, text);
+        layout.getChildren().addAll(label, text, tgb);
 
         stage = new Stage(StageStyle.UNDECORATED);
-        Scene scene = new Scene(anchorPane, 165, 90, Color.TRANSPARENT);
+        Scene scene = new Scene(anchorPane, 155, 110, Color.TRANSPARENT);
         stage.setScene(scene);
         stage.initModality(Modality.NONE);
         stage.initStyle(StageStyle.TRANSPARENT);
         stage.initOwner(Utility.getPrimaryStage());
         // set position this modal on parent frame
-        stage.setX(Utility.getPrimaryStage().getX() + 160);
-        stage.setY(Utility.getPrimaryStage().getY() + 320);
+        stage.setX(Utility.getPrimaryStage().getX() + 170);
+        stage.setY(Utility.getPrimaryStage().getY() + 300);
         stage.show();
         com.sun.glass.ui.Window.getWindows().get(0).setUndecoratedMoveRectangle(22);
         anchorPane.setStyle("-fx-background-radius: 22;" +
@@ -122,30 +136,31 @@ public class Settings {
             stage.setX(event.getScreenX() - xOffset);
             stage.setY(event.getScreenY() - yOffset);
         });
-        closeOnActions(fxButton);
+        Utility.closeOnActions(stage, fxButton);
         stage.setOpacity(0);
         Utility.getFadeOutAnimation(stage.opacityProperty()).play();
         layout.getChildren().get(1).requestFocus();
     }
 
-    public static void closeOnActions(Node fxButton) {
-
-        fxButton.setOnMouseExited(event -> {
-            Utility.getPrimaryStage().getScene().setOnMouseClicked(event1 -> removeOnActEvents(fxButton));
-            // Close on Esc pressed
-            stage.getScene().setOnKeyPressed(event2 -> {
-                if (event2.getCode() == KeyCode.ESCAPE) removeOnActEvents(fxButton);
-            });
-        });
+    static void tgbOnAction(ToggleButton tgb) {
+        if (tgb.isSelected()) {
+            ThemeSwitcher.getCurrentTheme().setDark(true);
+            tgb.setText("Dark theme");
+            tgb.setGraphic(new ImageView(imgPowerOn));
+            ThemeSwitcher.getCurrentTheme().setDarkTheme();
+            setBackGroundColor();
+        }
+        else {
+            ThemeSwitcher.getCurrentTheme().setDark(false);
+            tgb.setText("Light theme");
+            tgb.setGraphic(new ImageView(imgPowerOff));
+            ThemeSwitcher.getCurrentTheme().setLightTheme();
+            setBackGroundColor();
+        }
     }
 
-
-
-    private static void removeOnActEvents(Node fxButton) {
-        Utility.getPrimaryStage().getScene().setOnMouseClicked(null);
-        stage.getScene().setOnKeyPressed(null);
-        fxButton.setOnMouseExited(null);
-        isSettingsShow = false;
-        Utility.getFadeInAnimation(stage.opacityProperty()).play();
+    public static void setBackGroundColor(){
+        layout.setBackground(new Background(new BackgroundFill(
+                ThemeSwitcher.getCurrentTheme().getBackgroundColor(), new CornerRadii(16), Insets.EMPTY)));
     }
 }

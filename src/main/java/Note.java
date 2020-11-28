@@ -41,14 +41,14 @@ public class Note extends AnchorPane {
         noteModel.setTitleLabelText(title);
         titleLabel.setText(title);
         titleLabel.setFont(Font.font("Courier New", FontWeight.EXTRA_BOLD, 14));
-//        titleLabel.setTextFill(Color.WHITE);
+        setTitleLabelColor();
     }
 
     public void setPreview(String preview){
         noteModel.setPreviewLabelText(preview);
         previewLabel.setText(preview);
         previewLabel.setFont(Font.font("Courier New", 12));
-//        previewLabel.setTextFill(Color.WHITE);
+        setPreviewLabelColor();
     }
 
     public void setNoteDate(){
@@ -57,8 +57,8 @@ public class Note extends AnchorPane {
         String formatDateTime = ldt.format(formatter);
         dateStampLabel.setText(formatDateTime);
         noteModel.setNoteDate(formatDateTime);
-        dateStampLabel.setTextFill(Color.valueOf("#008500"));
-        dateStampLabel.setFont(Font.font("Courier New", FontWeight.LIGHT, 9));
+        setDateStampLabelColor();
+
     }
 
     public void setIndex(int index){
@@ -116,13 +116,6 @@ public class Note extends AnchorPane {
         return noteModel;
     }
 
-
-//
-//    dateStamp = #20db39
-//    Labels = white
-//    main font = #656b77
-//
-
     private void createNoteInstance(){
         final String cssNoteBorders = "-fx-border-color: blue;\n"
                 + "-fx-background-color: transparent;\n"
@@ -135,8 +128,11 @@ public class Note extends AnchorPane {
         Button trashButton = createTrashButton();
         // set note title and text, getting out model
         titleLabel = new Label(getTitle());
+        setTitleLabelColor();
         previewLabel = new Label(getPreview());
+        setPreviewLabelColor();
         dateStampLabel = new Label(getNoteDate());
+        setDateStampLabelColor();
 
         // set positions of labels and buttons in note
         AnchorPane.setBottomAnchor(previewLabel, 0.0);
@@ -157,6 +153,20 @@ public class Note extends AnchorPane {
         this.setOnMouseClicked(event -> {
             if (!View.isNoteEditorShow) Utility.getController().onNoteClick(this);
         });
+    }
+
+
+    public void setTitleLabelColor() {
+        titleLabel.setTextFill(ThemeSwitcher.getCurrentTheme().getTitleColor());
+    }
+
+    public void setPreviewLabelColor() {
+        previewLabel.setTextFill(ThemeSwitcher.getCurrentTheme().getPreviewColor());
+    }
+
+    public void setDateStampLabelColor() {
+        dateStampLabel.setFont(Font.font("Courier New", FontWeight.LIGHT, 9));
+        dateStampLabel.setTextFill(ThemeSwitcher.getCurrentTheme().getDateStampColor());
     }
 
     private Button createTrashButton(){

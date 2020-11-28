@@ -59,7 +59,7 @@ public class Controller extends View implements Initializable{
 
     @FXML private void onInfoClick() {
         if (!Info.isInfoShow) {
-            Info.stageClose();
+            Info.closeStage();
             Info.showInfo(fxInfo);
         }
         Info.isInfoShow = true;
@@ -67,12 +67,15 @@ public class Controller extends View implements Initializable{
 
     @FXML private void onSettingsClick() {
         if (!Settings.isSettingsShow) {
-            Settings.stageClose();
+            Settings.closeStage();
             Settings.showSettings(fxSettings, fxRootStackPane);
         }
         Settings.isSettingsShow = true;
     }
 
+    public void fxThemeBackground(){
+        fxRootStackPane.getChildren().set(0, ThemeSwitcher.getCurrentTheme().getBackgroundAppImage());
+    }
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {

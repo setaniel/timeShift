@@ -9,14 +9,13 @@ public class Serializer {
      * Serializing all notes, from files in user home directory
      * */
     public static void serializeNotes(){
-
         for (Node node : Utility.getContent().getChildren()) {
             try {
                 Note serialNote = (Note)node;
                 serialNote.setIndex(Utility.getContent().getChildren().indexOf(node));
 
-                // set theme for app
-                if (serialNote.getIndex() == 0) serialNote.getNoteModel().setCurrentTheme(ThemeSwitcher.getCurrentTheme());
+                // save theme bound
+                serialNote.getNoteModel().setCurrentTheme(ThemeSwitcher.isDark());
                 // _____________________
 
                 new File(System.getProperty("user.home") + "/documents/timeShift/serialize").mkdirs();
@@ -40,7 +39,7 @@ public class Serializer {
      * Deserializing all notes, from files in user home directory
      * */
     public static void deserializeNotes(){
-        Model model;
+        Model model = null;
         for (int i = 0; i < Integer.MAX_VALUE; i++) {
             File file = new File(String.format(System.getProperty("user.home") + "/documents/timeShift/serialize/%d.ser", i));
             if (file.exists()) {
@@ -48,10 +47,9 @@ public class Serializer {
                     FileInputStream fileIn = new FileInputStream(file);
                     ObjectInputStream in = new ObjectInputStream(fileIn);
                     model = (Model) in.readObject();
-                    Note note = new Note(model);
                     // set theme for app
-                    if (ThemeSwitcher.getCurrentTheme() == null) ThemeSwitcher.setCurrentTheme(model.getCurrentTheme());
-                    // _____________________
+                    ThemeSwitcher.setCurrentTheme(model.getCurrentTheme());
+                    Note note = new Note(model);
                     Utility.setDropShadow(note, Color.valueOf("#98ecf2"));
                     Utility.getContent().getChildren().add(note.getIndex(), note);
                     in.close();
@@ -62,7 +60,9 @@ public class Serializer {
                     break;
                 }
             }
-            else break;
+            else {
+                break;
+            }
         }
         deleteSerializeFiles();
         serializeNotes();

@@ -33,6 +33,7 @@ public class Main extends Application {
 
         Utility.setPrimaryStage(primaryStage);
         Serializer.deserializeNotes();
+
     }
     @FXML public static void main(String[] args) {
         launch(args);

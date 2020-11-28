@@ -27,6 +27,7 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 public class Utility {
+
     private static Controller controller;
     private static Stage primaryStage;
     private static boolean appClosingState = false;
@@ -146,10 +147,9 @@ public class Utility {
     // Animations
 
     /** Usage:
-     * Node.setOpacity( 1 );
      * getFadeInAnimation( Node.opacityProperty() ).play();
      */
-    public static Animation getFadeInAnimation(DoubleProperty property ) {
+    public static Animation getFadeInAnimation(DoubleProperty property/*, Node node*/) {
         Timeline timeline = new Timeline();
         timeline.getKeyFrames().addAll(
                 new KeyFrame( Duration.ONE, new KeyValue( property, 1 ) ),
@@ -169,5 +169,27 @@ public class Utility {
                 new KeyFrame( Duration.seconds(0.4), new KeyValue( property, 1 ) )
         );
         return timeline;
+    }
+
+    public static void closeOnActions(Stage stage, Node fxButton) {
+
+        fxButton.setOnMouseExited(event -> {
+            Utility.getPrimaryStage().getScene().setOnMouseClicked(event1 -> removeOnActEvents(stage, fxButton));
+            // Close on Esc pressed
+            stage.getScene().setOnKeyPressed(event2 -> {
+                if (event2.getCode() == KeyCode.ESCAPE) removeOnActEvents(stage, fxButton);
+            });
+        });
+    }
+
+
+
+    private static void removeOnActEvents(Stage stage, Node fxButton) {
+        Utility.getPrimaryStage().getScene().setOnMouseClicked(null);
+        stage.getScene().setOnKeyPressed(null);
+        fxButton.setOnMouseExited(null);
+        Settings.isSettingsShow = false;
+        Info.isInfoShow = false;
+        Utility.getFadeInAnimation(stage.opacityProperty()).play();
     }
 }
