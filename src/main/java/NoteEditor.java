@@ -82,10 +82,10 @@ class NoteEditor extends Pane{
     }
 
     private void removeEventHandlers(){
-
         okButton.setOnMouseClicked(null);
         Utility.getPrimaryStage().getScene().setOnMouseClicked(null);
         this.setOnKeyPressed(null);
+        this.setOnMouseExited(null);
         fxAddButton.setOnMouseExited(null);
     }
 
@@ -105,6 +105,7 @@ class NoteEditor extends Pane{
         });
         // part of event
         fxAddButton.setOnMouseExited(event -> setEventPrimeStageClick());
+        this.setOnMouseExited(event -> setEventPrimeStageClick());
 
         // Close on Esc pressed event
         this.setOnKeyPressed(event -> {
