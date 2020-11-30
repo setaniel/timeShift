@@ -6,28 +6,28 @@ import javafx.scene.paint.Color;
 import java.util.List;
 
 
-public class ThemeSwitcher {
+class ThemeSwitcher {
     private static ThemeSwitcher currentTheme;
     private static ImageView backgroundAppImage;
     private static Color dateStampColor;
     private static Color titleColor;
     private static Color previewColor;
     private static Color backgroundColor;
+    private static Color noteShadow;
     private static boolean isDark;
 
     private ThemeSwitcher(){
     }
 
-    public static ThemeSwitcher getCurrentTheme() {
+    static ThemeSwitcher getCurrentTheme() {
         if (currentTheme == null) {
             currentTheme = new ThemeSwitcher();
-            currentTheme.setLightTheme();
+            setLightTheme();
         }
         return currentTheme;
     }
 
-
-    public static void setCurrentTheme(boolean currentTheme) {
+    static void setCurrentTheme(boolean currentTheme) {
         isDark = currentTheme;
         if (isDark()){
             setDarkTheme();
@@ -37,25 +37,28 @@ public class ThemeSwitcher {
         applyCurrentTheme();
     }
 
-    public static void setLightTheme() {
+    static void setLightTheme() {
         isDark = false;
         dateStampColor = Color.valueOf("#008500");
         titleColor = Color.valueOf("#555249");
         previewColor = Color.valueOf("#555249");
         backgroundColor = Color.valueOf("#e8e4db");
+        noteShadow = Color.DARKCYAN;
         backgroundAppImage = new ImageView(new Image(ThemeSwitcher.class.getResourceAsStream("images/notes.png")));
         applyCurrentTheme();
     }
 
-    public static void setDarkTheme() {
+    static void setDarkTheme() {
         isDark = true;
         dateStampColor = Color.valueOf("#20db39");
         titleColor = Color.valueOf("#E2E9E4");
         previewColor = Color.valueOf("#E2E9E4");
         backgroundColor = Color.valueOf("#656b77");
+        noteShadow = Color.valueOf("#98ecf2");
         backgroundAppImage = new ImageView(new Image(ThemeSwitcher.class.getResourceAsStream("images/d_notes.png")));
         applyCurrentTheme();
     }
+
     private static void setNoteColors(){
         List<Node> list = Utility.getContent().getChildren();
         for (Node note  : list) {
@@ -63,6 +66,7 @@ public class ThemeSwitcher {
             n.setTitleLabelColor();
             n.setPreviewLabelColor();
             n.setDateStampLabelColor();
+            n.setNoteShadow();
         }
     }
 
@@ -73,32 +77,35 @@ public class ThemeSwitcher {
         Utility.getController().fxThemeBackground();
     }
 
-
-    public Color getDateStampColor() {
+    Color getDateStampColor() {
         return dateStampColor;
     }
 
-    public Color getTitleColor() {
+    Color getTitleColor() {
         return titleColor;
     }
 
-    public Color getPreviewColor() {
+    Color getPreviewColor() {
         return previewColor;
     }
 
-    public Color getBackgroundColor() {
+    Color getBackgroundColor() {
         return backgroundColor;
     }
 
-    public ImageView getBackgroundAppImage() {
+    ImageView getBackgroundAppImage() {
         return backgroundAppImage;
     }
 
-    public static boolean isDark() {
+    Color getNoteShadow() {
+        return noteShadow;
+    }
+
+    static boolean isDark() {
         return isDark;
     }
 
-    public static void setDark(boolean dark) {
+    static void setDark(boolean dark) {
         isDark = dark;
     }
 }

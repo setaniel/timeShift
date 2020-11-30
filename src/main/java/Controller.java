@@ -2,14 +2,12 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
-import javafx.scene.effect.InnerShadow;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.ScrollEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
-import javafx.scene.paint.Color;
 
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -36,25 +34,23 @@ public class Controller extends View implements Initializable{
     @FXML ImageView fxAddNoteButton;
     @FXML VBox fxContent;
 
-    public void onNewNoteClick() {
+    void onNewNoteClick() {
         View.setFxAddNoteButton(fxAddNoteButton);
-        NoteEditor.removeOkButton(fxAddNoteButton);
         addNote(new Note());
         Utility.removeButtonHandler(fxAddNoteButton);
     }
 
-    public void onNoteClick(Note note) {
+    void onNoteClick(Note note) {
         View.setFxAddNoteButton(fxAddNoteButton);
-        NoteEditor.removeOkButton(fxAddNoteButton);
         addNote(note);
     }
 
     @FXML private void onPomodoroClick() {
-        if (!Pomodoro.isPomodoroStarted) {
+        if (!Pomodoro.isPomodoroShow) {
             Pomodoro.stageClose();
             new Pomodoro().startPomodoro();
         }
-        Pomodoro.isPomodoroStarted = true;
+        Pomodoro.isPomodoroShow = true;
     }
 
     @FXML private void onInfoClick() {
@@ -73,7 +69,7 @@ public class Controller extends View implements Initializable{
         Settings.isSettingsShow = true;
     }
 
-    public void fxThemeBackground(){
+    void fxThemeBackground(){
         fxRootStackPane.getChildren().set(0, ThemeSwitcher.getCurrentTheme().getBackgroundAppImage());
     }
 

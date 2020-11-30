@@ -1,24 +1,15 @@
 import javafx.fxml.FXML;
 import javafx.scene.image.ImageView;
-import javafx.scene.layout.StackPane;
-import javafx.scene.layout.VBox;
-import javafx.stage.Stage;
 
 
-/**
- * Create a view frame.
- * Managing notes
- * */
+/** Managing notes **/
 class View {
     static boolean isNoteEditorShow = false;
     static ImageView fxAddNoteButton;
 
-    public static void setFxAddNoteButton(ImageView fxAddNoteButton) {
+     static void setFxAddNoteButton(ImageView fxAddNoteButton) {
         View.fxAddNoteButton = fxAddNoteButton;
     }
-
-
-
 
     static void addNote(Note note) {
         if (!isNoteEditorShow) {

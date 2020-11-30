@@ -15,40 +15,40 @@ import java.util.regex.Pattern;
 /**
  * Note is a fabric-class of notes.
  * */
-public class Note extends AnchorPane {
+class Note extends AnchorPane {
     private final Model noteModel;
     private Label titleLabel;
     private Label previewLabel;
     private Label dateStampLabel;
 
     /** Initialize new Note object, initialize model and content(note list) */
-    public Note(){
+    Note(){
         noteModel = new Model();
         createNoteInstance();
     }
     /** Create Note, from deserialized model objects. */
-    public Note(Model deserializedModel){
+    Note(Model deserializedModel){
         noteModel = deserializedModel;
         createNoteInstance();
     }
 
-    public void setText(String text){
+    void setText(String text){
         noteModel.setNoteText(text);
     }
 
-    public void setTitle(String title){
+    void setTitle(String title){
         noteModel.setTitleLabelText(title);
         titleLabel.setText(title);
         setTitleLabelColor();
     }
 
-    public void setPreview(String preview){
+    void setPreview(String preview){
         noteModel.setPreviewLabelText(preview);
         previewLabel.setText(preview);
         setPreviewLabelColor();
     }
 
-    public void setNoteDate(){
+    void setNoteDate(){
         LocalDateTime ldt = LocalDateTime.now();
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd.MM-HH:mm");
         String formatDateTime = ldt.format(formatter);
@@ -58,11 +58,12 @@ public class Note extends AnchorPane {
 
     }
 
-    public void setIndex(int index){
+    void setIndex(int index){
         noteModel.setIndex(index);
     }
 
-    public boolean update(String text){
+    /** Updates all the information, stored in the note, from the received string*/
+    boolean update(String text){
         boolean result = false;
         setText(text);
         titleLabel.setText(null);
@@ -92,27 +93,27 @@ public class Note extends AnchorPane {
         return result;
     }
 
-    public String getText(){
+    String getText(){
         return noteModel.getNoteText();
     }
 
-    public String getTitle(){
+    String getTitle(){
         return noteModel.getTitleLabelText();
     }
 
-    public String getPreview(){
+    String getPreview(){
         return noteModel.getPreviewLabelText();
     }
 
-    public String getNoteDate(){
+    String getNoteDate(){
         return noteModel.getNoteDate();
     }
 
-    public int getIndex(){
+    int getIndex(){
         return noteModel.getIndex();
     }
 
-    public Model getNoteModel(){
+    Model getNoteModel(){
         return noteModel;
     }
 
@@ -157,19 +158,23 @@ public class Note extends AnchorPane {
     }
 
 
-    public void setTitleLabelColor() {
+    void setTitleLabelColor() {
         titleLabel.setFont(Font.font("Courier New", FontWeight.BOLD, 13));
         titleLabel.setTextFill(ThemeSwitcher.getCurrentTheme().getTitleColor());
     }
 
-    public void setPreviewLabelColor() {
+    void setPreviewLabelColor() {
         previewLabel.setFont(Font.font("Courier New", 12));
         previewLabel.setTextFill(ThemeSwitcher.getCurrentTheme().getPreviewColor());
     }
 
-    public void setDateStampLabelColor() {
+    void setDateStampLabelColor() {
         dateStampLabel.setFont(Font.font("Courier New", FontWeight.LIGHT, 9));
         dateStampLabel.setTextFill(ThemeSwitcher.getCurrentTheme().getDateStampColor());
+    }
+
+    void setNoteShadow() {
+        Utility.setDropShadow(this, ThemeSwitcher.getCurrentTheme().getNoteShadow());
     }
 
     private Button createTrashButton(){

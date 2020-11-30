@@ -1,9 +1,9 @@
 import java.io.Serializable;
 /** Internal data storage for notes.
  * Uses for serialize and deserialize,
- * collecting data of all notes.
+ * collecting data of all notes, and for theme.
  * Each note uses its own instance of the model*/
-public class Model implements Serializable {
+class Model implements Serializable {
     private static final long serialVersionUID = 101;
 
     private boolean currentTheme;
@@ -13,40 +13,40 @@ public class Model implements Serializable {
     private String noteDate;
     private int index;
 
-    public void setNoteText(String text){
+    void setNoteText(String text){
         this.noteText = text;
     }
-    public void setPreviewLabelText(String previewText){
+    void setPreviewLabelText(String previewText){
         this.previewLabelText = previewText;
     }
-    public void setTitleLabelText(String titleText) {
+    void setTitleLabelText(String titleText) {
         this.titleLabelText = titleText;
     }
-    public void setNoteDate(String date){
+    void setNoteDate(String date){
         noteDate = date;
     }
-    public void setIndex(int contentIndex){
+    void setIndex(int contentIndex){
         this.index = contentIndex;
     }
-    public void setCurrentTheme(boolean currentTheme) {
+    void setCurrentTheme(boolean currentTheme) {
         this.currentTheme = currentTheme;
     }
 
 
-    public String getNoteText(){
+    String getNoteText(){
         return noteText;
     }
-    public String getTitleLabelText(){
+    String getTitleLabelText(){
         return titleLabelText;
     }
-    public String getPreviewLabelText(){
+    String getPreviewLabelText(){
         return previewLabelText;
     }
-    public String getNoteDate(){return noteDate;}
-    public int getIndex(){
+    String getNoteDate(){return noteDate;}
+    int getIndex(){
         return index;
     }
-    public boolean getCurrentTheme() {
+    boolean getCurrentTheme() {
         return currentTheme;
     }
 }

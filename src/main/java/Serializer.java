@@ -1,14 +1,13 @@
-import com.sun.org.apache.xpath.internal.operations.Mod;
 import javafx.scene.Node;
 import javafx.scene.paint.Color;
 
 import java.io.*;
 
-public class Serializer {
+class Serializer {
     /**
      * Serializing all notes, from files in user home directory
      * */
-    public static void serializeNotes(){
+    static void serializeNotes(){
         for (Node node : Utility.getContent().getChildren()) {
             try {
                 Note serialNote = (Note)node;
@@ -38,7 +37,7 @@ public class Serializer {
     /**
      * Deserializing all notes, from files in user home directory
      * */
-    public static void deserializeNotes(){
+    static void deserializeNotes(){
         Model model;
         for (int i = 0; i < Integer.MAX_VALUE; i++) {
             File file = new File(String.format(System.getProperty("user.home") + "/documents/timeShift/serialize/%d.ser", i));
@@ -50,7 +49,7 @@ public class Serializer {
                     // set theme for app
                     ThemeSwitcher.setCurrentTheme(model.getCurrentTheme());
                     Note note = new Note(model);
-                    Utility.setDropShadow(note, Color.valueOf("#98ecf2"));
+                    Utility.setDropShadow(note, ThemeSwitcher.getCurrentTheme().getNoteShadow());
                     Utility.getContent().getChildren().add(note.getIndex(), note);
                     in.close();
                     fileIn.close();
@@ -70,7 +69,7 @@ public class Serializer {
     /**
      * After deserialize, delete all .ser files
      * */
-    public static void deleteSerializeFiles(){
+    static void deleteSerializeFiles(){
         for (int i = 0; i < Integer.MAX_VALUE; i++) {
             File file = new File(String.format(System.getProperty("user.home") + "/documents/timeShift/serialize/%d.ser", i));
             if (file.exists()) {

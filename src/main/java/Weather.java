@@ -5,7 +5,7 @@ import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 import java.io.IOException;
 
-public class Weather {
+ class Weather {
 
     private static void weatherParse(){
         Document doc;
@@ -19,7 +19,7 @@ public class Weather {
         }
     }
 
-    public static void showWeather() {
+     static void showWeather() {
         weatherParse();
         // Long running operation runs on different thread
         Thread thread = new Thread(() -> {

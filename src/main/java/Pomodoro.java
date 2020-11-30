@@ -16,8 +16,8 @@ import javafx.stage.StageStyle;
 import java.util.Timer;
 import java.util.TimerTask;
 
-public class Pomodoro {
-    static boolean isPomodoroStarted = false;
+class Pomodoro {
+    static boolean isPomodoroShow = false;
     private double xOffset = 0;
     private double yOffset = 0;
     private static Button button;
@@ -26,20 +26,19 @@ public class Pomodoro {
     private static Stage stage;
     private Timer timer;
     private Image image;
-    Scene scene;
     private static int pomTimer;
 
-    public static void stageClose(){
+    static void stageClose(){
         if (stage != null && stage.isShowing()) {
             stage.close();
         }
     }
 
-    public Pomodoro(){
+    Pomodoro(){
         setImage("Tomato");
     }
 
-    public void startPomodoro(){
+    void startPomodoro(){
         createAnchorButton(25, 43, "Start");
         DropShadow dropShadow = new DropShadow();
         button.setEffect(dropShadow);
@@ -57,7 +56,7 @@ public class Pomodoro {
         stage.initOwner(Utility.getPrimaryStage());
         anchorPane.setMaxWidth(image.getWidth());
         anchorPane.setMaxHeight(image.getHeight());
-        scene = new Scene(stackPane, image.getWidth(), image.getHeight(), Color.TRANSPARENT);
+        Scene scene = new Scene(stackPane, image.getWidth(), image.getHeight(), Color.TRANSPARENT);
         stage.setScene(scene);
         // set transparent background
         scene.setFill(null);
@@ -69,7 +68,7 @@ public class Pomodoro {
         stage.show();
 
         stage.setOpacity(0);
-        Utility.getFadeOutAnimation(stage.opacityProperty()).play();
+        Utility.getFadeInAnimation(stage.opacityProperty()).play();
 
         scene.setOnMousePressed(event -> {
             xOffset = event.getSceneX();
@@ -99,11 +98,11 @@ public class Pomodoro {
         AnchorPane.setRightAnchor(closeImageView, 0.0);
         AnchorPane.setTopAnchor(closeImageView,5.0);
         closeImageView.setOnMouseClicked(event -> {
-            Utility.getFadeInAnimation(stage.opacityProperty()).play();
+            Utility.getFadeOutAnimation(stage.opacityProperty()).play();
             if (timer != null) timer.cancel();
-            isPomodoroStarted = false;
+            isPomodoroShow = false;
         });
-        Utility.setInnerShadow(closeImageView, Color.RED);
+        Utility.setInnerShadow(closeImageView);
         return closeImageView;
     }
     private void setDefaultButton(){
@@ -154,12 +153,11 @@ public class Pomodoro {
                         "-fx-min-height: 17px; " +
                         "-fx-max-width: %dpx; " +
                         "-fx-max-height: 17px; " +
-                        "-fx-background-color: -fx-body-color;" +
                         "-fx-background-insets: 0px; " +
                         "-fx-padding: 0px;" +
-                        "-fx-background-color: #22CC00; " //+
+                        "-fx-background-color: #22CC00; "
                         , width, width
         ));
-        Utility.setSwitchInnerShadows(button, Color.BLACK, Color.RED);
+        Utility.setSwitchInnerShadows(button);
     }
 }

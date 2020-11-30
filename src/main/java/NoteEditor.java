@@ -6,29 +6,36 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 
-public class NoteEditor extends Pane{
+class NoteEditor extends Pane{
     private static final ImageView okButton = new ImageView(
             new Image(NoteEditor.class.getResourceAsStream("images/done.png")));
     private String currentObjectText;
     private TextArea text;
     private Note newNote;
     private static ImageView fxAddButton;
+    private static NoteEditor instance;
 
-    public static void removeOkButton(ImageView fxAddNoteButton){
-        fxAddButton = fxAddNoteButton;
-        Utility.getRootUI().getChildren().remove(okButton);
-
-        // fading fxAddNoteButton
-        Utility.getFadeInAnimation(fxAddButton.opacityProperty()).play();
-
+    private NoteEditor(){
     }
 
-    public void initEditor(Note note){
+    static NoteEditor getInstance() {
+        if (instance == null) instance = new NoteEditor();
+        return instance;
+    }
+
+    static void removeOkButton(ImageView fxAddNoteButton){
+        fxAddButton = fxAddNoteButton;
+        Utility.getRootUI().getChildren().remove(okButton);
+        // fading fxAddNoteButton
+        Utility.getFadeOutAnimation(fxAddButton.opacityProperty()).play();
+    }
+
+    void initEditor(Note note){
         newNote = note;
         View.isNoteEditorShow = true;
         setEventHandlers();
-        Utility.setDropShadow(newNote, Color.DARKGREY);
         if (this.getChildren().size() > 0) this.getChildren().remove(0);
+        Utility.setDropShadow(note, ThemeSwitcher.getCurrentTheme().getNoteShadow());
         this.setPrefSize(250, 395);
 
         Utility.getRootUI().getChildren().add(okButton);
@@ -36,7 +43,7 @@ public class NoteEditor extends Pane{
         AnchorPane.setRightAnchor(okButton, 17.0);
         AnchorPane.setTopAnchor(okButton, 140.0);
         okButton.setOpacity(0);
-        Utility.getFadeOutAnimation(okButton.opacityProperty()).play();
+        Utility.getFadeInAnimation(okButton.opacityProperty()).play();
 
         text = new TextArea();
         this.getChildren().add(text);
@@ -52,7 +59,7 @@ public class NoteEditor extends Pane{
         }
     }
 
-    private void textChecks(){
+    private void procTextHideEditor(){
         if (!text.getText().equals("")) {
 
             if (currentObjectText == null && newNote.update(text.getText())) {
@@ -66,12 +73,10 @@ public class NoteEditor extends Pane{
             Utility.getContent().getChildren().remove(newNote);
         }
 
-
-
         removeEventHandlers();
         SlideScene.hideEditor(this);
-        Utility.getFadeInAnimation(okButton.opacityProperty()).play();
-        Utility.getFadeOutAnimation(fxAddButton.opacityProperty()).play();
+        Utility.getFadeOutAnimation(okButton.opacityProperty()).play();
+        Utility.getFadeInAnimation(fxAddButton.opacityProperty()).play();
         fxAddButton.setOnMouseClicked(event -> Utility.getController().onNewNoteClick());
         View.isNoteEditorShow = false;
     }
@@ -81,15 +86,14 @@ public class NoteEditor extends Pane{
         okButton.setOnMouseClicked(null);
         Utility.getPrimaryStage().getScene().setOnMouseClicked(null);
         this.setOnKeyPressed(null);
-        this.setOnMouseExited(null);
         fxAddButton.setOnMouseExited(null);
     }
 
-    private void setEventPrimeClick(){
+    private void setEventPrimeStageClick(){
         // On out of node click event
         Utility.getPrimaryStage().getScene().setOnMouseClicked(event -> {
             event.consume();
-            textChecks();
+            procTextHideEditor();
         });
     }
 
@@ -97,18 +101,16 @@ public class NoteEditor extends Pane{
         // okButton press event
         okButton.setOnMouseClicked(event -> {
             event.consume();
-            textChecks();
+            procTextHideEditor();
         });
         // part of event
-        this.setOnMouseExited(event -> setEventPrimeClick());
-        fxAddButton = Utility.getAddNoteButton();
-        fxAddButton.setOnMouseExited(event -> setEventPrimeClick());
+        fxAddButton.setOnMouseExited(event -> setEventPrimeStageClick());
 
         // Close on Esc pressed event
         this.setOnKeyPressed(event -> {
             if (event.getCode() == KeyCode.ESCAPE) {
                 event.consume();
-                textChecks();
+                procTextHideEditor();
             }
         });
     }

@@ -1,7 +1,6 @@
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.control.ToggleButton;
@@ -18,7 +17,7 @@ import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import org.apache.commons.lang3.StringUtils;
 
-public class Settings {
+class Settings {
     private static double xOffset = 0;
     private static double yOffset = 0;
     static boolean isSettingsShow = false;
@@ -27,15 +26,17 @@ public class Settings {
     private static final Image imgPowerOff = new Image(Settings.class.getResourceAsStream("images/powerOff.png"));
     private static final Image imgPowerOn = new Image(Settings.class.getResourceAsStream("images/powerOn.png"));
 
-    public static void closeStage(){
+    static void closeStage(){
         if (stage != null && stage.isShowing()) {
             stage.close();
         }
     }
 
-    public static void showSettings(ImageView fxButton){
+    static void showSettings(ImageView fxButton){
         layout = new VBox();
         ToggleButton tgb = new ToggleButton();
+        tgb.setStyle("-fx-background-radius: 8");
+        Utility.setSwitchInnerShadows(tgb, Color.BLACK, Color.DARKGREY);
         tgb.setSelected(ThemeSwitcher.isDark());
         tgb.setOnAction(event -> tgbOnAction(tgb));
         tgb.setFont(Font.font("Courier New", FontWeight.BOLD, 12));
@@ -49,7 +50,6 @@ public class Settings {
 
 
         ImageView okButton = new ImageView(new Image(NoteEditor.class.getResourceAsStream("images/done.png")));
-//        Button okButton = new Button("", imageView);
         okButton.setStyle("-fx-background-color : transparent;");
         //____
 
@@ -99,8 +99,6 @@ public class Settings {
 
         //-----------------------------------
         okButton.setOnMouseClicked(event -> {
-            DropShadow shadow = new DropShadow();
-            shadow.setColor(Color.RED);
             if (StringUtils.isNumeric(text.getCharacters())){
                 int i;
                 if ((i = Integer.parseInt(text.getText())) <= 999){
@@ -108,13 +106,13 @@ public class Settings {
                     stage.close();
                 }else {
                     label.setText(" Incorrect value ");
-                    text.setEffect(shadow);
+                    Utility.setStaticDropShadow(text, Color.RED);
                     label.setBackground(new Background(new BackgroundFill(Paint.valueOf("red"),
                             new CornerRadii(16), Insets.EMPTY)));
                 }
             }else {
                 label.setText(" Incorrect value ");
-                text.setEffect(shadow);
+                Utility.setStaticDropShadow(text, Color.RED);
                 label.setBackground(new Background(new BackgroundFill(Paint.valueOf("red"),
                         new CornerRadii(16), Insets.EMPTY)));
             }
@@ -130,9 +128,9 @@ public class Settings {
             stage.setX(event.getScreenX() - xOffset);
             stage.setY(event.getScreenY() - yOffset);
         });
-        Utility.closeOnActions(stage, fxButton);
+        Utility.setCloseOnActions(stage, fxButton);
         stage.setOpacity(0);
-        Utility.getFadeOutAnimation(stage.opacityProperty()).play();
+        Utility.getFadeInAnimation(stage.opacityProperty()).play();
         layout.getChildren().get(1).requestFocus();
     }
 
@@ -142,18 +140,17 @@ public class Settings {
             tgb.setText("Dark theme");
             tgb.setGraphic(new ImageView(imgPowerOn));
             ThemeSwitcher.setDarkTheme();
-            setBackGroundColor();
         }
         else {
             ThemeSwitcher.setDark(false);
             tgb.setText("Light theme");
             tgb.setGraphic(new ImageView(imgPowerOff));
             ThemeSwitcher.setLightTheme();
-            setBackGroundColor();
         }
+        setBackGroundColor();
     }
 
-    public static void setBackGroundColor(){
+    static void setBackGroundColor(){
         layout.setBackground(new Background(new BackgroundFill(
                 ThemeSwitcher.getCurrentTheme().getBackgroundColor(), new CornerRadii(16), Insets.EMPTY)));
     }

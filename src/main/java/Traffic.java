@@ -15,7 +15,7 @@ import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 import java.io.IOException;
 
-public class Traffic {
+class Traffic {
     private static final StackPane parsedStackTraffic  = new StackPane();
     private static final Label trafficLabelValue = new Label();
     private static ImageView trafficColorImage;
@@ -59,7 +59,7 @@ public class Traffic {
 
     }
 
-    public static void showTraffic(AnchorPane fxTrafficPane) {
+    static void showTraffic(AnchorPane fxTrafficPane) {
         DropShadow dropShadow = new DropShadow();
         parsedStackTraffic.setEffect(dropShadow);
 

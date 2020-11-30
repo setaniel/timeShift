@@ -18,20 +18,18 @@ import java.net.URI;
 import java.net.URISyntaxException;
 
 
-public class Info {
+class Info {
     private static double xOffset = 0;
     private static double yOffset = 0;
     static boolean isInfoShow = false;
     private static Stage stage;
     private static VBox layout;
 
-    public static void closeStage(){
-        if (stage != null && stage.isShowing()) {
-            stage.close();
-        }
+    static void closeStage(){
+        if ( stage != null && stage.isShowing() ) stage.close();
     }
 
-    public static void showInfo(ImageView fxButton) {
+    static void showInfo(ImageView fxButton) {
         layout = new VBox();
         AnchorPane anchorPane = new AnchorPane();
         anchorPane.getChildren().add(layout);
@@ -43,9 +41,9 @@ public class Info {
         layout.setAlignment(Pos.TOP_CENTER);
         layout.setPadding(new Insets(10, 10, 10, 10));
 
-        Label version = new Label("Ver.1.1.2a");
+        Label version = new Label("Ver.1.1.3");
         setLabelFont(version);
-        Label nickName = new Label("@Setaniel");
+        Label nickName = new Label("Setaniel");
         setLabelFont(nickName);
         Label author = new Label("Kirill Orlov");
         setLabelFont(author);
@@ -86,13 +84,14 @@ public class Info {
             stage.setX(event.getScreenX() - xOffset);
             stage.setY(event.getScreenY() - yOffset);
         });
-        Utility.closeOnActions(stage, fxButton);
+
+        Utility.setCloseOnActions(stage, fxButton);
 
         stage.setOpacity(0);
-        Utility.getFadeOutAnimation(stage.opacityProperty()).play();
+        Utility.getFadeInAnimation(stage.opacityProperty()).play();
         layout.getChildren().get(4).requestFocus();
     }
-    public static void setBackGroundColor(){
+    static void setBackGroundColor(){
         layout.setBackground(new Background(new BackgroundFill(
                 ThemeSwitcher.getCurrentTheme().getBackgroundColor(), new CornerRadii(16), Insets.EMPTY)));
     }

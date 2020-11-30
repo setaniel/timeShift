@@ -7,12 +7,12 @@ import javafx.scene.layout.StackPane;
 import javafx.util.Duration;
 
 
-public class SlideScene {
+class SlideScene {
     static Pane parentRoot;
     static StackPane parentContainer;
     static Pane root;
 
-    public static void initScene(){
+    static void initScene(){
         parentRoot = Utility.getContentAnchor();
         parentContainer = Utility.getContentStack();
     }
@@ -27,7 +27,7 @@ public class SlideScene {
     }
 
 
-    public static void showEditor(){
+    static void showEditor(){
         root = Utility.getNoteEditor(); // куда впихиваю
 
         if (parentContainer.getChildren().size() == 2) {

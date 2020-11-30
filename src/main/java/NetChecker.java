@@ -16,7 +16,7 @@ import java.net.UnknownHostException;
  * {@link //#ping} method pinging google.com, using system methods.
  * Result showing in Label, on app right-bottom.
  * */
-public class NetChecker {
+class NetChecker {
     private static final Label netLabel = Utility.getNetLabel();
     private static BufferedReader inStream;
     private static Process process;
@@ -74,7 +74,7 @@ public class NetChecker {
     /**
      * Run net check method on every 2 seconds
      * */
-    public static void ping() {
+    static void ping() {
         // Long running operation runs on different thread
         thread = new Thread(() -> {
             Runnable updater = NetChecker::check;
@@ -94,7 +94,7 @@ public class NetChecker {
         thread.setDaemon(true);
         thread.start();
     }
-    public static void stopPing(){
+    static void stopPing(){
         thread.interrupt();
     }
 }
