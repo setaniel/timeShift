@@ -8,7 +8,7 @@ You can use a light theme
 
 ![Light theme](/Light.png)
 
-or dark theme< you can switch it in settings
+or dark theme. You can switch it in settings
 
 ![Dark theme](/Dark.png)
 
