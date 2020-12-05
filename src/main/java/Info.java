@@ -59,7 +59,7 @@ class Info {
         layout.setAlignment(Pos.TOP_CENTER);
         layout.setPadding(new Insets(10, 10, 10, 10));
 
-        Label version = new Label("Ver.1.1.3");
+        Label version = new Label("Ver.1.1.5");
         setLabelFont(version);
         Label nickName = new Label("Setaniel");
         setLabelFont(nickName);
