@@ -21,47 +21,62 @@ import javafx.stage.Stage;
 import javafx.util.Duration;
 
 class Utility {
+    private Controller controller;
+    private Stage primaryStage;
+    private boolean appClosingState = false;
+    private int pomodoroTime = 25;
+    private static Utility instance;
 
-    private static Controller controller;
-    private static Stage primaryStage;
-    private static boolean appClosingState = false;
-    private static int pomodoroTime = 25;
-    // Setters
-    static void setController(Controller controller) {
-        Utility.controller = controller;
+    static Utility getInstance(){
+        if (instance == null) instance = new Utility();
+        return instance;
     }
-    static void setPrimaryStage(Stage primeStage) {
+
+    private Utility(){
+    }
+
+    // Setters
+    void setController(Controller fxController) {
+        controller = fxController;
+    }
+
+    void setPrimaryStage(Stage primeStage) {
         primaryStage = primeStage;
     }
-    static void setIsAppClosing(boolean state) {
+
+    void setIsAppClosing(boolean state) {
         appClosingState = state;
     }
-    static void setPomodoroTime(int time) {
+
+    void setPomodoroTime(int time) {
         pomodoroTime = time;
     }
 
-    static void setDropShadow(Node node, Color color) {
+    void setDropShadow(Node node, Color color) {
         DropShadow shadow = new DropShadow(10.0, color);
         // Adding the shadow when the mouse cursor is on
         node.addEventHandler(MouseEvent.MOUSE_ENTERED, e -> node.setEffect(shadow));
         // Removing the shadow when the mouse cursor is off
         node.addEventHandler(MouseEvent.MOUSE_EXITED, e -> node.setEffect(null));
     }
-    static void setInnerShadow(Node node) {
+
+    void setInnerShadow(Node node) {
         InnerShadow shadow = new InnerShadow(10.0, Color.RED);
         // Adding the shadow when the mouse cursor is on
         node.addEventHandler(MouseEvent.MOUSE_ENTERED, e -> node.setEffect(shadow));
         // Removing the shadow when the mouse cursor is off
         node.addEventHandler(MouseEvent.MOUSE_EXITED, e -> node.setEffect(null));
     }
-    static void setUIShadows(Node node) {
+
+    void setUIShadows(Node node) {
         DropShadow blackShadow = new DropShadow(10.0, Color.BLACK);
         DropShadow redShadow = new DropShadow(17.0, Color.RED);
         node.setEffect(blackShadow);
         node.addEventHandler(MouseEvent.MOUSE_ENTERED, e -> node.setEffect(redShadow));
         node.addEventHandler(MouseEvent.MOUSE_EXITED, e -> node.setEffect(blackShadow));
     }
-    static void setSwitchInnerShadows(Node node) {
+
+    void setSwitchInnerShadows(Node node) {
         InnerShadow viewShadow = new InnerShadow(10.0, Color.BLACK);
         InnerShadow actionShadow = new InnerShadow(10.0, Color.RED);
         node.setEffect(viewShadow);
@@ -69,7 +84,7 @@ class Utility {
         node.setOnMouseExited(event -> node.setEffect(viewShadow));
     }
 
-    static void setSwitchInnerShadows(Node node, Color constant, Color action) {
+    void setSwitchInnerShadows(Node node, Color constant, Color action) {
         InnerShadow constantShadow = new InnerShadow(10.0, constant);
         InnerShadow actionShadow = new InnerShadow(10.0, action);
         node.setEffect(constantShadow);
@@ -77,25 +92,26 @@ class Utility {
         node.setOnMouseExited(event -> node.setEffect(constantShadow));
     }
 
-    static void setStaticInnerShadow(Node node) {
+    void setStaticInnerShadow(Node node) {
         InnerShadow innerShadow = new InnerShadow(10.0, Color.BLACK);
         node.setEffect(innerShadow);
     }
-    static void setStaticDropShadow(Node node, Color color) {
+
+    void setStaticDropShadow(Node node, Color color) {
         DropShadow dropShadow = new DropShadow(10.0, color);
         node.setEffect(dropShadow);
     }
 
-
     // Getters
-    static Pane getContentAnchor() {
+    Pane getContentAnchor() {
         return controller.fxContentAnchor;
     }
-    static StackPane getContentStack() {
+
+    StackPane getContentStack() {
         return controller.fxContentStack;
     }
 
-    static Label getWeatherLabel(){
+    Label getWeatherLabel(){
         // Adding the shadow
         InnerShadow shadow = new InnerShadow();
         controller.fxWeatherLabel.setEffect(shadow);
@@ -106,7 +122,8 @@ class Utility {
                 new CornerRadii(16), Insets.EMPTY)));
         return controller.fxWeatherLabel;
     }
-    static Label getNetLabel(){
+
+    Label getNetLabel(){
         // Adding the shadow
         InnerShadow shadow = new InnerShadow();
         controller.fxNetLabel.setEffect(shadow);
@@ -115,23 +132,28 @@ class Utility {
         controller.fxNetLabel.setFont(Font.font("Courier New", FontWeight.BOLD, 12));
         return controller.fxNetLabel;
     }
-    static int getPomodoroTime(){
+
+    int getPomodoroTime(){
         return pomodoroTime;
     }
-    static VBox getContent(){
+
+    VBox getContent(){
         return controller.fxContent;
     }
-    static AnchorPane getRootUI() {
+
+    AnchorPane getRootUI() {
         return controller.fxRootUI;
     }
-    static Stage getPrimaryStage(){
+
+    Stage getPrimaryStage(){
         return primaryStage;
     }
-    static boolean isAppClosing() {
+
+    boolean isAppClosing() {
         return appClosingState;
     }
 
-    static Controller getController() {
+    Controller getController() {
         return controller;
     }
 
@@ -140,7 +162,7 @@ class Utility {
     /** Usage:
      * getFadeOutAnimation( Node.opacityProperty() ).play();
      */
-    static Animation getFadeOutAnimation(DoubleProperty property) {
+    Animation getFadeOutAnimation(DoubleProperty property) {
         Timeline timeline = new Timeline();
         timeline.getKeyFrames().addAll(
                 new KeyFrame( Duration.ONE, new KeyValue( property, 1 ) ),
@@ -153,7 +175,7 @@ class Utility {
      * Node.setOpacity( 0 ); <br>
      * getFadeInAnimation( Node.opacityProperty() ).play();
      */
-    static Animation getFadeInAnimation(DoubleProperty property ) {
+    Animation getFadeInAnimation(DoubleProperty property ) {
         Timeline timeline = new Timeline();
         timeline.getKeyFrames().addAll(
                 new KeyFrame( Duration.ZERO, new KeyValue( property, 0 ) ),
@@ -162,10 +184,10 @@ class Utility {
         return timeline;
     }
 
-    static void setCloseOnActions(Stage stage, Node fxButton, Object object) {
+    void setCloseOnActions(Stage stage, Node fxButton, Object object) {
 
         fxButton.setOnMouseExited(event -> {
-            Utility.getPrimaryStage().getScene().setOnMouseClicked(event1 -> removeOnActEvents(stage, fxButton, object));
+            getPrimaryStage().getScene().setOnMouseClicked(event1 -> removeOnActEvents(stage, fxButton, object));
             // Close on Esc pressed
             stage.getScene().setOnKeyPressed(event2 -> {
                 if (event2.getCode() == KeyCode.ESCAPE) removeOnActEvents(stage, fxButton, object);
@@ -173,10 +195,8 @@ class Utility {
         });
     }
 
-
-
-    private static void removeOnActEvents(Stage stage, Node fxButton, Object object) {
-        Utility.getPrimaryStage().getScene().setOnMouseClicked(null);
+    void removeOnActEvents(Stage stage, Node fxButton, Object object) {
+        getPrimaryStage().getScene().setOnMouseClicked(null);
         stage.getScene().setOnKeyPressed(null);
         if (object.getClass().getName().equals("Settings")){
             Settings.getInstance().setSettingsShow(false);
@@ -184,9 +204,10 @@ class Utility {
             Info.getInstance().setInfoShow(false);
         }
         fxButton.setOnMouseExited(null);
-        Utility.getFadeOutAnimation(stage.opacityProperty()).play();
+        getFadeOutAnimation(stage.opacityProperty()).play();
     }
-    static void removeButtonHandler(ImageView fxButton){
+
+    void removeButtonHandler(ImageView fxButton){
         fxButton.setOnMouseClicked(null);
     }
 }

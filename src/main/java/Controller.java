@@ -37,7 +37,7 @@ public class Controller implements Initializable{
     void onNewNoteClick() {
         View.getInstance().setFxAddNoteButton(fxAddNoteButton);
         View.getInstance().addNote(new Note());
-        Utility.removeButtonHandler(fxAddNoteButton);
+        Utility.getInstance().removeButtonHandler(fxAddNoteButton);
     }
 
     void onNoteClick(Note note) {
@@ -73,17 +73,17 @@ public class Controller implements Initializable{
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        Utility.setController(this);
+        Utility.getInstance().setController(this);
         fxScroll.getStylesheets().add(Controller.class.getResource("scroll.css").toExternalForm());
         fxScroll.setVbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
         setScrollVisibility();
-        Utility.setStaticInnerShadow(fxRootStackPane);
-        Utility.setUIShadows(fxMinimize);
-        Utility.setUIShadows(fxInfo);
-        Utility.setUIShadows(fxSettings);
-        Utility.setUIShadows(fxAddNoteButton);
-        Utility.setUIShadows(fxCloseButton);
-        Utility.setUIShadows(fxPomodoro);
+        Utility.getInstance().setStaticInnerShadow(fxRootStackPane);
+        Utility.getInstance().setUIShadows(fxMinimize);
+        Utility.getInstance().setUIShadows(fxInfo);
+        Utility.getInstance().setUIShadows(fxSettings);
+        Utility.getInstance().setUIShadows(fxAddNoteButton);
+        Utility.getInstance().setUIShadows(fxCloseButton);
+        Utility.getInstance().setUIShadows(fxPomodoro);
         Serializer.getInstance().serializeNotes();
         NetChecker.getInstance().ping();
         Weather.showWeather();
@@ -99,12 +99,12 @@ public class Controller implements Initializable{
                 fxScroll.setVbarPolicy(ScrollPane.ScrollBarPolicy.NEVER));
     }
     @FXML private void minimizeApp() {
-        Utility.getPrimaryStage().setIconified(true);
+        Utility.getInstance().getPrimaryStage().setIconified(true);
     }
 
     // Closing app, run serialization
     @FXML private void closeApp() {
-        Utility.setIsAppClosing(true);
+        Utility.getInstance().setIsAppClosing(true);
         Serializer.getInstance().serializeNotes();
     }
 }

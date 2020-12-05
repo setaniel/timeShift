@@ -54,7 +54,7 @@ class Pomodoro {
         // set scene
         stage = new Stage(StageStyle.UNDECORATED);
         stage.initModality(Modality.NONE);
-        stage.initOwner(Utility.getPrimaryStage());
+        stage.initOwner(Utility.getInstance().getPrimaryStage());
         anchorPane.setMaxWidth(image.getWidth());
         anchorPane.setMaxHeight(image.getHeight());
         Scene scene = new Scene(stackPane, image.getWidth(), image.getHeight(), Color.TRANSPARENT);
@@ -64,12 +64,12 @@ class Pomodoro {
         stackPane.setStyle("-fx-background-color: rgba(0, 0, 0, 0);");
         stage.initStyle(StageStyle.TRANSPARENT);
         // set position this modal on parent frame
-        stage.setX(Utility.getPrimaryStage().getX() + 350);
-        stage.setY(Utility.getPrimaryStage().getY() + 50);
+        stage.setX(Utility.getInstance().getPrimaryStage().getX() + 350);
+        stage.setY(Utility.getInstance().getPrimaryStage().getY() + 50);
         stage.show();
 
         stage.setOpacity(0);
-        Utility.getFadeInAnimation(stage.opacityProperty()).play();
+        Utility.getInstance().getFadeInAnimation(stage.opacityProperty()).play();
 
         scene.setOnMousePressed(event -> {
             xOffset = event.getSceneX();
@@ -99,11 +99,11 @@ class Pomodoro {
         AnchorPane.setRightAnchor(closeImageView, 0.0);
         AnchorPane.setTopAnchor(closeImageView,5.0);
         closeImageView.setOnMouseClicked(event -> {
-            Utility.getFadeOutAnimation(stage.opacityProperty()).play();
+            Utility.getInstance().getFadeOutAnimation(stage.opacityProperty()).play();
             if (timer != null) timer.cancel();
             isPomodoroShow = false;
         });
-        Utility.setInnerShadow(closeImageView);
+        Utility.getInstance().setInnerShadow(closeImageView);
         return closeImageView;
     }
     private void setDefaultButton(){
@@ -114,7 +114,7 @@ class Pomodoro {
     }
 
     private void startTimerButton(){
-        pomTimer = Utility.getPomodoroTime();
+        pomTimer = Utility.getInstance().getPomodoroTime();
         anchorPane.getChildren().remove(button);
         createAnchorButton(37.0, 26, String.valueOf(pomTimer));
         anchorPane.getChildren().add(button);
@@ -127,14 +127,14 @@ class Pomodoro {
                     button.setText(String.valueOf(pomTimer--));
                     if (pomTimer == -1){
                         timer.cancel();
-                        pomTimer = Utility.getPomodoroTime();
+                        pomTimer = Utility.getInstance().getPomodoroTime();
                         setImage("sadTomato");
                         setDefaultButton();
                         button.setText("Clear");
                     }
                     button.setOnAction(event -> {
                         timer.cancel();
-                        pomTimer = Utility.getPomodoroTime();
+                        pomTimer = Utility.getInstance().getPomodoroTime();
                         setImage("Tomato");
                         setDefaultButton();
                     });
@@ -159,6 +159,6 @@ class Pomodoro {
                         "-fx-background-color: #22CC00; "
                         , width, width
         ));
-        Utility.setSwitchInnerShadows(button);
+        Utility.getInstance().setSwitchInnerShadows(button);
     }
 }

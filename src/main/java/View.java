@@ -37,8 +37,8 @@ class View {
     }
 
     void manageNotes(Note note) {
-        Utility.getContent().getChildren().remove(note);
-        Utility.getContent().getChildren().add(0, note);
+        Utility.getInstance().getContent().getChildren().remove(note);
+        Utility.getInstance().getContent().getChildren().add(0, note);
         Serializer.getInstance().deleteSerializeFiles();
         Serializer.getInstance().serializeNotes();
     }

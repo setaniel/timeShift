@@ -14,10 +14,10 @@ class Serializer {
      * Serializing all notes, from files in user home directory
      * */
     void serializeNotes(){
-        for (Node node : Utility.getContent().getChildren()) {
+        for (Node node : Utility.getInstance().getContent().getChildren()) {
             try {
                 Note serialNote = (Note)node;
-                serialNote.setIndex(Utility.getContent().getChildren().indexOf(node));
+                serialNote.setIndex(Utility.getInstance().getContent().getChildren().indexOf(node));
 
                 // save theme bound
                 serialNote.getNoteModel().setCurrentTheme(ThemeSwitcher.getInstance().isDark());
@@ -33,8 +33,8 @@ class Serializer {
                 e.printStackTrace();
             }
         }
-        if (Utility.isAppClosing()){
-            Utility.getPrimaryStage().close();
+        if (Utility.getInstance().isAppClosing()){
+            Utility.getInstance().getPrimaryStage().close();
             System.exit(0);
         }
 
@@ -55,8 +55,8 @@ class Serializer {
                     // set theme for app
                     ThemeSwitcher.getInstance().setCurrentTheme(model.getCurrentTheme());
                     Note note = new Note(model);
-                    Utility.setDropShadow(note, ThemeSwitcher.getInstance().getNoteShadow());
-                    Utility.getContent().getChildren().add(note.getIndex(), note);
+                    Utility.getInstance().setDropShadow(note, ThemeSwitcher.getInstance().getNoteShadow());
+                    Utility.getInstance().getContent().getChildren().add(note.getIndex(), note);
                     in.close();
                     fileIn.close();
                 } catch (IOException e) {

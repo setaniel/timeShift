@@ -24,9 +24,9 @@ class NoteEditor extends Pane{
 
     void removeOkButton(ImageView fxAddNoteButton){
         fxAddButton = fxAddNoteButton;
-        Utility.getRootUI().getChildren().remove(okButton);
+        Utility.getInstance().getRootUI().getChildren().remove(okButton);
         // fading fxAddNoteButton
-        Utility.getFadeOutAnimation(fxAddButton.opacityProperty()).play();
+        Utility.getInstance().getFadeOutAnimation(fxAddButton.opacityProperty()).play();
     }
 
     void initEditor(Note note){
@@ -34,15 +34,15 @@ class NoteEditor extends Pane{
         View.getInstance().setNoteEditorShow(true);
         setEventHandlers();
         if (this.getChildren().size() > 0) this.getChildren().remove(0);
-        Utility.setDropShadow(note, ThemeSwitcher.getInstance().getNoteShadow());
+        Utility.getInstance().setDropShadow(note, ThemeSwitcher.getInstance().getNoteShadow());
         this.setPrefSize(250, 395);
 
-        Utility.getRootUI().getChildren().add(okButton);
-        Utility.setUIShadows(okButton);
+        Utility.getInstance().getRootUI().getChildren().add(okButton);
+        Utility.getInstance().setUIShadows(okButton);
         AnchorPane.setRightAnchor(okButton, 17.0);
         AnchorPane.setTopAnchor(okButton, 140.0);
         okButton.setOpacity(0);
-        Utility.getFadeInAnimation(okButton.opacityProperty()).play();
+        Utility.getInstance().getFadeInAnimation(okButton.opacityProperty()).play();
 
         text = new TextArea();
         this.getChildren().add(text);
@@ -69,20 +69,20 @@ class NoteEditor extends Pane{
             }
 
         } else {
-            Utility.getContent().getChildren().remove(newNote);
+            Utility.getInstance().getContent().getChildren().remove(newNote);
         }
 
         removeEventHandlers();
         SlideScene.getInstance().hideEditor(this);
-        Utility.getFadeOutAnimation(okButton.opacityProperty()).play();
-        Utility.getFadeInAnimation(fxAddButton.opacityProperty()).play();
-        fxAddButton.setOnMouseClicked(event -> Utility.getController().onNewNoteClick());
+        Utility.getInstance().getFadeOutAnimation(okButton.opacityProperty()).play();
+        Utility.getInstance().getFadeInAnimation(fxAddButton.opacityProperty()).play();
+        fxAddButton.setOnMouseClicked(event -> Utility.getInstance().getController().onNewNoteClick());
         View.getInstance().setNoteEditorShow(false);
     }
 
     private void removeEventHandlers(){
         okButton.setOnMouseClicked(null);
-        Utility.getPrimaryStage().getScene().setOnMouseClicked(null);
+        Utility.getInstance().getPrimaryStage().getScene().setOnMouseClicked(null);
         this.setOnKeyPressed(null);
         this.setOnMouseExited(null);
         fxAddButton.setOnMouseExited(null);
@@ -90,7 +90,7 @@ class NoteEditor extends Pane{
 
     private void setEventPrimeStageClick(){
         // On out of node click event
-        Utility.getPrimaryStage().getScene().setOnMouseClicked(event -> {
+        Utility.getInstance().getPrimaryStage().getScene().setOnMouseClicked(event -> {
             event.consume();
             procTextHideEditor();
         });

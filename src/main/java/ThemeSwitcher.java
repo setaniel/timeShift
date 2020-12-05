@@ -60,7 +60,7 @@ class ThemeSwitcher {
     }
 
     private void setNoteColors(){
-        List<Node> list = Utility.getContent().getChildren();
+        List<Node> list = Utility.getInstance().getContent().getChildren();
         for (Node note  : list) {
             Note n = (Note) note;
             n.setTitleLabelColor();
@@ -74,7 +74,7 @@ class ThemeSwitcher {
         backgroundAppImage.setFitHeight(522.0);
         backgroundAppImage.setFitWidth(380.0);
         setNoteColors();
-        Utility.getController().fxThemeBackground();
+        Utility.getInstance().getController().fxThemeBackground();
     }
 
     Color getDateStampColor() {

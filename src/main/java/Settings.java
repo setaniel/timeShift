@@ -54,7 +54,7 @@ class Settings {
         layout = new VBox();
         ToggleButton tgb = new ToggleButton();
         tgb.setStyle("-fx-background-radius: 8");
-        Utility.setSwitchInnerShadows(tgb, Color.BLACK, Color.DARKGREY);
+        Utility.getInstance().setSwitchInnerShadows(tgb, Color.BLACK, Color.DARKGREY);
         tgb.setSelected(ThemeSwitcher.getInstance().isDark());
         tgb.setOnAction(event -> tgbOnAction(tgb));
         tgb.setFont(Font.font("Courier New", FontWeight.BOLD, 12));
@@ -91,8 +91,8 @@ class Settings {
 
 
         text.setFont(Font.font("Courier New", FontWeight.BOLD, 15));
-        Utility.setDropShadow(text, Color.BLACK);
-        Utility.setUIShadows(okButton);
+        Utility.getInstance().setDropShadow(text, Color.BLACK);
+        Utility.getInstance().setUIShadows(okButton);
         text.setBackground(new Background(new BackgroundFill(Paint.valueOf("white"), new CornerRadii(16), Insets.EMPTY)));
         Label label = new Label("Pomodoro timer");
         label.setFont(Font.font("Courier New", FontWeight.BOLD, 12));
@@ -105,10 +105,10 @@ class Settings {
         stage.setScene(scene);
         stage.initModality(Modality.NONE);
         stage.initStyle(StageStyle.TRANSPARENT);
-        stage.initOwner(Utility.getPrimaryStage());
+        stage.initOwner(Utility.getInstance().getPrimaryStage());
         // set position this modal on parent frame
-        stage.setX(Utility.getPrimaryStage().getX() + 170);
-        stage.setY(Utility.getPrimaryStage().getY() + 300);
+        stage.setX(Utility.getInstance().getPrimaryStage().getX() + 170);
+        stage.setY(Utility.getInstance().getPrimaryStage().getY() + 300);
         stage.show();
         com.sun.glass.ui.Window.getWindows().get(0).setUndecoratedMoveRectangle(22);
         anchorPane.setStyle("-fx-background-radius: 22;" +
@@ -120,17 +120,17 @@ class Settings {
             if (StringUtils.isNumeric(text.getCharacters())){
                 int i;
                 if ((i = Integer.parseInt(text.getText())) <= 999){
-                    Utility.setPomodoroTime(i);
+                    Utility.getInstance().setPomodoroTime(i);
                     stage.close();
                 }else {
                     label.setText(" Incorrect value ");
-                    Utility.setStaticDropShadow(text, Color.RED);
+                    Utility.getInstance().setStaticDropShadow(text, Color.RED);
                     label.setBackground(new Background(new BackgroundFill(Paint.valueOf("red"),
                             new CornerRadii(16), Insets.EMPTY)));
                 }
             }else {
                 label.setText(" Incorrect value ");
-                Utility.setStaticDropShadow(text, Color.RED);
+                Utility.getInstance().setStaticDropShadow(text, Color.RED);
                 label.setBackground(new Background(new BackgroundFill(Paint.valueOf("red"),
                         new CornerRadii(16), Insets.EMPTY)));
             }
@@ -146,9 +146,9 @@ class Settings {
             stage.setX(event.getScreenX() - xOffset);
             stage.setY(event.getScreenY() - yOffset);
         });
-        Utility.setCloseOnActions(stage, fxButton, this);
+        Utility.getInstance().setCloseOnActions(stage, fxButton, this);
         stage.setOpacity(0);
-        Utility.getFadeInAnimation(stage.opacityProperty()).play();
+        Utility.getInstance().getFadeInAnimation(stage.opacityProperty()).play();
         layout.getChildren().get(1).requestFocus();
     }
 

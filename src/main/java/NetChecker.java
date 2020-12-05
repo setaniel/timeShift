@@ -17,7 +17,7 @@ import java.net.UnknownHostException;
  * Result showing in Label, on app right-bottom.
  * */
 class NetChecker {
-    private static final Label netLabel = Utility.getNetLabel();
+    private static final Label netLabel = Utility.getInstance().getNetLabel();
     private BufferedReader inStream;
     private Process process;
     private Thread thread;

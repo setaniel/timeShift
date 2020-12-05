@@ -153,7 +153,7 @@ class Note extends AnchorPane {
         this.getChildren().addAll(titleLabel, previewLabel, trashButton, dateStampLabel);
         this.setMaxWidth(252.0);
         this.setOnMouseClicked(event -> {
-            if (!View.getInstance().isNoteEditorShow()) Utility.getController().onNoteClick(this);
+            if (!View.getInstance().isNoteEditorShow()) Utility.getInstance().getController().onNoteClick(this);
         });
     }
 
@@ -174,17 +174,17 @@ class Note extends AnchorPane {
     }
 
     void setNoteShadow() {
-        Utility.setDropShadow(this, ThemeSwitcher.getInstance().getNoteShadow());
+        Utility.getInstance().setDropShadow(this, ThemeSwitcher.getInstance().getNoteShadow());
     }
 
     private Button createTrashButton(){
         Image image = new Image(Note.class.getResourceAsStream("images/trash.png"));
         ImageView imageView = new ImageView(image);
         Button button = new Button("", imageView);
-        Utility.setDropShadow(button, Color.BLACK);
+        Utility.getInstance().setDropShadow(button, Color.BLACK);
         button.setStyle("-fx-background-color : transparent;");
         button.setOnAction(evt -> {
-            Utility.getContent().getChildren().remove(this);
+            Utility.getInstance().getContent().getChildren().remove(this);
             Serializer.getInstance().deleteSerializeFiles();
             Serializer.getInstance().serializeNotes();
         });

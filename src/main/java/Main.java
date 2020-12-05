@@ -32,7 +32,7 @@ public class Main extends Application {
                 "-fx-background-insets: 10; " +
                 "-fx-effect: dropShadow(three-pass-box, black, 10, 0, 0, 0);");
 
-        Utility.setPrimaryStage(primaryStage);
+        Utility.getInstance().setPrimaryStage(primaryStage);
         Serializer.getInstance().deserializeNotes();
 
         Controller controller = loader.getController();

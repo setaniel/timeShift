@@ -18,8 +18,8 @@ class SlideScene {
     }
 
     void initScene(){
-        parentRoot = Utility.getContentAnchor();
-        parentContainer = Utility.getContentStack();
+        parentRoot = Utility.getInstance().getContentAnchor();
+        parentContainer = Utility.getInstance().getContentStack();
     }
 
     void hideEditor(Pane root){

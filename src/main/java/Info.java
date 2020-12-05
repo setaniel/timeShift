@@ -83,10 +83,10 @@ class Info {
         stage.setScene(scene);
         stage.initModality(Modality.NONE);
         stage.initStyle(StageStyle.TRANSPARENT);
-        stage.initOwner(Utility.getPrimaryStage());
+        stage.initOwner(Utility.getInstance().getPrimaryStage());
         // set position this modal on parent frame
-        stage.setX(Utility.getPrimaryStage().getX() + 125);
-        stage.setY(Utility.getPrimaryStage().getY() + 330);
+        stage.setX(Utility.getInstance().getPrimaryStage().getX() + 125);
+        stage.setY(Utility.getInstance().getPrimaryStage().getY() + 330);
         stage.show();
         anchorPane.setStyle("-fx-background-radius: 22;" +
                 "-fx-background-insets: 10; " +
@@ -103,10 +103,10 @@ class Info {
             stage.setY(event.getScreenY() - yOffset);
         });
 
-        Utility.setCloseOnActions(stage, fxButton, this);
+        Utility.getInstance().setCloseOnActions(stage, fxButton, this);
 
         stage.setOpacity(0);
-        Utility.getFadeInAnimation(stage.opacityProperty()).play();
+        Utility.getInstance().getFadeInAnimation(stage.opacityProperty()).play();
         layout.getChildren().get(4).requestFocus();
     }
     void setBackGroundColor(){
