@@ -4,31 +4,42 @@ import javafx.scene.image.ImageView;
 
 /** Managing notes **/
 class View {
-    static boolean isNoteEditorShow = false;
-    static ImageView fxAddNoteButton;
+    private boolean isNoteEditorShow = false;
+    private ImageView AddNoteButton;
+    private static View instance;
 
-     static void setFxAddNoteButton(ImageView fxAddNoteButton) {
-        View.fxAddNoteButton = fxAddNoteButton;
+    static View getInstance(){
+        if (instance == null) instance = new View();
+        return instance;
     }
 
-    static void addNote(Note note) {
+    private View(){
+    }
+
+    public boolean isNoteEditorShow() {
+        return isNoteEditorShow;
+    }
+
+    public void setNoteEditorShow(boolean noteEditorShow) {
+        isNoteEditorShow = noteEditorShow;
+    }
+
+    void setFxAddNoteButton(ImageView fxAddNoteButton) {
+        AddNoteButton = fxAddNoteButton;
+    }
+
+    void addNote(Note note) {
         if (!isNoteEditorShow) {
-            NoteEditor.removeOkButton(fxAddNoteButton);
-            Utility.getNoteEditor().initEditor(note);
-            SlideScene.showEditor();
+            NoteEditor.getInstance().removeOkButton(AddNoteButton);
+            NoteEditor.getInstance().initEditor(note);
+            SlideScene.getInstance().showEditor();
         }
     }
 
-    static void manageNotes(Note note) {
+    void manageNotes(Note note) {
         Utility.getContent().getChildren().remove(note);
         Utility.getContent().getChildren().add(0, note);
-        Serializer.deleteSerializeFiles();
-        Serializer.serializeNotes();
-    }
-
-    // Closing app, run serialization
-    @FXML private void closeApp() {
-        Utility.setIsAppClosing(true);
-        Serializer.serializeNotes();
+        Serializer.getInstance().deleteSerializeFiles();
+        Serializer.getInstance().serializeNotes();
     }
 }

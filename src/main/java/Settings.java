@@ -18,29 +18,47 @@ import javafx.stage.StageStyle;
 import org.apache.commons.lang3.StringUtils;
 
 class Settings {
-    private static double xOffset = 0;
-    private static double yOffset = 0;
-    static boolean isSettingsShow = false;
-    private static Stage stage;
-    private static VBox layout;
-    private static final Image imgPowerOff = new Image(Settings.class.getResourceAsStream("images/powerOff.png"));
-    private static final Image imgPowerOn = new Image(Settings.class.getResourceAsStream("images/powerOn.png"));
+    private double xOffset = 0;
+    private double yOffset = 0;
+    private boolean isSettingsShow = false;
+    private Stage stage;
+    private VBox layout;
+    private final Image imgPowerOff = new Image(Settings.class.getResourceAsStream("images/powerOff.png"));
+    private final Image imgPowerOn = new Image(Settings.class.getResourceAsStream("images/powerOn.png"));
+    private static Settings instance;
 
-    static void closeStage(){
+    static Settings getInstance(){
+        if (instance == null) instance = new Settings();
+        return instance;
+    }
+
+    private Settings(){
+    }
+
+    void closeStage(){
         if (stage != null && stage.isShowing()) {
             stage.close();
         }
     }
 
-    static void showSettings(ImageView fxButton){
+    boolean isSettingsShow() {
+        return isSettingsShow;
+    }
+
+    void setSettingsShow(boolean settingsShow) {
+        isSettingsShow = settingsShow;
+    }
+
+    void showSettings(ImageView fxButton){
+        setSettingsShow(true);
         layout = new VBox();
         ToggleButton tgb = new ToggleButton();
         tgb.setStyle("-fx-background-radius: 8");
         Utility.setSwitchInnerShadows(tgb, Color.BLACK, Color.DARKGREY);
-        tgb.setSelected(ThemeSwitcher.isDark());
+        tgb.setSelected(ThemeSwitcher.getInstance().isDark());
         tgb.setOnAction(event -> tgbOnAction(tgb));
         tgb.setFont(Font.font("Courier New", FontWeight.BOLD, 12));
-        if (ThemeSwitcher.isDark()){
+        if (ThemeSwitcher.getInstance().isDark()){
             tgb.setText("Dark theme");
             tgb.setGraphic(new ImageView(imgPowerOn));
         } else {
@@ -128,30 +146,28 @@ class Settings {
             stage.setX(event.getScreenX() - xOffset);
             stage.setY(event.getScreenY() - yOffset);
         });
-        Utility.setCloseOnActions(stage, fxButton);
+        Utility.setCloseOnActions(stage, fxButton, this);
         stage.setOpacity(0);
         Utility.getFadeInAnimation(stage.opacityProperty()).play();
         layout.getChildren().get(1).requestFocus();
     }
 
-    static void tgbOnAction(ToggleButton tgb) {
+    private void tgbOnAction(ToggleButton tgb) {
         if (tgb.isSelected()) {
-            ThemeSwitcher.setDark(true);
+            ThemeSwitcher.getInstance().setCurrentTheme(true);
             tgb.setText("Dark theme");
             tgb.setGraphic(new ImageView(imgPowerOn));
-            ThemeSwitcher.setDarkTheme();
         }
         else {
-            ThemeSwitcher.setDark(false);
+            ThemeSwitcher.getInstance().setCurrentTheme(false);
             tgb.setText("Light theme");
             tgb.setGraphic(new ImageView(imgPowerOff));
-            ThemeSwitcher.setLightTheme();
         }
         setBackGroundColor();
     }
 
-    static void setBackGroundColor(){
+    void setBackGroundColor(){
         layout.setBackground(new Background(new BackgroundFill(
-                ThemeSwitcher.getCurrentTheme().getBackgroundColor(), new CornerRadii(16), Insets.EMPTY)));
+                ThemeSwitcher.getInstance().getBackgroundColor(), new CornerRadii(16), Insets.EMPTY)));
     }
 }

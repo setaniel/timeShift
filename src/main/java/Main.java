@@ -33,7 +33,7 @@ public class Main extends Application {
                 "-fx-effect: dropShadow(three-pass-box, black, 10, 0, 0, 0);");
 
         Utility.setPrimaryStage(primaryStage);
-        Serializer.deserializeNotes();
+        Serializer.getInstance().deserializeNotes();
 
         Controller controller = loader.getController();
         controller.fxAddNoteButton.setOnMouseClicked(event -> controller.onNewNoteClick());

@@ -17,7 +17,7 @@ import java.util.ResourceBundle;
  * the FXML file and Java code. Here the link fx:id
  * of links is initialized and translated into Java code.
  * */
-public class Controller extends View implements Initializable{
+public class Controller implements Initializable{
     @FXML private StackPane fxRootStackPane;
     @FXML private AnchorPane fxTrafficPane;
     @FXML private ImageView fxMinimize;
@@ -35,14 +35,14 @@ public class Controller extends View implements Initializable{
     @FXML VBox fxContent;
 
     void onNewNoteClick() {
-        View.setFxAddNoteButton(fxAddNoteButton);
-        addNote(new Note());
+        View.getInstance().setFxAddNoteButton(fxAddNoteButton);
+        View.getInstance().addNote(new Note());
         Utility.removeButtonHandler(fxAddNoteButton);
     }
 
     void onNoteClick(Note note) {
-        View.setFxAddNoteButton(fxAddNoteButton);
-        addNote(note);
+        View.getInstance().setFxAddNoteButton(fxAddNoteButton);
+        View.getInstance().addNote(note);
     }
 
     @FXML private void onPomodoroClick() {
@@ -54,23 +54,21 @@ public class Controller extends View implements Initializable{
     }
 
     @FXML private void onInfoClick() {
-        if (!Info.isInfoShow) {
-            Info.closeStage();
-            Info.showInfo(fxInfo);
+        if (!Info.getInstance().isInfoShow()) {
+            Info.getInstance().closeStage();
+            Info.getInstance().showInfo(fxInfo);
         }
-        Info.isInfoShow = true;
     }
 
     @FXML private void onSettingsClick() {
-        if (!Settings.isSettingsShow) {
-            Settings.closeStage();
-            Settings.showSettings(fxSettings);
+        if (!Settings.getInstance().isSettingsShow()) {
+            Settings.getInstance().closeStage();
+            Settings.getInstance().showSettings(fxSettings);
         }
-        Settings.isSettingsShow = true;
     }
 
     void fxThemeBackground(){
-        fxRootStackPane.getChildren().set(0, ThemeSwitcher.getCurrentTheme().getBackgroundAppImage());
+        fxRootStackPane.getChildren().set(0, ThemeSwitcher.getInstance().getBackgroundAppImage());
     }
 
     @Override
@@ -86,11 +84,11 @@ public class Controller extends View implements Initializable{
         Utility.setUIShadows(fxAddNoteButton);
         Utility.setUIShadows(fxCloseButton);
         Utility.setUIShadows(fxPomodoro);
-        Serializer.serializeNotes();
-        NetChecker.ping();
+        Serializer.getInstance().serializeNotes();
+        NetChecker.getInstance().ping();
         Weather.showWeather();
-        Traffic.showTraffic(fxTrafficPane);
-        SlideScene.initScene();
+        Traffic.getInstance().showTraffic(fxTrafficPane);
+        SlideScene.getInstance().initScene();
     }
     private void setScrollVisibility() {
         // Start scrolling
@@ -102,5 +100,11 @@ public class Controller extends View implements Initializable{
     }
     @FXML private void minimizeApp() {
         Utility.getPrimaryStage().setIconified(true);
+    }
+
+    // Closing app, run serialization
+    @FXML private void closeApp() {
+        Utility.setIsAppClosing(true);
+        Serializer.getInstance().serializeNotes();
     }
 }

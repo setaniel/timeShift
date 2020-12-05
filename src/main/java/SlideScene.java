@@ -8,16 +8,21 @@ import javafx.util.Duration;
 
 
 class SlideScene {
-    static Pane parentRoot;
-    static StackPane parentContainer;
-    static Pane root;
+    private Pane parentRoot;
+    private StackPane parentContainer;
+    private static SlideScene instance;
 
-    static void initScene(){
+    static SlideScene getInstance(){
+        if (instance == null) instance = new SlideScene();
+        return instance;
+    }
+
+    void initScene(){
         parentRoot = Utility.getContentAnchor();
         parentContainer = Utility.getContentStack();
     }
 
-    static void hideEditor(Pane root){
+    void hideEditor(Pane root){
         root.translateXProperty().set(0);
         Timeline timeline = new Timeline();
         KeyValue keyValue = new KeyValue(root.translateXProperty(), -318, Interpolator.EASE_OUT);
@@ -27,8 +32,8 @@ class SlideScene {
     }
 
 
-    static void showEditor(){
-        root = Utility.getNoteEditor(); // куда впихиваю
+    void showEditor(){
+        Pane root = NoteEditor.getInstance();
 
         if (parentContainer.getChildren().size() == 2) {
             parentContainer.getChildren().remove(1);

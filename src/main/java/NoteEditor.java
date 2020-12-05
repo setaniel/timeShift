@@ -4,15 +4,14 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
-import javafx.scene.paint.Color;
 
 class NoteEditor extends Pane{
-    private static final ImageView okButton = new ImageView(
+    private final ImageView okButton = new ImageView(
             new Image(NoteEditor.class.getResourceAsStream("images/done.png")));
     private String currentObjectText;
     private TextArea text;
     private Note newNote;
-    private static ImageView fxAddButton;
+    private ImageView fxAddButton;
     private static NoteEditor instance;
 
     private NoteEditor(){
@@ -23,7 +22,7 @@ class NoteEditor extends Pane{
         return instance;
     }
 
-    static void removeOkButton(ImageView fxAddNoteButton){
+    void removeOkButton(ImageView fxAddNoteButton){
         fxAddButton = fxAddNoteButton;
         Utility.getRootUI().getChildren().remove(okButton);
         // fading fxAddNoteButton
@@ -32,10 +31,10 @@ class NoteEditor extends Pane{
 
     void initEditor(Note note){
         newNote = note;
-        View.isNoteEditorShow = true;
+        View.getInstance().setNoteEditorShow(true);
         setEventHandlers();
         if (this.getChildren().size() > 0) this.getChildren().remove(0);
-        Utility.setDropShadow(note, ThemeSwitcher.getCurrentTheme().getNoteShadow());
+        Utility.setDropShadow(note, ThemeSwitcher.getInstance().getNoteShadow());
         this.setPrefSize(250, 395);
 
         Utility.getRootUI().getChildren().add(okButton);
@@ -63,10 +62,10 @@ class NoteEditor extends Pane{
         if (!text.getText().equals("")) {
 
             if (currentObjectText == null && newNote.update(text.getText())) {
-                View.manageNotes(newNote);
+                View.getInstance().manageNotes(newNote);
             }else if (!currentObjectText.equals(text.getText())){
                 newNote.update(text.getText());
-                View.manageNotes(newNote);
+                View.getInstance().manageNotes(newNote);
             }
 
         } else {
@@ -74,11 +73,11 @@ class NoteEditor extends Pane{
         }
 
         removeEventHandlers();
-        SlideScene.hideEditor(this);
+        SlideScene.getInstance().hideEditor(this);
         Utility.getFadeOutAnimation(okButton.opacityProperty()).play();
         Utility.getFadeInAnimation(fxAddButton.opacityProperty()).play();
         fxAddButton.setOnMouseClicked(event -> Utility.getController().onNewNoteClick());
-        View.isNoteEditorShow = false;
+        View.getInstance().setNoteEditorShow(false);
     }
 
     private void removeEventHandlers(){

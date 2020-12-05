@@ -11,7 +11,7 @@
     <name>timeShift</name>
     <url>https://setaniel.github.io</url>
     <description>
-        Tomato Technique Task List and Time Management Draft
+        Task List and Time Management Draft - Tomato Technique
     </description>
 
     <developers>
@@ -45,7 +45,7 @@
         </pluginRepository>
     </pluginRepositories>
     <build>
-        <finalName>timeShift_1.0</finalName>
+        <finalName>timeShift_1.1.3</finalName>
         <resources>
             <resource>
                 <directory>src/main/java</directory>
@@ -93,10 +93,8 @@
                     </descriptorRefs>
                     <archive>
                         <manifest>
-                            <!--test-->
                             <addClasspath>true</addClasspath>
                             <classpathPrefix>libs/</classpathPrefix>
-                            <!--test-->
                             <mainClass>Main</mainClass>
                         </manifest>
                     </archive>

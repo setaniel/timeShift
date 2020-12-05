@@ -153,28 +153,28 @@ class Note extends AnchorPane {
         this.getChildren().addAll(titleLabel, previewLabel, trashButton, dateStampLabel);
         this.setMaxWidth(252.0);
         this.setOnMouseClicked(event -> {
-            if (!View.isNoteEditorShow) Utility.getController().onNoteClick(this);
+            if (!View.getInstance().isNoteEditorShow()) Utility.getController().onNoteClick(this);
         });
     }
 
 
     void setTitleLabelColor() {
         titleLabel.setFont(Font.font("Courier New", FontWeight.BOLD, 13));
-        titleLabel.setTextFill(ThemeSwitcher.getCurrentTheme().getTitleColor());
+        titleLabel.setTextFill(ThemeSwitcher.getInstance().getTitleColor());
     }
 
     void setPreviewLabelColor() {
         previewLabel.setFont(Font.font("Courier New", 12));
-        previewLabel.setTextFill(ThemeSwitcher.getCurrentTheme().getPreviewColor());
+        previewLabel.setTextFill(ThemeSwitcher.getInstance().getPreviewColor());
     }
 
     void setDateStampLabelColor() {
         dateStampLabel.setFont(Font.font("Courier New", FontWeight.LIGHT, 9));
-        dateStampLabel.setTextFill(ThemeSwitcher.getCurrentTheme().getDateStampColor());
+        dateStampLabel.setTextFill(ThemeSwitcher.getInstance().getDateStampColor());
     }
 
     void setNoteShadow() {
-        Utility.setDropShadow(this, ThemeSwitcher.getCurrentTheme().getNoteShadow());
+        Utility.setDropShadow(this, ThemeSwitcher.getInstance().getNoteShadow());
     }
 
     private Button createTrashButton(){
@@ -185,8 +185,8 @@ class Note extends AnchorPane {
         button.setStyle("-fx-background-color : transparent;");
         button.setOnAction(evt -> {
             Utility.getContent().getChildren().remove(this);
-            Serializer.deleteSerializeFiles();
-            Serializer.serializeNotes();
+            Serializer.getInstance().deleteSerializeFiles();
+            Serializer.getInstance().serializeNotes();
         });
         return button;
     }

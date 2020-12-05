@@ -7,28 +7,28 @@ import java.util.List;
 
 
 class ThemeSwitcher {
-    private static ThemeSwitcher currentTheme;
-    private static ImageView backgroundAppImage;
-    private static Color dateStampColor;
-    private static Color titleColor;
-    private static Color previewColor;
-    private static Color backgroundColor;
-    private static Color noteShadow;
-    private static boolean isDark;
+    private static ThemeSwitcher instance;
+    private ImageView backgroundAppImage;
+    private Color dateStampColor;
+    private Color titleColor;
+    private Color previewColor;
+    private Color backgroundColor;
+    private Color noteShadow;
+    private boolean isDark;
 
     private ThemeSwitcher(){
+//        setLightTheme();
     }
 
-    static ThemeSwitcher getCurrentTheme() {
-        if (currentTheme == null) {
-            currentTheme = new ThemeSwitcher();
-            setLightTheme();
+    static ThemeSwitcher getInstance() {
+        if (instance == null) {
+            instance = new ThemeSwitcher();
         }
-        return currentTheme;
+        return instance;
     }
 
-    static void setCurrentTheme(boolean currentTheme) {
-        isDark = currentTheme;
+    void setCurrentTheme(boolean setIsDark) {
+        isDark = setIsDark;
         if (isDark()){
             setDarkTheme();
         }else {
@@ -37,7 +37,7 @@ class ThemeSwitcher {
         applyCurrentTheme();
     }
 
-    static void setLightTheme() {
+    private void setLightTheme() {
         isDark = false;
         dateStampColor = Color.valueOf("#008500");
         titleColor = Color.valueOf("#555249");
@@ -48,7 +48,7 @@ class ThemeSwitcher {
         applyCurrentTheme();
     }
 
-    static void setDarkTheme() {
+    private void setDarkTheme() {
         isDark = true;
         dateStampColor = Color.valueOf("#20db39");
         titleColor = Color.valueOf("#E2E9E4");
@@ -59,7 +59,7 @@ class ThemeSwitcher {
         applyCurrentTheme();
     }
 
-    private static void setNoteColors(){
+    private void setNoteColors(){
         List<Node> list = Utility.getContent().getChildren();
         for (Node note  : list) {
             Note n = (Note) note;
@@ -70,7 +70,7 @@ class ThemeSwitcher {
         }
     }
 
-    private static void applyCurrentTheme(){
+    private void applyCurrentTheme(){
         backgroundAppImage.setFitHeight(522.0);
         backgroundAppImage.setFitWidth(380.0);
         setNoteColors();
@@ -101,11 +101,7 @@ class ThemeSwitcher {
         return noteShadow;
     }
 
-    static boolean isDark() {
+    boolean isDark() {
         return isDark;
-    }
-
-    static void setDark(boolean dark) {
-        isDark = dark;
     }
 }

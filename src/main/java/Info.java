@@ -19,17 +19,35 @@ import java.net.URISyntaxException;
 
 
 class Info {
-    private static double xOffset = 0;
-    private static double yOffset = 0;
-    static boolean isInfoShow = false;
-    private static Stage stage;
-    private static VBox layout;
+    private double xOffset = 0;
+    private double yOffset = 0;
+    private boolean isInfoShow = false;
+    private Stage stage;
+    private VBox layout;
+    private static Info instance;
 
-    static void closeStage(){
+    private Info(){
+    }
+
+    public static Info getInstance() {
+        if (instance == null) instance = new Info();
+        return instance;
+    }
+
+    boolean isInfoShow() {
+        return isInfoShow;
+    }
+
+    void setInfoShow(boolean infoShow) {
+        isInfoShow = infoShow;
+    }
+
+    void closeStage(){
         if ( stage != null && stage.isShowing() ) stage.close();
     }
 
-    static void showInfo(ImageView fxButton) {
+    void showInfo(ImageView fxButton) {
+        setInfoShow(true);
         layout = new VBox();
         AnchorPane anchorPane = new AnchorPane();
         anchorPane.getChildren().add(layout);
@@ -85,17 +103,17 @@ class Info {
             stage.setY(event.getScreenY() - yOffset);
         });
 
-        Utility.setCloseOnActions(stage, fxButton);
+        Utility.setCloseOnActions(stage, fxButton, this);
 
         stage.setOpacity(0);
         Utility.getFadeInAnimation(stage.opacityProperty()).play();
         layout.getChildren().get(4).requestFocus();
     }
-    static void setBackGroundColor(){
+    void setBackGroundColor(){
         layout.setBackground(new Background(new BackgroundFill(
-                ThemeSwitcher.getCurrentTheme().getBackgroundColor(), new CornerRadii(16), Insets.EMPTY)));
+                ThemeSwitcher.getInstance().getBackgroundColor(), new CornerRadii(16), Insets.EMPTY)));
     }
-    private static void setLabelFont(Label label) {
+    private void setLabelFont(Label label) {
         label.setFont(Font.font("Courier New", FontWeight.BOLD, 14));
     }
 

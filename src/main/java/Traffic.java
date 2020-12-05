@@ -16,13 +16,22 @@ import org.jsoup.select.Elements;
 import java.io.IOException;
 
 class Traffic {
-    private static final StackPane parsedStackTraffic  = new StackPane();
-    private static final Label trafficLabelValue = new Label();
-    private static ImageView trafficColorImage;
-    private static AnchorPane trafficAppPane;
-    private static ImageView yaLogo;
+    private final StackPane parsedStackTraffic  = new StackPane();
+    private final Label trafficLabelValue = new Label();
+    private ImageView trafficColorImage;
+    private AnchorPane trafficAppPane;
+    private ImageView yaLogo;
+    private static Traffic instance;
 
-    private static void trafficParse(){
+    static Traffic getInstance(){
+        if (instance == null) instance = new Traffic();
+        return instance;
+    }
+
+    private Traffic(){
+    }
+
+    private void trafficParse(){
         trafficLabelValue.setFont(Font.font("Courier New", FontWeight.EXTRA_BOLD,13));
         Document doc;
         try {
@@ -45,7 +54,7 @@ class Traffic {
         AnchorPane.setBottomAnchor(yaLogo, 3.0);
         AnchorPane.setRightAnchor(parsedStackTraffic, 65.0);
     }
-    private static void setTrafficColor(){
+    private void setTrafficColor(){
 
         if (StringUtils.isNumeric(trafficLabelValue.getText())) {
             int val = Integer.parseInt(trafficLabelValue.getText());
@@ -59,7 +68,7 @@ class Traffic {
 
     }
 
-    static void showTraffic(AnchorPane fxTrafficPane) {
+    void showTraffic(AnchorPane fxTrafficPane) {
         DropShadow dropShadow = new DropShadow();
         parsedStackTraffic.setEffect(dropShadow);
 

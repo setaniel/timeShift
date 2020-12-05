@@ -26,8 +26,6 @@ class Utility {
     private static Stage primaryStage;
     private static boolean appClosingState = false;
     private static int pomodoroTime = 25;
-    private static final NoteEditor noteEditor = NoteEditor.getInstance();
-
     // Setters
     static void setController(Controller controller) {
         Utility.controller = controller;
@@ -132,9 +130,7 @@ class Utility {
     static boolean isAppClosing() {
         return appClosingState;
     }
-    static NoteEditor getNoteEditor() {
-        return noteEditor;
-    }
+
     static Controller getController() {
         return controller;
     }
@@ -166,25 +162,28 @@ class Utility {
         return timeline;
     }
 
-    static void setCloseOnActions(Stage stage, Node fxButton) {
+    static void setCloseOnActions(Stage stage, Node fxButton, Object object) {
 
         fxButton.setOnMouseExited(event -> {
-            Utility.getPrimaryStage().getScene().setOnMouseClicked(event1 -> removeOnActEvents(stage, fxButton));
+            Utility.getPrimaryStage().getScene().setOnMouseClicked(event1 -> removeOnActEvents(stage, fxButton, object));
             // Close on Esc pressed
             stage.getScene().setOnKeyPressed(event2 -> {
-                if (event2.getCode() == KeyCode.ESCAPE) removeOnActEvents(stage, fxButton);
+                if (event2.getCode() == KeyCode.ESCAPE) removeOnActEvents(stage, fxButton, object);
             });
         });
     }
 
 
 
-    private static void removeOnActEvents(Stage stage, Node fxButton) {
+    private static void removeOnActEvents(Stage stage, Node fxButton, Object object) {
         Utility.getPrimaryStage().getScene().setOnMouseClicked(null);
         stage.getScene().setOnKeyPressed(null);
+        if (object.getClass().getName().equals("Settings")){
+            Settings.getInstance().setSettingsShow(false);
+        }else {
+            Info.getInstance().setInfoShow(false);
+        }
         fxButton.setOnMouseExited(null);
-        Settings.isSettingsShow = false;
-        Info.isInfoShow = false;
         Utility.getFadeOutAnimation(stage.opacityProperty()).play();
     }
     static void removeButtonHandler(ImageView fxButton){

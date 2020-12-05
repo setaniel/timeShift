@@ -18,14 +18,23 @@ import java.net.UnknownHostException;
  * */
 class NetChecker {
     private static final Label netLabel = Utility.getNetLabel();
-    private static BufferedReader inStream;
-    private static Process process;
-    private static Thread thread;
+    private BufferedReader inStream;
+    private Process process;
+    private Thread thread;
+    private static NetChecker instance;
+
+    private NetChecker(){
+    }
+
+    public static NetChecker getInstance() {
+        if (instance == null) instance = new NetChecker();
+        return instance;
+    }
 
     /**
      * Run command, set style on netLabel by command response
      * */
-    @Deprecated private static void runSystemPing(String command) {
+    @Deprecated private void runSystemPing(String command) {
         // Init Process and InputStream
         try {
             process = Runtime.getRuntime().exec(command);
@@ -74,7 +83,7 @@ class NetChecker {
     /**
      * Run net check method on every 2 seconds
      * */
-    static void ping() {
+    void ping() {
         // Long running operation runs on different thread
         thread = new Thread(() -> {
             Runnable updater = NetChecker::check;
@@ -94,7 +103,7 @@ class NetChecker {
         thread.setDaemon(true);
         thread.start();
     }
-    static void stopPing(){
+    void stopPing(){
         thread.interrupt();
     }
 }

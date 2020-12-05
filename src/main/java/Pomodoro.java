@@ -20,13 +20,14 @@ class Pomodoro {
     static boolean isPomodoroShow = false;
     private double xOffset = 0;
     private double yOffset = 0;
-    private static Button button;
-    private static AnchorPane anchorPane;
+    private Button button;
+    private AnchorPane anchorPane;
     private final StackPane stackPane = new StackPane();
     private static Stage stage;
     private Timer timer;
     private Image image;
-    private static int pomTimer;
+    private int pomTimer;
+
 
     static void stageClose(){
         if (stage != null && stage.isShowing()) {
