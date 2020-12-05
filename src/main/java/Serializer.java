@@ -10,6 +10,36 @@ class Serializer {
         if (instance == null) instance = new Serializer();
         return instance;
     }
+
+    void serializeSettings(){
+        try {
+            new File(System.getProperty("user.home") + "/documents/timeShift/serialize").mkdirs();
+            FileOutputStream fileOut = new FileOutputStream(System.getProperty("user.home") + "/documents/timeShift/serialize/settings.ser");
+            ObjectOutputStream out = new ObjectOutputStream(fileOut);
+            out.writeObject(SettingsHolder.getInstance());
+            out.close();
+            fileOut.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+    }
+
+    void deserializeSettings(){
+        File file = new File(System.getProperty("user.home") + "/documents/timeShift/serialize/settings.ser");
+        if (file.exists()) {
+            try {
+                FileInputStream fileIn = new FileInputStream(file);
+                ObjectInputStream in = new ObjectInputStream(fileIn);
+                SettingsHolder.setInstance((SettingsHolder) in.readObject());
+                in.close();
+                fileIn.close();
+            } catch (IOException | ClassNotFoundException ignored) {
+
+            }
+        }
+    }
+
     /**
      * Serializing all notes, from files in user home directory
      * */
@@ -18,11 +48,6 @@ class Serializer {
             try {
                 Note serialNote = (Note)node;
                 serialNote.setIndex(Utility.getInstance().getContent().getChildren().indexOf(node));
-
-                // save theme bound
-                serialNote.getNoteModel().setCurrentTheme(ThemeSwitcher.getInstance().isDark());
-                // _____________________
-
                 new File(System.getProperty("user.home") + "/documents/timeShift/serialize").mkdirs();
                 FileOutputStream fileOut = new FileOutputStream(String.format(System.getProperty("user.home") + "/documents/timeShift/serialize/%d.ser", serialNote.getIndex()));
                 ObjectOutputStream out = new ObjectOutputStream(fileOut);
@@ -52,8 +77,6 @@ class Serializer {
                     FileInputStream fileIn = new FileInputStream(file);
                     ObjectInputStream in = new ObjectInputStream(fileIn);
                     model = (Model) in.readObject();
-                    // set theme for app
-                    ThemeSwitcher.getInstance().setCurrentTheme(model.getCurrentTheme());
                     Note note = new Note(model);
                     Utility.getInstance().setDropShadow(note, ThemeSwitcher.getInstance().getNoteShadow());
                     Utility.getInstance().getContent().getChildren().add(note.getIndex(), note);
@@ -64,8 +87,7 @@ class Serializer {
                 } catch (ClassNotFoundException c){
                     break;
                 }
-            }
-            else {
+            }else {
                 break;
             }
         }

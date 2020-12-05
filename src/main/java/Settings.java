@@ -4,7 +4,6 @@ import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.control.ToggleButton;
-import javafx.scene.effect.DropShadow;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
@@ -120,7 +119,8 @@ class Settings {
             if (StringUtils.isNumeric(text.getCharacters())){
                 int i;
                 if ((i = Integer.parseInt(text.getText())) <= 999){
-                    Utility.getInstance().setPomodoroTime(i);
+                    SettingsHolder.getInstance().setPomodoroTime(i);
+                    Serializer.getInstance().serializeSettings();
                     stage.close();
                 }else {
                     label.setText(" Incorrect value ");
@@ -164,6 +164,7 @@ class Settings {
             tgb.setGraphic(new ImageView(imgPowerOff));
         }
         setBackGroundColor();
+        Serializer.getInstance().serializeSettings();
     }
 
     void setBackGroundColor(){

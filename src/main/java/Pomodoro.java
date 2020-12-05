@@ -114,7 +114,7 @@ class Pomodoro {
     }
 
     private void startTimerButton(){
-        pomTimer = Utility.getInstance().getPomodoroTime();
+        pomTimer = SettingsHolder.getInstance().getPomodoroTime();
         anchorPane.getChildren().remove(button);
         createAnchorButton(37.0, 26, String.valueOf(pomTimer));
         anchorPane.getChildren().add(button);
@@ -127,14 +127,14 @@ class Pomodoro {
                     button.setText(String.valueOf(pomTimer--));
                     if (pomTimer == -1){
                         timer.cancel();
-                        pomTimer = Utility.getInstance().getPomodoroTime();
+                        pomTimer = SettingsHolder.getInstance().getPomodoroTime();
                         setImage("sadTomato");
                         setDefaultButton();
                         button.setText("Clear");
                     }
                     button.setOnAction(event -> {
                         timer.cancel();
-                        pomTimer = Utility.getInstance().getPomodoroTime();
+                        pomTimer = SettingsHolder.getInstance().getPomodoroTime();
                         setImage("Tomato");
                         setDefaultButton();
                     });

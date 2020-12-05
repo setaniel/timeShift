@@ -84,7 +84,12 @@ public class Controller implements Initializable{
         Utility.getInstance().setUIShadows(fxAddNoteButton);
         Utility.getInstance().setUIShadows(fxCloseButton);
         Utility.getInstance().setUIShadows(fxPomodoro);
+        Serializer.getInstance().deserializeSettings();
+        Serializer.getInstance().serializeSettings();
+        Serializer.getInstance().deserializeNotes();
         Serializer.getInstance().serializeNotes();
+        // set theme for app
+        ThemeSwitcher.getInstance().setCurrentTheme(SettingsHolder.getInstance().getCurrentTheme());
         NetChecker.getInstance().ping();
         Weather.showWeather();
         Traffic.getInstance().showTraffic(fxTrafficPane);
@@ -105,6 +110,7 @@ public class Controller implements Initializable{
     // Closing app, run serialization
     @FXML private void closeApp() {
         Utility.getInstance().setIsAppClosing(true);
+        Serializer.getInstance().serializeSettings();
         Serializer.getInstance().serializeNotes();
     }
 }

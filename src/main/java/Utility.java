@@ -24,7 +24,6 @@ class Utility {
     private Controller controller;
     private Stage primaryStage;
     private boolean appClosingState = false;
-    private int pomodoroTime = 25;
     private static Utility instance;
 
     static Utility getInstance(){
@@ -46,10 +45,6 @@ class Utility {
 
     void setIsAppClosing(boolean state) {
         appClosingState = state;
-    }
-
-    void setPomodoroTime(int time) {
-        pomodoroTime = time;
     }
 
     void setDropShadow(Node node, Color color) {
@@ -131,10 +126,6 @@ class Utility {
         controller.fxNetLabel.setPadding(new Insets(5, 8, 5, 8));
         controller.fxNetLabel.setFont(Font.font("Courier New", FontWeight.BOLD, 12));
         return controller.fxNetLabel;
-    }
-
-    int getPomodoroTime(){
-        return pomodoroTime;
     }
 
     VBox getContent(){

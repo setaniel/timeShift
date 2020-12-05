@@ -17,7 +17,6 @@ class ThemeSwitcher {
     private boolean isDark;
 
     private ThemeSwitcher(){
-//        setLightTheme();
     }
 
     static ThemeSwitcher getInstance() {
@@ -29,6 +28,7 @@ class ThemeSwitcher {
 
     void setCurrentTheme(boolean setIsDark) {
         isDark = setIsDark;
+        SettingsHolder.getInstance().setCurrentTheme(isDark);
         if (isDark()){
             setDarkTheme();
         }else {
