@@ -26,8 +26,8 @@ public class SettingsHolder implements Serializable {
         pomodoroTime = time;
     }
 
-    void setCurrentTheme(boolean currentTheme) {
-        this.currentTheme = currentTheme;
+    void setCurrentTheme(boolean appCurrentTheme) {
+        currentTheme = appCurrentTheme;
     }
 
     void setPomodoroTime(int time) {

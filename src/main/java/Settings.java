@@ -105,7 +105,7 @@ class Settings {
         stage.initModality(Modality.NONE);
         stage.initStyle(StageStyle.TRANSPARENT);
         stage.initOwner(Utility.getInstance().getPrimaryStage());
-        // set position this modal on parent frame
+        // set position this modal window on parent frame
         stage.setX(Utility.getInstance().getPrimaryStage().getX() + 170);
         stage.setY(Utility.getInstance().getPrimaryStage().getY() + 300);
         stage.show();

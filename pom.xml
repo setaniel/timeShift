@@ -45,7 +45,7 @@
         </pluginRepository>
     </pluginRepositories>
     <build>
-        <finalName>timeShift_1.1.3</finalName>
+        <finalName>timeShift_1.1.5</finalName>
         <resources>
             <resource>
                 <directory>src/main/java</directory>

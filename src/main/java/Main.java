@@ -19,7 +19,7 @@ public class Main extends Application {
     public void start(Stage primaryStage) throws Exception {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("MainWindow.fxml"));
         Parent root = loader.load();
-        Scene scene = new Scene(root, 386, 528, Color.TRANSPARENT); //width 420 height 565
+        Scene scene = new Scene(root, 386, 528, Color.TRANSPARENT);
         primaryStage.initStyle(StageStyle.TRANSPARENT);
         primaryStage.setScene(scene);
         primaryStage.show();
@@ -33,10 +33,6 @@ public class Main extends Application {
                 "-fx-effect: dropShadow(three-pass-box, black, 10, 0, 0, 0);");
 
         Utility.getInstance().setPrimaryStage(primaryStage);
-        /*Serializer.getInstance().deserializeNotes();
-        System.out.println("deser in main");
-        Serializer.getInstance().deserializeSettings();*/
-
         Controller controller = loader.getController();
         controller.fxAddNoteButton.setOnMouseClicked(event -> controller.onNewNoteClick());
     }

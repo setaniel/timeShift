@@ -2,6 +2,9 @@ import javafx.scene.Node;
 
 import java.io.*;
 
+/**
+ * Serializer for classes SettingsHolder and Model
+ * */
 class Serializer {
     private static Serializer instance;
     private Serializer(){
@@ -62,7 +65,6 @@ class Serializer {
             Utility.getInstance().getPrimaryStage().close();
             System.exit(0);
         }
-
     }
 
     /**
@@ -92,7 +94,6 @@ class Serializer {
             }
         }
         deleteSerializeFiles();
-        serializeNotes();
     }
     /**
      * After deserialize, delete all .ser files

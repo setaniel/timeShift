@@ -1,7 +1,7 @@
 import java.io.Serializable;
 /** Internal data storage for notes.
  * Uses for serialize and deserialize,
- * collecting data of all notes, and for theme.
+ * collecting data of all notes.
  * Each note uses its own instance of the model*/
 class Model implements Serializable {
     private static final long serialVersionUID = 101;
