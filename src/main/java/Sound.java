@@ -2,11 +2,6 @@ import javax.sound.sampled.*;
 import java.io.File;
 
 public class Sound {
-    public static void main(String[] args) {
-        instance = getInstance();
-        instance.PlayMusicSDL();
-    }
-
     private static Sound instance;
 
     private Sound(){
