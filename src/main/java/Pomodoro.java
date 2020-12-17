@@ -131,7 +131,7 @@ class Pomodoro {
                         setImage("sadTomato");
                         setDefaultButton();
                         button.setText("Clear");
-                        playEndTimeSound();
+                        Sound.getInstance().PlayMusicSDL();
                     }
                     button.setOnAction(event -> {
                         timer.cancel();
@@ -142,11 +142,6 @@ class Pomodoro {
                 });
             }
         },0, 60 * 1000);
-    }
-
-    private void playEndTimeSound(){
-        Sound sound = Sound.getInstance();
-        sound.PlayMusicSDL();
     }
 
     private void createAnchorButton(double leftAnchor, int width, String text){

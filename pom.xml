@@ -48,19 +48,14 @@
         <finalName>timeShift_1.1.5</finalName>
         <resources>
             <resource>
-                <directory>src/main/java</directory>
-                <includes>
-                    <include>*.fxml</include>
-                    <include>*.css</include>
-                    <include>images/*</include>
-                </includes>
-            </resource>
-            <resource>
                 <directory>src/resources</directory>
                 <includes>
                     <include>*.png</include>
+                    <include>*.fxml</include>
                     <include>*.css</include>
                     <include>images/*</include>
+                    <include>sound/*</include>
+                    <include>*.wav</include>
                 </includes>
             </resource>
         </resources>

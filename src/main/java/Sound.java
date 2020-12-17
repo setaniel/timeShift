@@ -2,6 +2,11 @@ import javax.sound.sampled.*;
 import java.io.File;
 
 public class Sound {
+/*    public static void main(String[] args) {
+        instance = getInstance();
+        instance.PlayMusicSDL();
+    }*/
+
     private static Sound instance;
 
     private Sound(){
@@ -15,8 +20,7 @@ public class Sound {
     public void PlayMusicSDL() {
         byte[] b = new byte[2048];
         try {
-            File f = new File("src/resources/mario.wav");
-            AudioInputStream ais = AudioSystem.getAudioInputStream(f);
+            AudioInputStream ais = AudioSystem.getAudioInputStream(getInstance().getClass().getResource("/sound/mario.wav"));
             AudioFormat af = ais.getFormat();
             DataLine.Info info = new DataLine.Info(SourceDataLine.class, af);
             if (AudioSystem.isLineSupported(info)) {
