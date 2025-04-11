@@ -5,6 +5,10 @@ import javafx.scene.paint.Color;
 
 import java.util.List;
 
+/**
+ @author Setaniel
+ @version 1.1.4
+ */
 
 class ThemeSwitcher {
     private static ThemeSwitcher instance;

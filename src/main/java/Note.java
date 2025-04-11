@@ -14,6 +14,8 @@ import java.util.regex.Pattern;
 
 /**
  * Note is a fabric-class of notes.
+ * @author Setaniel
+ * @version 1.0
  * */
 class Note extends AnchorPane {
     private final Model noteModel;

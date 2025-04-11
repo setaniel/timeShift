@@ -4,6 +4,8 @@ import java.io.*;
 
 /**
  * Serializer for classes SettingsHolder and Model
+ * @author Setaniel
+ * @version 1.1.3
  * */
 class Serializer {
     private static Serializer instance;

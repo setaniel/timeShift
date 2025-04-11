@@ -16,6 +16,11 @@ import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import org.apache.commons.lang3.StringUtils;
 
+/**
+ @author Setaniel
+ @version 1.1.4
+ */
+
 class Settings {
     private double xOffset = 0;
     private double yOffset = 0;

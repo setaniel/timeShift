@@ -15,6 +15,11 @@ import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 import java.io.IOException;
 
+/**
+ @author Setaniel
+ @version 1.1.6
+ */
+
 class Traffic {
     private final StackPane parsedStackTraffic  = new StackPane();
     private final Label trafficLabelValue = new Label();
@@ -35,7 +40,9 @@ class Traffic {
         trafficLabelValue.setFont(Font.font("Courier New", FontWeight.EXTRA_BOLD,13));
         Document doc;
         try {
-            doc = Jsoup.connect("https://www.yandex.ru/").get();
+//            doc = Jsoup.connect("https://www.yandex.ru/").get();
+            doc = Jsoup.connect("https://www.moscowmap.ru/probki.html").get();
+//            Elements divs=doc.select("div [class=\"traffic__rate-text\"]");
             Elements divs=doc.select("div [class=\"traffic__rate-text\"]");
             Element div = divs.get(0);
             trafficLabelValue.setText(div.text());

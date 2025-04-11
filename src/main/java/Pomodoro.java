@@ -16,6 +16,11 @@ import javafx.stage.StageStyle;
 import java.util.Timer;
 import java.util.TimerTask;
 
+/**
+ @author Setaniel
+ @version 1.0
+ */
+
 class Pomodoro {
     static boolean isPomodoroShow = false;
     private double xOffset = 0;

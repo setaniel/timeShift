@@ -1,5 +1,10 @@
 import java.io.Serializable;
 
+/**
+ @author Setaniel
+ @version 1.1.4
+ */
+
 public class SettingsHolder implements Serializable {
     private static final long serialVersionUID = 202;
 

@@ -17,6 +17,10 @@ import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;
 
+/**
+ @author Setaniel
+ @version 1.0
+ */
 
 class Info {
     private double xOffset = 0;

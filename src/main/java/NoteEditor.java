@@ -5,6 +5,10 @@ import javafx.scene.input.KeyCode;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
 
+/**
+ @author Setaniel
+ @version 1.0
+ */
 class NoteEditor extends Pane{
     private final ImageView okButton = new ImageView(
             new Image(NoteEditor.class.getResourceAsStream("images/done.png")));

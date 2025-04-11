@@ -7,13 +7,15 @@ import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 
-
+/**
+ * The starting point of the program. Only run
+ * the application, do not contain any logic. The
+ * main window is designed here. This class loads
+ * the FXML that describes the appearance of the program.
+ * @author Setaniel
+ * @version 1.0
+ * */
 public class Main extends Application {
-
-    /** The starting point of the program. Only run
-     * the application, do not contain any logic. The
-     * main window is designed here. This class loads
-     * the FXML that describes the appearance of the program. */
 
     @Override
     public void start(Stage primaryStage) throws Exception {

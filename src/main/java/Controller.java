@@ -10,16 +10,19 @@ import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 
 import java.net.URL;
+import java.util.Objects;
 import java.util.ResourceBundle;
 
 /**
- * The class that controls the relationship between
- * the FXML file and Java code. Here the link fx:id
- * of links is initialized and translated into Java code.
- * */
+ The class that controls the relationship between
+ the FXML file and Java code. Here the link fx:id
+ of links is initialized and translated into Java code.
+ @author Setaniel
+ @version 1.1.6
+  */
 public class Controller implements Initializable{
     @FXML private StackPane fxRootStackPane;
-    @FXML private AnchorPane fxTrafficPane;
+//    @FXML private AnchorPane fxTrafficPane;
     @FXML private ImageView fxMinimize;
     @FXML private ScrollPane fxScroll;
     @FXML private ImageView fxInfo;
@@ -74,7 +77,7 @@ public class Controller implements Initializable{
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         Utility.getInstance().setController(this);
-        fxScroll.getStylesheets().add(Controller.class.getResource("scroll.css").toExternalForm());
+        fxScroll.getStylesheets().add(Objects.requireNonNull(Controller.class.getResource("scroll.css")).toExternalForm());
         fxScroll.setVbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
         setScrollVisibility();
         Utility.getInstance().setStaticInnerShadow(fxRootStackPane);
@@ -91,8 +94,8 @@ public class Controller implements Initializable{
         // set theme for app
         ThemeSwitcher.getInstance().setCurrentTheme(SettingsHolder.getInstance().getCurrentTheme());
         NetChecker.getInstance().ping();
-        Weather.showWeather();
-        Traffic.getInstance().showTraffic(fxTrafficPane);
+        WeatherReader.showWeather(); //------------ Deprecated
+//        Traffic.getInstance().showTraffic(fxTrafficPane); ------------Here are disabled not fixed options !!!!!!!
         SlideScene.getInstance().initScene();
     }
     private void setScrollVisibility() {

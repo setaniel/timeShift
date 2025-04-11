@@ -20,6 +20,12 @@ import javafx.scene.text.FontWeight;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 
+/**
+ Contains auxiliary methods
+ @author Setaniel
+ @version 1.1.3
+*/
+
 class Utility {
     private Controller controller;
     private Stage primaryStage;
@@ -106,7 +112,7 @@ class Utility {
         return controller.fxContentStack;
     }
 
-    Label getWeatherLabel(){
+    Label getWeatherLabelCold(){
         // Adding the shadow
         InnerShadow shadow = new InnerShadow();
         controller.fxWeatherLabel.setEffect(shadow);
@@ -114,6 +120,30 @@ class Utility {
         controller.fxWeatherLabel.setPadding(new Insets(5, 8, 5, 8));
         controller.fxWeatherLabel.setFont(Font.font("Courier New", FontWeight.BOLD, 13));
         controller.fxWeatherLabel.setBackground(new Background(new BackgroundFill(Paint.valueOf("#98ecf2"),
+                new CornerRadii(16), Insets.EMPTY)));
+        return controller.fxWeatherLabel;
+    }
+
+    Label getWeatherLabelHot(){
+        // Adding the shadow
+        InnerShadow shadow = new InnerShadow();
+        controller.fxWeatherLabel.setEffect(shadow);
+        controller.fxWeatherLabel.setAlignment(Pos.CENTER);
+        controller.fxWeatherLabel.setPadding(new Insets(5, 8, 5, 8));
+        controller.fxWeatherLabel.setFont(Font.font("Courier New", FontWeight.BOLD, 13));
+        controller.fxWeatherLabel.setBackground(new Background(new BackgroundFill(Paint.valueOf("#ffcc33"),
+                new CornerRadii(16), Insets.EMPTY)));
+        return controller.fxWeatherLabel;
+    }
+
+    Label getWeatherLabelGrey(){
+        // Adding the shadow
+        InnerShadow shadow = new InnerShadow();
+        controller.fxWeatherLabel.setEffect(shadow);
+        controller.fxWeatherLabel.setAlignment(Pos.CENTER);
+        controller.fxWeatherLabel.setPadding(new Insets(5, 8, 5, 8));
+        controller.fxWeatherLabel.setFont(Font.font("Courier New", FontWeight.BOLD, 13));
+        controller.fxWeatherLabel.setBackground(new Background(new BackgroundFill(Paint.valueOf("#808080"),
                 new CornerRadii(16), Insets.EMPTY)));
         return controller.fxWeatherLabel;
     }

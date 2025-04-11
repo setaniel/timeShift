@@ -1,5 +1,9 @@
 import javax.sound.sampled.*;
-import java.io.File;
+
+/**
+ @author Setaniel
+ @version 1.1.2
+ */
 
 public class Sound {
 /*    public static void main(String[] args) {

@@ -12,10 +12,12 @@ import java.net.InetAddress;
 import java.net.UnknownHostException;
 
 /**
- * This class check your internet connection.
- * {@link //#ping} method pinging google.com, using system methods.
- * Result showing in Label, on app right-bottom.
- * */
+   This class check your internet connection.
+   {@link #ping} method pinging google.com, using system methods.
+   Result showing in Label, on app right-bottom.
+   @author Setaniel
+   @version 1.1.4
+   */
 class NetChecker {
     private static final Label netLabel = Utility.getInstance().getNetLabel();
     private BufferedReader inStream;

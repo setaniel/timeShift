@@ -6,6 +6,10 @@ import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
 import javafx.util.Duration;
 
+/**
+ @author Setaniel
+ @version 1.1.2
+ */
 
 class SlideScene {
     private Pane parentRoot;

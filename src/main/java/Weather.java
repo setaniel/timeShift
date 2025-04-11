@@ -5,6 +5,13 @@ import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 import java.io.IOException;
 
+/**
+ * @deprecated This class has been deprecated and replaced by the WeatherReader and GeoLocationFinder classes.
+ * @author Setaniel
+ * @version 1.1.4
+ */
+
+@Deprecated
  class Weather {
 
     private static void weatherParse(){
@@ -13,15 +20,15 @@ import java.io.IOException;
             doc = Jsoup.connect("https://www.gismeteo.ru/").get();
             Elements spans=doc.select("span [class=value unit unit_temperature_c]");
             Element span = spans.get(0);
-            Utility.getInstance().getWeatherLabel().setText(span.text() + "°");
+            Utility.getInstance().getWeatherLabelGrey().setText(span.text() + "°");
         } catch (IOException e) {
-            Utility.getInstance().getWeatherLabel().setText("- °");
+            Utility.getInstance().getWeatherLabelGrey().setText("- °");
         }
     }
 
      static void showWeather() {
         weatherParse();
-        // Long running operation runs on different thread
+        // Long-running operation runs on different thread
         Thread thread = new Thread(() -> {
             Runnable updater = Weather::weatherParse;
             // Thread sleep every 2 seconds and start Platform.runLater(updater)

@@ -2,7 +2,11 @@ import javafx.fxml.FXML;
 import javafx.scene.image.ImageView;
 
 
-/** Managing notes **/
+/**
+ * Managing notes
+ * @author Setaniel
+ * @version 1.0
+ * **/
 class View {
     private boolean isNoteEditorShow = false;
     private ImageView AddNoteButton;
